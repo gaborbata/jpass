@@ -4,7 +4,7 @@
     <groupId>jpass</groupId>
     <artifactId>jpass</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.24-SNAPSHOT</version>
+    <version>0.1.24-RELEASE</version>
     <name>JPass</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>1.0</version>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>com.formdev</groupId>

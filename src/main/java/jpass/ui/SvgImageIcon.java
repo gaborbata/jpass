@@ -41,6 +41,7 @@ import com.kitfox.svg.SVGUniverse;
 
 /**
  * @author Karl Tauber
+ * @author Gabor_Bata
  */
 public class SvgImageIcon extends ImageIcon {
     private static final Logger LOG = Logger.getLogger(SvgImageIcon.class.getName());
@@ -49,11 +50,19 @@ public class SvgImageIcon extends ImageIcon {
     private static final SVGUniverse svgUniverse = new SVGUniverse();
 
     private final String name;
+    private final int width;
+    private final int height;
     private SVGDiagram diagram;
     private boolean dark;
 
     public SvgImageIcon(String name) {
+        this(name, 0, 0);
+    }
+
+    public SvgImageIcon(String name, int width, int height) {
         this.name = name;
+        this.width = width;
+        this.height = height;
     }
 
     private void update() {
@@ -84,14 +93,20 @@ public class SvgImageIcon extends ImageIcon {
 
     @Override
     public int getIconWidth() {
+        if (width > 0) {
+            return UIScale.scale(width);
+        }
         update();
-        return (int)UIScale.scale((diagram != null) ? diagram.getWidth() : 16);
+        return (int)UIScale.scale(diagram != null ? diagram.getWidth() : 16);
     }
 
     @Override
     public int getIconHeight() {
+        if (height > 0) {
+            return UIScale.scale(height);
+        }
         update();
-        return (int)UIScale.scale((diagram != null) ? diagram.getHeight() : 16);
+        return (int)UIScale.scale(diagram != null ? diagram.getHeight() : 16);
     }
 
     @Override
@@ -127,6 +142,13 @@ public class SvgImageIcon extends ImageIcon {
 
         UIScale.scaleGraphics(g);
 
+	if( width > 0 || height > 0 ) {
+            double sx = width > 0 ? width / diagram.getWidth() : 1;
+            double sy = height > 0 ? height / diagram.getHeight() : 1;
+            if( sx != 1 || sy != 1 ) {
+                g.scale( sx, sy );
+            }
+        }
         diagram.setIgnoringClipHeuristic(true);
 
         try {

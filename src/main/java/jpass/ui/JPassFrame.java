@@ -45,6 +45,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -75,7 +77,7 @@ public final class JPassFrame extends JFrame {
     private static JPassFrame INSTANCE;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
-    public static final String PROGRAM_VERSION = "0.1.24-SNAPSHOT";
+    public static final String PROGRAM_VERSION = "0.1.24-RELEASE";
 
     private final JPopupMenu popup;
     private final JPanel topContainerPanel;
@@ -95,7 +97,9 @@ public final class JPassFrame extends JFrame {
 
     private JPassFrame(String fileName) {
         try {
-            setIconImage(getIcon("jpass").getImage());
+            setIconImages(Stream.of(16, 20, 32, 40, 64, 80, 128, 160)
+                .map(size -> getIcon("jpass", size, size).getImage())
+                .collect(Collectors.toList()));            
         } catch (Exception e) {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }

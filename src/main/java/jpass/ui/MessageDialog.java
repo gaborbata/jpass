@@ -296,8 +296,20 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @return ImageIcon object
      */
     public static ImageIcon getIcon(String name) {
+        return getIcon(name, 0, 0);
+    }
+
+    /**
+     * Returns an image resource.
+     *
+     * @param name image name without path and extension
+     * @param width the image width
+     * @param height the image height
+     * @return ImageIcon object
+     */
+    public static ImageIcon getIcon(String name, int width, int height) {
         try {
-            return new SvgImageIcon("resources/images/" + name + ".svg");
+            return new SvgImageIcon("resources/images/" + name + ".svg", width, height);
         } catch (Exception e) {
             return null;
         }

@@ -149,16 +149,6 @@ public class DataModel {
     }
 
     /**
-     * Gets entry index by title.
-     *
-     * @param title entry title
-     * @return entry index
-     */
-    public int getEntryIndexByTitle(String title) {
-        return getTitles().indexOf(title);
-    }
-
-    /**
      * Gets entry by title.
      *
      * @param title entry title
@@ -170,5 +160,15 @@ public class DataModel {
             return this.entries.getEntry().get(entryIndex);
         }
         return null;
+    }
+
+    /**
+     * Gets entry index by title.
+     *
+     * @param title entry title
+     * @return entry index
+     */
+    private int getEntryIndexByTitle(String title) {
+        return getTitles().indexOf(title);
     }
 }

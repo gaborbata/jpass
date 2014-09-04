@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="entries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+    <xs:unique name="uniqueTitle">
+      <xs:selector xpath="entry" />
+      <xs:field xpath="title" />
+    </xs:unique>
+  </xs:element>
+  <xs:complexType name="entry">
+    <xs:sequence>
+      <xs:element name="title" minOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value=".*\S.*" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="url" type="xs:string" minOccurs="0" />
+      <xs:element name="user" type="xs:string" minOccurs="0" />
+      <xs:element name="password" type="xs:string" minOccurs="0" />
+      <xs:element name="notes" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

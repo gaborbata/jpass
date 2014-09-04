@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+jar {
+    baseName = 'jpass'
+    version = '0.1.12'
+    manifest {
+        attributes('Main-Class': 'jpass.JPass')
+    }
+}

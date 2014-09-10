@@ -20,6 +20,13 @@ How to compile
 * Maven: `mvn clean install`
 * Gradle: `gradle clean build`
 
+Usage
+-----
+Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.12.jar`).
+You can also run the application from the command line by typing (the password file is optional):
+
+    java -jar jpass-0.1.12.jar [password_file]
+
 License
 -------
 Copyright (c) 2009-2012 Gabor Bata
@@ -39,6 +46,7 @@ This software is provided by the author "as is" and any express or implied warra
 This software includes MicroCrypt 0.3, covered by the following license:
 
 Copyright (c) 2007 Timm Knape
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -54,6 +62,7 @@ This software is provided by the copyright holders and contributors "as is" and 
 This software includes SpringUtilities, covered by the following license:
 
 Copyright (c) 1995-2008 Sun Microsystems, Inc.
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

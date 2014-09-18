@@ -76,7 +76,7 @@ public final class JPassFrame extends JFrame {
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
     private final JList entryTitleList;
-    private final DefaultListModel<String> entryTitleListModel;
+    private final DefaultListModel entryTitleListModel;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
@@ -159,8 +159,8 @@ public final class JPassFrame extends JFrame {
         this.popup.add(MenuActionType.COPY_USER.getAction());
         this.popup.add(MenuActionType.COPY_PASSWORD.getAction());
 
-        this.entryTitleListModel = new DefaultListModel<String>();
-        this.entryTitleList = new JList<String>(this.entryTitleListModel);
+        this.entryTitleListModel = new DefaultListModel();
+        this.entryTitleList = new JList(this.entryTitleListModel);
         this.entryTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entryTitleList.addMouseListener(new ListListener());
         this.scrollPane = new JScrollPane(this.entryTitleList);

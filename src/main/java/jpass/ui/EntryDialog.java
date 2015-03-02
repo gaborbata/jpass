@@ -32,6 +32,7 @@ package jpass.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -152,6 +153,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
         this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
         this.notesField = TextComponentFactory.newTextArea();
+        this.notesField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
         this.notesField.setLineWrap(true);
         this.notesField.setWrapStyleWord(true);
         this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);

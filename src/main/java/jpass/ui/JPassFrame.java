@@ -51,6 +51,7 @@ import jpass.ui.action.Callback;
 import jpass.ui.action.CloseListener;
 import jpass.ui.action.ListListener;
 import jpass.ui.action.MenuActionType;
+import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
 
 /**
@@ -259,6 +260,9 @@ public final class JPassFrame extends JFrame {
      * Exits the application.
      */
     public void exitFrame() {
+        // Clear clipboard on exit
+        EntryHelper.copyEntryField(this, null);
+
         if (this.processing) {
             return;
         }

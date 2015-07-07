@@ -6,7 +6,7 @@ targetCompatibility = 1.6
 
 jar {
     baseName = 'jpass'
-    version = '0.1.12'
+    version = '0.1.13'
     manifest {
         attributes('Main-Class': 'jpass.JPass')
     }

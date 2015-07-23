@@ -238,7 +238,7 @@ public final class JPassFrame extends JFrame {
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleListModel.clear();
         List<String> titleList = this.model.getListOfTitles();
-        Collections.sort(titleList);
+        Collections.sort(titleList, String.CASE_INSENSITIVE_ORDER);
         for (String title : titleList) {
             this.entryTitleListModel.addElement(title);
         }

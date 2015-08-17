@@ -13,7 +13,7 @@ Features:
 * Organize all your user name, password, URL and notes information in one file
 * Data import/export in XML format
 
-![JPass](https://raw.githubusercontent.com/gaborbata/jpass/master/resources/jpass-screenshot.png)
+![JPass](https://raw.githubusercontent.com/gaborbata/jpass/master/resources/jpass-capture.gif)
 
 How to compile
 --------------
@@ -29,7 +29,7 @@ You can also run the application from the command line by typing (the password f
 
 License
 -------
-Copyright (c) 2009-2012 Gabor Bata
+Copyright (c) 2009-2015 Gabor Bata
 
 All rights reserved.
 

@@ -36,6 +36,7 @@ import javax.swing.plaf.metal.DefaultMetalTheme;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import jpass.ui.JPassFrame;
+import jpass.util.Configuration;
 
 /**
  * Entry point of JPass.
@@ -46,48 +47,52 @@ import jpass.ui.JPassFrame;
 public class JPass {
 
     public static void main(final String[] args) {
-        MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme() {
-            private final ColorUIResource primary1 = new ColorUIResource(0x4d6781);
-            private final ColorUIResource primary2 = new ColorUIResource(0x7a96b0);
-            private final ColorUIResource primary3 = new ColorUIResource(0xc8d4e2);
-            private final ColorUIResource secondary1 = new ColorUIResource(0x000000);
-            private final ColorUIResource secondary2 = new ColorUIResource(0xaaaaaa);
-            private final ColorUIResource secondary3 = new ColorUIResource(0xdfdfdf);
-
-            @Override
-            protected ColorUIResource getPrimary1() {
-                return this.primary1;
-            }
-
-            @Override
-            protected ColorUIResource getPrimary2() {
-                return this.primary2;
-            }
-
-            @Override
-            protected ColorUIResource getPrimary3() {
-                return this.primary3;
-            }
-
-            @Override
-            protected ColorUIResource getSecondary1() {
-                return this.secondary1;
-            }
-
-            @Override
-            protected ColorUIResource getSecondary2() {
-                return this.secondary2;
-            }
-
-            @Override
-            protected ColorUIResource getSecondary3() {
-                return this.secondary3;
-            }
-        });
-
         try {
-            UIManager.put("swing.boldMetal", Boolean.FALSE);
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            if (Configuration.getInstance().is("system.look.and.feel.enabled", false)) {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } else {
+                MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme() {
+                    private final ColorUIResource primary1 = new ColorUIResource(0x4d6781);
+                    private final ColorUIResource primary2 = new ColorUIResource(0x7a96b0);
+                    private final ColorUIResource primary3 = new ColorUIResource(0xc8d4e2);
+                    private final ColorUIResource secondary1 = new ColorUIResource(0x000000);
+                    private final ColorUIResource secondary2 = new ColorUIResource(0xaaaaaa);
+                    private final ColorUIResource secondary3 = new ColorUIResource(0xdfdfdf);
+
+                    @Override
+                    protected ColorUIResource getPrimary1() {
+                        return this.primary1;
+                    }
+
+                    @Override
+                    protected ColorUIResource getPrimary2() {
+                        return this.primary2;
+                    }
+
+                    @Override
+                    protected ColorUIResource getPrimary3() {
+                        return this.primary3;
+                    }
+
+                    @Override
+                    protected ColorUIResource getSecondary1() {
+                        return this.secondary1;
+                    }
+
+                    @Override
+                    protected ColorUIResource getSecondary2() {
+                        return this.secondary2;
+                    }
+
+                    @Override
+                    protected ColorUIResource getSecondary3() {
+                        return this.secondary3;
+                    }
+                });
+
+                UIManager.put("swing.boldMetal", Boolean.FALSE);
+                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

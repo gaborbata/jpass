@@ -53,6 +53,7 @@ import jpass.ui.action.ListListener;
 import jpass.ui.action.MenuActionType;
 import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
+import jpass.util.Configuration;
 
 /**
  * The main frame for JPass.
@@ -82,7 +83,7 @@ public final class JPassFrame extends JFrame {
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
 
-    public JPassFrame(String fileName) {
+    private JPassFrame(String fileName) {
         try {
             setIconImage(MessageDialog.getIcon("lock").getImage());
         } catch (Exception e) {
@@ -226,14 +227,14 @@ public final class JPassFrame extends JFrame {
      */
     public void refreshFrameTitle() {
         setTitle((getModel().isModified() ? "*" : "")
-                + (getModel().getFileName() == null ? "Untitled" : getModel()
-                        .getFileName()) + " - " + PROGRAM_NAME);
+                + (getModel().getFileName() == null ? "Untitled" : getModel().getFileName()) + " - " + PROGRAM_NAME);
     }
 
     /**
      * Refresh the entry titles based on data model.
      *
-     * @param selectTitle title to select, or {@code null} if nothing to select
+     * @param selectTitle
+     *            title to select, or {@code null} if nothing to select
      */
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleListModel.clear();
@@ -260,17 +261,16 @@ public final class JPassFrame extends JFrame {
      * Exits the application.
      */
     public void exitFrame() {
-        // Clear clipboard on exit
-        EntryHelper.copyEntryField(this, null);
+        if (Configuration.getInstance().is("clear.clipboard.on.exit.enabled", false)) {
+            EntryHelper.copyEntryField(this, null);
+        }
 
         if (this.processing) {
             return;
         }
         if (this.model.isModified()) {
-            int option = MessageDialog.showQuestionMessage(
-                    this,
-                    "The current file has been modified.\n" +
-                    "Do you want to save the changes before closing?",
+            int option = MessageDialog.showQuestionMessage(this,
+                    "The current file has been modified.\nDo you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
                 FileHelper.saveFile(this, false, new Callback() {
@@ -296,7 +296,8 @@ public final class JPassFrame extends JFrame {
     /**
      * Sets the processing state of this frame.
      *
-     * @param processing processing state
+     * @param processing
+     *            processing state
      */
     public void setProcessing(boolean processing) {
         this.processing = processing;

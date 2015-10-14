@@ -11,3 +11,10 @@ jar {
         attributes('Main-Class': 'jpass.JPass')
     }
 }
+
+task copyConfig(type: Copy) {
+    from 'src/main/config'
+    into 'build/libs'
+}
+
+build.dependsOn copyConfig

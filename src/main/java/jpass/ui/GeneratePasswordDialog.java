@@ -50,6 +50,7 @@ import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
+import jpass.util.Configuration;
 import jpass.util.CryptUtils;
 import jpass.util.SpringUtilities;
 
@@ -69,7 +70,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     private static final String[][] passwordOptions = {
         { "Upper case letters (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         { "Lower case letters (a-z)", "abcdefghijklmnopqrstuvwxyz" },
-        { "Numbers (0-9)", "0123456789" },
+        { "Numbers (0-9)", "0123456789" }
     };
 
     private JCheckBox[] checkBoxes;
@@ -97,7 +98,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Constructor of GeneratePasswordDialog.
      *
-     * @param parent JFrame parent component
+     * @param parent
+     *            JFrame parent component
      */
     public GeneratePasswordDialog(JFrame parent) {
         super(parent);
@@ -107,7 +109,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Constructor of GeneratePasswordDialog.
      *
-     * @param parent JDialog parent component
+     * @param parent
+     *            JDialog parent component
      */
     public GeneratePasswordDialog(JDialog parent) {
         super(parent);
@@ -117,8 +120,11 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Initializes the GeneratePasswordDialog instance.
      *
-     * @param parent parent component
-     * @param showAcceptButton if true then the dialog shows an "Accept" and "Cancel" button, otherwise only a "Close" button
+     * @param parent
+     *            parent component
+     * @param showAcceptButton
+     *            if true then the dialog shows an "Accept" and "Cancel" button,
+     *            otherwise only a "Close" button
      *
      */
     private void initDialog(final Component parent, final boolean showAcceptButton) {
@@ -130,9 +136,17 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.lengthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         this.lengthLabel = new JLabel("Password length:");
         this.lengthPanel.add(this.lengthLabel);
-        this.lengthSpinner = new JSpinner(new SpinnerNumberModel(14, 1, 64, 1));
-        this.lengthPanel.add(this.lengthSpinner);
 
+        int passwordGenerationLength = Configuration.getInstance().getInteger("default.password.generation.length", 14);
+        if (passwordGenerationLength > 64) {
+            passwordGenerationLength = 64;
+        }
+        if (passwordGenerationLength < 1) {
+            passwordGenerationLength = 1;
+        }
+
+        this.lengthSpinner = new JSpinner(new SpinnerNumberModel(passwordGenerationLength, 1, 64, 1));
+        this.lengthPanel.add(this.lengthSpinner);
 
         this.charactersPanel = new JPanel();
         this.charactersPanel.setBorder(new TitledBorder("Settings"));
@@ -150,12 +164,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.customSymbolsField.setEditable(false);
         this.charactersPanel.add(this.customSymbolsField);
 
-
         this.charactersPanel.setLayout(new SpringLayout());
-        SpringUtilities.makeCompactGrid(this.charactersPanel,
-                6, 1,   //rows, columns
-                5, 5,   //initX, initY
-                5, 5);  //xPad, yPad
+        SpringUtilities.makeCompactGrid(this.charactersPanel, 6, 1, 5, 5, 5, 5);
 
         this.passwordPanel = new JPanel(new BorderLayout());
         this.passwordPanel.setBorder(new TitledBorder("Generated password"));
@@ -169,7 +179,6 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         JPanel generateButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         generateButtonPanel.add(this.generateButton);
         this.passwordPanel.add(generateButtonPanel, BorderLayout.SOUTH);
-
 
         this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
@@ -189,7 +198,6 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.cancelButton.setMnemonic(KeyEvent.VK_C);
         this.cancelButton.addActionListener(this);
         this.buttonPanel.add(this.cancelButton);
-
 
         getContentPane().add(this.charactersPanel, BorderLayout.NORTH);
         getContentPane().add(this.passwordPanel, BorderLayout.CENTER);
@@ -229,7 +237,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 
             StringBuilder generated = new StringBuilder();
             int passwordLength = Integer.parseInt(String.valueOf(this.lengthSpinner.getValue()));
-            for(int i = 0; i < passwordLength; i++) {
+            for (int i = 0; i < passwordLength; i++) {
                 generated.append(characterSet.charAt(this.random.nextInt(characterSet.length())));
             }
             this.passwordField.setText(generated.toString());
@@ -248,8 +256,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Gets the generated password.
      *
-     * @return if the password is not generated than the return
-     * value is {@code null}, otherwise the generated password
+     * @return if the password is not generated than the return value is
+     *         {@code null}, otherwise the generated password
      */
     public String getGeneratedPassword() {
         return this.generatedPassword;

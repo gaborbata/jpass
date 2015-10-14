@@ -43,7 +43,7 @@ public final class Configuration {
     private static volatile Configuration INSTANCE;
     private Properties properties = new Properties();
 
-    public Configuration() {
+    private Configuration() {
         try {
             File filePointer = new File("jpass.properties");
             if (filePointer.exists() && filePointer.isFile()) {

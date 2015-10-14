@@ -41,6 +41,10 @@ import javax.swing.SpringLayout;
  */
 public class SpringUtilities {
 
+    private SpringUtilities() {
+        // utility class
+    }
+
     /**
      * Aligns the first {@code rows} * {@code cols} components of {@code parent} in a grid.
      * Each component is as big as the maximum preferred width and height of the components. The parent is

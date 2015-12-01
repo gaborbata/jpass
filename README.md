@@ -22,10 +22,10 @@ How to compile
 
 Usage
 -----
-Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.13.jar`).
+Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.14.jar`).
 You can also run the application from the command line by typing (the password file is optional):
 
-    java -jar jpass-0.1.13.jar [password_file]
+    java -jar jpass-0.1.14.jar [password_file]
 
 Configuration
 -------------

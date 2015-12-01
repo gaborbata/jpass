@@ -14,7 +14,7 @@ dependencies {
 
 jar {
     baseName = 'jpass'
-    version = '0.1.13'
+    version = '0.1.14'
     manifest {
         attributes('Main-Class': 'jpass.JPass')
     }

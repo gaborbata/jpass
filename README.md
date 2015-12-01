@@ -27,6 +27,16 @@ You can also run the application from the command line by typing (the password f
 
     java -jar jpass-0.1.13.jar [password_file]
 
+Configuration
+-------------
+Default configurations can be overridden in `jpass.properties` file:
+
+| Configuration key                  | Value type | Default value |
+| ---------------------------------- | ---------- | ------------- |
+| system.look.and.feel.enabled       | boolean    | false         |
+| clear.clipboard.on.exit.enabled    | boolean    | false         |
+| default.password.generation.length | integer    | 14            |
+
 License
 -------
 Copyright (c) 2009-2015 Gabor Bata

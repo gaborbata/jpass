@@ -45,12 +45,18 @@ import jpass.util.Configuration;
  *
  */
 public class JPass {
+    private static final String METAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 
     public static void main(final String[] args) {
         try {
+            String lookAndFeel;
             if (Configuration.getInstance().is("system.look.and.feel.enabled", false)) {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                lookAndFeel = UIManager.getSystemLookAndFeelClassName();
             } else {
+                lookAndFeel = METAL_LOOK_AND_FEEL;
+            }
+
+            if (METAL_LOOK_AND_FEEL.equals(lookAndFeel)) {
                 MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme() {
                     private final ColorUIResource primary1 = new ColorUIResource(0x4d6781);
                     private final ColorUIResource primary2 = new ColorUIResource(0x7a96b0);
@@ -91,8 +97,9 @@ public class JPass {
                 });
 
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             }
+
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -80,7 +80,7 @@ public class JAXBConverter<T> {
      *
      * @param inputStream the input stream
      * @return the JAXB generated object
-     * @throws JAXBException
+     * @throws JAXBException if any error occurred
      */
     @SuppressWarnings("unchecked")
     public T unmarshal(InputStream inputStream) throws JAXBException {

@@ -50,6 +50,7 @@ public class SpringUtilities {
      * Each component is as big as the maximum preferred width and height of the components. The parent is
      * made just big enough to fit them all.
      *
+     * @param parent parent container
      * @param rows number of rows
      * @param cols number of columns
      * @param initialX x location to start the grid at
@@ -133,6 +134,7 @@ public class SpringUtilities {
      * Each component in a column is as wide as the maximum preferred width of the components in that column;
      * height is similarly determined for each row. The parent is made just big enough to fit them all.
      *
+     * @param parent parent container
      * @param rows number of rows
      * @param cols number of columns
      * @param initialX x location to start the grid at

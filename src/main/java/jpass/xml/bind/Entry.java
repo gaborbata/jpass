@@ -5,7 +5,6 @@
 // Generated on: 2011.02.26 at 04:17:19 DU CET
 //
 
-
 package jpass.xml.bind;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,32 +12,31 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * <p>Java class for entry complex type.
  *
  * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
- * &lt;complexType name="entry">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="title">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value=".*\S.*"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="user" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="entry"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="title"&gt;
+ *           &lt;simpleType&gt;
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *               &lt;pattern value=".*\S.*"/&gt;
+ *             &lt;/restriction&gt;
+ *           &lt;/simpleType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="user" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  *
  *
@@ -65,7 +63,7 @@ public class Entry {
      *
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public String getTitle() {
@@ -77,7 +75,7 @@ public class Entry {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public void setTitle(String value) {
@@ -89,7 +87,7 @@ public class Entry {
      *
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public String getUrl() {
@@ -101,7 +99,7 @@ public class Entry {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public void setUrl(String value) {
@@ -113,7 +111,7 @@ public class Entry {
      *
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public String getUser() {
@@ -125,7 +123,7 @@ public class Entry {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public void setUser(String value) {
@@ -137,7 +135,7 @@ public class Entry {
      *
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public String getPassword() {
@@ -149,7 +147,7 @@ public class Entry {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public void setPassword(String value) {
@@ -161,7 +159,7 @@ public class Entry {
      *
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public String getNotes() {
@@ -173,7 +171,7 @@ public class Entry {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link String}
      *
      */
     public void setNotes(String value) {

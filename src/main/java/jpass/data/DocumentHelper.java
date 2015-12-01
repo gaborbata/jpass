@@ -40,7 +40,6 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.xml.bind.JAXBException;
 
-
 import jpass.crypt.io.CryptInputStream;
 import jpass.crypt.io.CryptOutputStream;
 import jpass.util.StringUtils;

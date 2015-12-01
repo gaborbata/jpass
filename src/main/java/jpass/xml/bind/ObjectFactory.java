@@ -5,11 +5,9 @@
 // Generated on: 2011.02.26 at 04:17:19 DU CET
 //
 
-
 package jpass.xml.bind;
 
 import javax.xml.bind.annotation.XmlRegistry;
-
 
 /**
  * This object contains factory methods for each
@@ -28,7 +26,6 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
-
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: jpass.xml.bind
      *
@@ -37,19 +34,18 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Entry }
-     *
+     * Create an instance of {@link Entry}
+     * @return a new {@link Entry} instance
      */
     public Entry createEntry() {
         return new Entry();
     }
 
     /**
-     * Create an instance of {@link Entries }
-     *
+     * Create an instance of {@link Entries}
+     * @return a new {@link Entries} instance
      */
     public Entries createEntries() {
         return new Entries();
     }
-
 }

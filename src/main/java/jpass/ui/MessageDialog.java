@@ -328,6 +328,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * Shows a textfile from the classpath.
      *
      * @param parent parent component
+     * @param title window title
      * @param textFile text file name
      */
     public static void showTextFile(final Component parent, final String title, final String textFile) {

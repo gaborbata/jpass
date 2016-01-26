@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -70,7 +71,9 @@ public final class JPassFrame extends JFrame {
     public static final String PROGRAM_VERSION = "0.1.14";
 
     private final JPopupMenu popup;
+    private final JPanel topContainerPanel;
     private final JMenuBar menuBar;
+    private final SearchPanel searchPanel;
     private final JMenu fileMenu;
     private final JMenu editMenu;
     private final JMenu toolsMenu;
@@ -109,6 +112,19 @@ public final class JPassFrame extends JFrame {
         this.toolBar.add(MenuActionType.ABOUT.getAction());
         this.toolBar.add(MenuActionType.EXIT.getAction());
 
+        this.searchPanel = new SearchPanel(new Callback() {
+            @Override
+            public void call(boolean enabled) {
+                if (enabled) {
+                    refreshEntryTitleList(null);
+                }
+            }
+        });
+
+        this.topContainerPanel = new JPanel(new BorderLayout());
+        this.topContainerPanel.add(this.toolBar, BorderLayout.NORTH);
+        this.topContainerPanel.add(this.searchPanel, BorderLayout.SOUTH);
+
         this.menuBar = new JMenuBar();
 
         this.fileMenu = new JMenu("File");
@@ -136,6 +152,8 @@ public final class JPassFrame extends JFrame {
         this.editMenu.add(MenuActionType.COPY_URL.getAction());
         this.editMenu.add(MenuActionType.COPY_USER.getAction());
         this.editMenu.add(MenuActionType.COPY_PASSWORD.getAction());
+        this.editMenu.addSeparator();
+        this.editMenu.add(MenuActionType.FIND_ENTRY.getAction());
         this.menuBar.add(this.editMenu);
 
         this.toolsMenu = new JMenu("Tools");
@@ -160,6 +178,8 @@ public final class JPassFrame extends JFrame {
         this.popup.add(MenuActionType.COPY_URL.getAction());
         this.popup.add(MenuActionType.COPY_USER.getAction());
         this.popup.add(MenuActionType.COPY_PASSWORD.getAction());
+        this.popup.addSeparator();
+        this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
         this.entryTitleListModel = new DefaultListModel();
         this.entryTitleList = new JList(this.entryTitleListModel);
@@ -172,7 +192,7 @@ public final class JPassFrame extends JFrame {
 
         refreshAll();
 
-        getContentPane().add(this.toolBar, BorderLayout.NORTH);
+        getContentPane().add(this.topContainerPanel, BorderLayout.NORTH);
         getContentPane().add(this.scrollPane, BorderLayout.CENTER);
         getContentPane().add(this.statusPanel, BorderLayout.SOUTH);
 
@@ -226,27 +246,36 @@ public final class JPassFrame extends JFrame {
      * Refresh frame title based on data model.
      */
     public void refreshFrameTitle() {
-        setTitle((getModel().isModified() ? "*" : "")
-                + (getModel().getFileName() == null ? "Untitled" : getModel().getFileName()) + " - " + PROGRAM_NAME);
+        setTitle((getModel().isModified() ? "*" : "") + (getModel().getFileName() == null ? "Untitled" : getModel().getFileName()) + " - "
+                + PROGRAM_NAME);
     }
 
     /**
      * Refresh the entry titles based on data model.
      *
-     * @param selectTitle
-     *            title to select, or {@code null} if nothing to select
+     * @param selectTitle title to select, or {@code null} if nothing to select
      */
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleListModel.clear();
         List<String> titleList = this.model.getListOfTitles();
         Collections.sort(titleList, String.CASE_INSENSITIVE_ORDER);
+
+        String searchCriteria = this.searchPanel.getSearchCriteria();
         for (String title : titleList) {
-            this.entryTitleListModel.addElement(title);
+            if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
+                this.entryTitleListModel.addElement(title);
+            }
         }
+
         if (selectTitle != null) {
             this.entryTitleList.setSelectedValue(selectTitle, true);
         }
-        this.statusPanel.setText("Entries count: " + titleList.size());
+
+        if (searchCriteria.isEmpty()) {
+            this.statusPanel.setText("Entries count: " + titleList.size());
+        } else {
+            this.statusPanel.setText("Entries found: " + this.entryTitleListModel.size() + " / " + titleList.size());
+        }
     }
 
     /**
@@ -270,8 +299,7 @@ public final class JPassFrame extends JFrame {
         }
         if (this.model.isModified()) {
             int option = MessageDialog.showQuestionMessage(this,
-                    "The current file has been modified.\nDo you want to save the changes before closing?",
-                    MessageDialog.YES_NO_CANCEL_OPTION);
+                    "The current file has been modified.\nDo you want to save the changes before closing?", MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
                 FileHelper.saveFile(this, false, new Callback() {
                     @Override
@@ -296,15 +324,14 @@ public final class JPassFrame extends JFrame {
     /**
      * Sets the processing state of this frame.
      *
-     * @param processing
-     *            processing state
+     * @param processing processing state
      */
     public void setProcessing(boolean processing) {
         this.processing = processing;
         for (MenuActionType actionType : MenuActionType.values()) {
             actionType.getAction().setEnabled(!processing);
         }
-
+        this.searchPanel.setEnabled(!processing);
         this.entryTitleList.setEnabled(!processing);
         this.statusPanel.setProcessing(processing);
     }
@@ -316,5 +343,14 @@ public final class JPassFrame extends JFrame {
      */
     public boolean isProcessing() {
         return this.processing;
+    }
+
+    /**
+     * Get search panel.
+     *
+     * @return the search panel
+     */
+    public SearchPanel getSearchPanel() {
+        return searchPanel;
     }
 }

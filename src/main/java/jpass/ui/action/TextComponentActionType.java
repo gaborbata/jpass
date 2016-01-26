@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,8 +41,8 @@ import javax.swing.text.Caret;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 
-import jpass.util.ClipboardUtils;
 import jpass.ui.CopiablePasswordField;
+import jpass.util.ClipboardUtils;
 
 /**
  * Enumeration which holds text actions and related data.

@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -102,30 +102,30 @@ public final class MessageDialog extends JDialog implements ActionListener {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         JButton defaultButton;
         switch (optionType) {
-            case YES_NO_OPTION:
-                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
-                buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
-                break;
-            case YES_NO_CANCEL_OPTION:
-                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
-                buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
-                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
-                break;
-            case OK_CANCEL_OPTION:
-                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
-                buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
-                break;
-            default:
-                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
-                buttonPanel.add(defaultButton);
-                break;
+        case YES_NO_OPTION:
+            defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+            buttonPanel.add(defaultButton);
+            buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
+            break;
+        case YES_NO_CANCEL_OPTION:
+            defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+            buttonPanel.add(defaultButton);
+            buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
+            buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+            break;
+        case OK_CANCEL_OPTION:
+            defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+            buttonPanel.add(defaultButton);
+            buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+            break;
+        default:
+            defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+            buttonPanel.add(defaultButton);
+            break;
         }
         getRootPane().setDefaultButton(defaultButton);
 
-        JPanel mainPanel = new JPanel(new BorderLayout(5,0));
+        JPanel mainPanel = new JPanel(new BorderLayout(5, 0));
 
         float widthMultiplier;
         JPanel messagePanel = new JPanel(new BorderLayout());
@@ -153,7 +153,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
         getContentPane().add(mainPanel);
         setResizable(false);
         pack();
-        setSize((int)(getWidth() * widthMultiplier),getHeight());
+        setSize((int) (getWidth() * widthMultiplier), getHeight());
         setLocationRelativeTo(parent);
         setVisible(true);
     }
@@ -232,8 +232,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param optionType question type
      * @return selected option
      */
-    public static int showQuestionMessage(final Component parent, final String message,
-            final int optionType) {
+    public static int showQuestionMessage(final Component parent, final String message, final int optionType) {
         return showMessageDialog(parent, message, "Confirmation", getIcon("dialog_question"), optionType);
     }
 
@@ -260,7 +259,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
         SpringUtilities.makeCompactGrid(panel, confirm ? 2 : 1, 2, 5, 5, 5, 5);
         boolean notCorrect = true;
 
-        while(notCorrect) {
+        while (notCorrect) {
             int option = showMessageDialog(parent, panel, "Enter Password", getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
                 if (password.getPassword().length == 0) {
@@ -279,8 +278,8 @@ public final class MessageDialog extends JDialog implements ActionListener {
         try {
             passwordHash = CryptUtils.getPKCS5Sha256Hash(password.getPassword());
         } catch (Exception e) {
-            showErrorMessage(parent, "Cannot generate password hash:\n" + StringUtils.stripString(e.getMessage())
-                    + "\n\nOpening and saving files are not possible!");
+            showErrorMessage(parent,
+                    "Cannot generate password hash:\n" + StringUtils.stripString(e.getMessage()) + "\n\nOpening and saving files are not possible!");
         }
         return passwordHash;
     }

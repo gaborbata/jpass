@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -142,7 +142,7 @@ public enum MenuActionType {
             StringBuilder sb = new StringBuilder();
             sb.append("<b>" + JPassFrame.PROGRAM_NAME + "</b>\n");
             sb.append("version: " + JPassFrame.PROGRAM_VERSION + "\n");
-            sb.append("Copyright &copy; 2009-2015 G\u00e1bor Bata\n");
+            sb.append("Copyright &copy; 2009-2016 G\u00e1bor Bata\n");
             sb.append("\n");
             sb.append("Java version: ").append(System.getProperties().getProperty("java.version")).append("\n");
             sb.append(System.getProperties().getProperty("java.vendor"));
@@ -231,6 +231,14 @@ public enum MenuActionType {
         @Override
         public void actionPerformed(ActionEvent ev) {
             EntryHelper.copyEntryField(JPassFrame.getInstance(), null);
+        }
+    }),
+
+    FIND_ENTRY("jpass.menu.find_enty_action", new AbstractMenuAction("Find Entry", MessageDialog.getIcon("find"), KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK)) {
+        private static final long serialVersionUID = -7621614933053924326L;
+        @Override
+        public void actionPerformed(ActionEvent ev) {
+            JPassFrame.getInstance().getSearchPanel().setVisible(true);
         }
     });
 

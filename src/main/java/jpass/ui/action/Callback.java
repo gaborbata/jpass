@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

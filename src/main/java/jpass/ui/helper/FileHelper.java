@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2015 Gabor Bata
+ * Copyright (c) 2009-2016 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,11 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import jpass.data.DocumentHelper;
-import jpass.util.StringUtils;
 import jpass.ui.JPassFrame;
 import jpass.ui.MessageDialog;
 import jpass.ui.action.Callback;
 import jpass.ui.action.Worker;
+import jpass.util.StringUtils;
 
 /**
  * Helper utils for file operations.
@@ -73,6 +73,7 @@ public final class FileHelper {
                     public void call(boolean result) {
                         if (result) {
                             parent.getModel().clear();
+                            parent.getSearchPanel().setVisible(false);
                             parent.refreshAll();
                         }
                     }
@@ -83,6 +84,7 @@ public final class FileHelper {
             }
         }
         parent.getModel().clear();
+        parent.getSearchPanel().setVisible(false);
         parent.refreshAll();
     }
 
@@ -165,6 +167,7 @@ public final class FileHelper {
                     parent.getModel().setModified(true);
                     parent.getModel().setFileName(null);
                     parent.getModel().setPassword(null);
+                    parent.getSearchPanel().setVisible(false);
                 } catch (Throwable e) {
                     throw new Exception("An error occured during the import operation:\n" + e.getMessage());
                 }
@@ -308,6 +311,7 @@ public final class FileHelper {
                     parent.getModel().setEntries(DocumentHelper.newInstance(fileName, password).readDocument());
                     parent.getModel().setFileName(fileName);
                     parent.getModel().setPassword(password);
+                    parent.getSearchPanel().setVisible(false);
                 } catch (FileNotFoundException e) {
                     throw e;
                 } catch (IOException e) {

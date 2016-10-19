@@ -32,7 +32,6 @@ package jpass.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -51,7 +50,6 @@ import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import jpass.util.Configuration;
 import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 import jpass.xml.bind.Entry;
@@ -152,12 +150,9 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.notesPanel = new JPanel(new BorderLayout(5, 5));
         this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
         this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
+
         this.notesField = TextComponentFactory.newTextArea();
-
-        if (Configuration.getInstance().is("system.look.and.feel.enabled", false)) {
-            this.notesField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        }
-
+        this.notesField.setFont(new JLabel().getFont());
         this.notesField.setLineWrap(true);
         this.notesField.setWrapStyleWord(true);
         this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);

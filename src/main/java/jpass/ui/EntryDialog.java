@@ -62,6 +62,7 @@ import jpass.xml.bind.Entry;
  */
 public class EntryDialog extends JDialog implements ActionListener {
     private static final long serialVersionUID = -8551022862532925078L;
+    private static final char NULL_ECHO = '\0';
 
     private JPanel fieldPanel;
     private JPanel notesPanel;
@@ -80,7 +81,6 @@ public class EntryDialog extends JDialog implements ActionListener {
     private JToggleButton showButton;
     private JButton generateButton;
 
-    private static final char NULL_ECHO = '\0';
     private final char ORIGINAL_ECHO;
 
     private Entry formData;
@@ -152,7 +152,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
 
         this.notesField = TextComponentFactory.newTextArea();
-        this.notesField.setFont(new JLabel().getFont());
+        this.notesField.setFont(TextComponentFactory.newTextField().getFont());
         this.notesField.setLineWrap(true);
         this.notesField.setWrapStyleWord(true);
         this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);

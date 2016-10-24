@@ -15,17 +15,21 @@ Features:
 
 ![JPass](https://raw.githubusercontent.com/gaborbata/jpass/master/resources/jpass-capture.gif)
 
-How to compile
---------------
-* Maven: `mvn clean package`
-* Gradle: `gradle clean build`
-
 Usage
 -----
 Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.14.jar`).
 You can also run the application from the command line by typing (the password file is optional):
 
     java -jar jpass-0.1.14.jar [password_file]
+
+Download
+--------
+You can find the latest distribution package under the [releases](https://github.com/gaborbata/jpass/releases) link.
+
+How to compile
+--------------
+* Maven: `mvn clean package`
+* Gradle: `gradle clean build`
 
 Configuration
 -------------

@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import jpass.crypt.Cbc;
+import jpass.crypt.SaltHolder;
 import jpass.util.CryptUtils;
 
 /**
@@ -79,11 +80,11 @@ public class CryptOutputStream extends OutputStream {
      */
     public CryptOutputStream(OutputStream parent, byte[] key)
             throws IOException {
+        parent.write(SaltHolder.INST.getSalt());
         byte[] iv = new byte[16];
         Random rnd = CryptUtils.newRandomNumberGenerator();
         rnd.nextBytes(iv);
         parent.write(iv);
-
         this._cipher = new Cbc(iv, key, parent);
     }
 

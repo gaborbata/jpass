@@ -219,7 +219,7 @@ public final class FileHelper {
 
         final byte[] password;
         if (parent.getModel().getPassword() == null) {
-            password = MessageDialog.showPasswordDialog(parent, true);
+            password = MessageDialog.showPasswordDialog(parent, true, null);
             if (password == null) {
                 callback.call(false);
                 return;
@@ -300,7 +300,7 @@ public final class FileHelper {
         if (fileName == null) {
             return;
         }
-        final byte[] password = MessageDialog.showPasswordDialog(parent, false);
+        final byte[] password = MessageDialog.showPasswordDialog(parent, false, fileName);
         if (password == null) {
             return;
         }

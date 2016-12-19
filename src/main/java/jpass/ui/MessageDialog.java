@@ -39,10 +39,19 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.security.spec.KeySpec;
 import java.util.Arrays;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -56,8 +65,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import jpass.crypt.SaltHolder;
 
-import jpass.util.CryptUtils;
 import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 
@@ -244,7 +253,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @return the password
      */
     @SuppressWarnings("null")
-    public static byte[] showPasswordDialog(final Component parent, final boolean confirm) {
+    public static byte[] showPasswordDialog(final Component parent, final boolean confirm, final String fileName) {
         JPanel panel = new JPanel();
         panel.add(new JLabel("Password:"));
         final JPasswordField password = TextComponentFactory.newPasswordField();
@@ -273,10 +282,33 @@ public final class MessageDialog extends JDialog implements ActionListener {
                 return null;
             }
         }
-
+        
+        byte[] salt = new byte[36];
+        if (fileName != null) {
+            FileInputStream in = null;
+            try {
+                in = new FileInputStream(fileName);
+                in.read(salt);
+            } catch (Exception ex) {
+                Logger.getLogger(MessageDialog.class.getName()).log(Level.SEVERE, null, ex);
+                salt = "".getBytes();
+            } finally {
+                try {
+                    if (in != null) in.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(MessageDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            salt = UUID.randomUUID().toString().getBytes(Charset.forName("UTF-8"));
+        }
         byte[] passwordHash = null;
         try {
-            passwordHash = CryptUtils.getPKCS5Sha256Hash(password.getPassword());
+            SaltHolder.INST.setSalt(salt);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(password.getPassword(), salt, 65536, 256);
+            SecretKey secretKey = factory.generateSecret(spec);
+            passwordHash = secretKey.getEncoded();
         } catch (Exception e) {
             showErrorMessage(parent,
                     "Cannot generate password hash:\n" + StringUtils.stripString(e.getMessage()) + "\n\nOpening and saving files are not possible!");

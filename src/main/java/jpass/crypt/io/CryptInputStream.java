@@ -37,6 +37,7 @@ import java.io.InputStream;
 
 import jpass.crypt.Cbc;
 import jpass.crypt.DecryptException;
+import jpass.crypt.SaltHolder;
 
 /**
  * Reads from an encrypted {@link java.io.InputStream} and provides the
@@ -112,6 +113,7 @@ public class CryptInputStream extends InputStream {
      */
     public CryptInputStream(InputStream parent, byte[] key) throws IOException {
         this._parent = parent;
+        parent.read(new byte[36]);//uuid salt
         byte[] iv = new byte[16];
         int readed = 0;
         while (readed < 16) {

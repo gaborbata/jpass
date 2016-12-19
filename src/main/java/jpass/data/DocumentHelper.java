@@ -111,7 +111,7 @@ public final class DocumentHelper {
             if (this.key == null) {
                 inputStream = new FileInputStream(this.fileName);
             } else {
-                inputStream = new GZIPInputStream(new CryptInputStream(new FileInputStream(this.fileName), this.key));
+                inputStream = new CryptInputStream(new FileInputStream(this.fileName), this.key);
             }
             entries = CONVERTER.unmarshal(inputStream);
         } catch (JAXBException e) {
@@ -138,7 +138,7 @@ public final class DocumentHelper {
             if (this.key == null) {
                 outputStream = new FileOutputStream(this.fileName);
             } else {
-                outputStream = new GZIPOutputStream(new CryptOutputStream(new FileOutputStream(this.fileName), this.key));
+                outputStream = new CryptOutputStream(new FileOutputStream(this.fileName), this.key);
             }
             CONVERTER.marshal(document, outputStream, Boolean.valueOf(this.key == null));
         } catch (JAXBException e) {

@@ -29,24 +29,6 @@
 
 package jpass.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.WindowConstants;
-
 import jpass.data.DataModel;
 import jpass.ui.action.Callback;
 import jpass.ui.action.CloseListener;
@@ -55,6 +37,13 @@ import jpass.ui.action.MenuActionType;
 import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
 import jpass.util.Configuration;
+import jpass.xml.bind.Entry;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The main frame for JPass.
@@ -84,6 +73,7 @@ public final class JPassFrame extends JFrame {
     private final DefaultListModel entryTitleListModel;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
+    private final IconStorage iconStorage = IconStorage.getInstance();
     private volatile boolean processing = false;
 
     private JPassFrame(String fileName) {
@@ -185,6 +175,7 @@ public final class JPassFrame extends JFrame {
         this.entryTitleList = new JList(this.entryTitleListModel);
         this.entryTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entryTitleList.addMouseListener(new ListListener());
+        this.entryTitleList.setCellRenderer(new IconedListCellRenderer());
         this.scrollPane = new JScrollPane(this.entryTitleList);
         MenuActionType.bindAllActions(this.entryTitleList);
 
@@ -352,5 +343,25 @@ public final class JPassFrame extends JFrame {
      */
     public SearchPanel getSearchPanel() {
         return searchPanel;
+    }
+
+    private class IconedListCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component label = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (!Configuration.getInstance().is("fetch.icons", false))
+                return label;
+            Entry entry = model.getEntryByTitle(value.toString()); // god forgive me
+            ImageIcon icon = iconStorage.getIcon(entry.getUrl());
+            if (icon != null) {
+                JPanel row = new JPanel(new BorderLayout());
+                row.add(label, BorderLayout.CENTER);
+                JLabel iconLabel = new JLabel();
+                iconLabel.setIcon(icon);
+                row.add(iconLabel, BorderLayout.WEST);
+                return row;
+            }
+            return label;
+        }
     }
 }

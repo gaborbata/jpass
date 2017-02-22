@@ -17,10 +17,10 @@ Features:
 
 Usage
 -----
-Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.14.jar`).
+Java 6 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.15-SNAPSHOT.jar`).
 You can also run the application from the command line by typing (the password file is optional):
 
-    java -jar jpass-0.1.14.jar [password_file]
+    java -jar jpass-0.1.15-SNAPSHOT.jar [password_file]
 
 Download
 --------
@@ -44,7 +44,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 License
 -------
-Copyright (c) 2009-2016 Gabor Bata
+Copyright (c) 2009-2017 Gabor Bata
 
 All rights reserved.
 

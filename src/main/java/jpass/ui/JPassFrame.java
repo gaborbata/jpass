@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2016 Gabor Bata
+ * Copyright (c) 2009-2017 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ public final class JPassFrame extends JFrame {
     private static volatile JPassFrame INSTANCE;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
-    public static final String PROGRAM_VERSION = "0.1.14a";
+    public static final String PROGRAM_VERSION = "0.1.15-SNAPSHOT";
 
     private final JPopupMenu popup;
     private final JPanel topContainerPanel;

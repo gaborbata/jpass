@@ -12,17 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Icon storage for getting and caching image data from a favicon provider.
+ *
  * @author Daniil Bubnov
  */
 public class IconStorage {
     private static final String GET_ICON = "https://www.google.com/s2/favicons?domain=";
     private static final ImageIcon DEFAULT_ICON = new ImageIcon(IconStorage.class.getClassLoader().getResource("resources/images/keyring.png"));
-    private final String ICONS = "icons";
-    Map<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
+    private static final String ICONS = "icons";
+    private final Map<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
 
     private IconStorage() {
-        if (!new File(ICONS).exists())
+        if (!new File(ICONS).exists()) {
             new File(ICONS).mkdir();
+        }
     }
 
     public static IconStorage getInstance() {
@@ -30,12 +33,14 @@ public class IconStorage {
     }
 
     synchronized public ImageIcon getIcon(String url) {
-        if (url == null)
+        if (url == null) {
             return DEFAULT_ICON;
+        }
         // check cache
         ImageIcon imageIcon = icons.get(url);
-        if (imageIcon != null)
+        if (imageIcon != null) {
             return imageIcon;
+        }
         // check file
         File iconFile = new File(ICONS, url.hashCode() + ".png");
         if (iconFile.exists()) {
@@ -54,7 +59,6 @@ public class IconStorage {
             g2.dispose();
             ImageIO.write(bi, "png", new File(ICONS, url.hashCode() + ".png"));
             icons.put(url, imageIcon);
-            return imageIcon;
         } catch (Exception e) {
             e.printStackTrace();
             // so, impossible happened...
@@ -63,7 +67,7 @@ public class IconStorage {
             // this will save us from occasional connection problems
             imageIcon = DEFAULT_ICON;
             icons.put(url, imageIcon);
-            return imageIcon;
         }
+        return imageIcon;
     }
 }

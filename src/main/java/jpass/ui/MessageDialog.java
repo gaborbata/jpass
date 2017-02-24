@@ -243,7 +243,6 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param confirm password confirmation
      * @return the password
      */
-    @SuppressWarnings("null")
     public static byte[] showPasswordDialog(final Component parent, final boolean confirm) {
         JPanel panel = new JPanel();
         panel.add(new JLabel("Password:"));

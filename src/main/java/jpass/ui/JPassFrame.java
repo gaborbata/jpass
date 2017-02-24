@@ -89,7 +89,7 @@ public final class JPassFrame extends JFrame {
     private final DefaultListModel entryTitleListModel;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
-    private final IconStorage iconStorage = IconStorage.getInstance();
+    private final IconStorage iconStorage = IconStorage.newInstance();
     private volatile boolean processing = false;
 
     private JPassFrame(String fileName) {
@@ -361,9 +361,14 @@ public final class JPassFrame extends JFrame {
         return searchPanel;
     }
 
+    /**
+     * Cell renderer which puts a favicon in front of a list entry.
+     *
+     * @author Daniil Bubnov
+     */
     private class IconedListCellRenderer extends DefaultListCellRenderer {
         @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component label = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (!Configuration.getInstance().is("fetch.icons", false))
                 return label;

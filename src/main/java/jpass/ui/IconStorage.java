@@ -28,11 +28,11 @@ public class IconStorage {
         }
     }
 
-    public static IconStorage getInstance() {
+    public static IconStorage newInstance() {
         return new IconStorage();
     }
 
-    synchronized public ImageIcon getIcon(String url) {
+    public synchronized ImageIcon getIcon(String url) {
         if (url == null) {
             return DEFAULT_ICON;
         }

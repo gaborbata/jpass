@@ -40,7 +40,7 @@ Default configurations can be overridden in `jpass.properties` file:
 | system.look.and.feel.enabled       | boolean    | false         |
 | clear.clipboard.on.exit.enabled    | boolean    | false         |
 | default.password.generation.length | integer    | 14            |
-| fetch.icons                        | boolean    | true          |
+| fetch.icons                        | boolean    | false         |
 
 License
 -------

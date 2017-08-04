@@ -37,6 +37,8 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import jpass.ui.JPassFrame;
 import jpass.util.Configuration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Entry point of JPass.
@@ -45,6 +47,7 @@ import jpass.util.Configuration;
  *
  */
 public class JPass {
+    private final static Logger LOG = Logger.getLogger(JPass.class.getName());
     private static final String METAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 
     public static void main(final String[] args) {
@@ -101,7 +104,7 @@ public class JPass {
 
             UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.CONFIG, "Could not set look and feel for the application", e);
         }
 
         SwingUtilities.invokeLater(new Runnable() {

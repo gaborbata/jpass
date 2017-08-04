@@ -10,6 +10,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Icon storage for getting and caching image data from a favicon provider.
@@ -17,6 +19,7 @@ import java.util.Map;
  * @author Daniil Bubnov
  */
 public class IconStorage {
+    private final static Logger LOG = Logger.getLogger(IconStorage.class.getName());
     private static final String GET_ICON = "https://www.google.com/s2/favicons?domain=";
     private static final ImageIcon DEFAULT_ICON = new ImageIcon(IconStorage.class.getClassLoader().getResource("resources/images/keyring.png"));
     private static final String ICONS = "icons";
@@ -60,7 +63,7 @@ public class IconStorage {
             ImageIO.write(bi, "png", new File(ICONS, url.hashCode() + ".png"));
             icons.put(url, imageIcon);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Could not get favicon.");
             // so, impossible happened...
             // we put a standard icon to cache.
             // note that on the next application run we will try to retrieve the icon again,

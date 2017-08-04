@@ -33,6 +33,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class for loading configurations from jpass.properties.
@@ -40,19 +42,20 @@ import java.util.Properties;
  * @author Gabor_Bata
  */
 public final class Configuration {
+    private final static Logger LOG = Logger.getLogger(Configuration.class.getName());
     private static volatile Configuration INSTANCE;
     private Properties properties = new Properties();
 
     private Configuration() {
         try {
-            File filePointer = new File("jpass.properties");
-            if (filePointer.exists() && filePointer.isFile()) {
-                InputStream is = new FileInputStream(filePointer);
+            File filePath = new File("jpass.properties");
+            if (filePath.exists() && filePath.isFile()) {
+                InputStream is = new FileInputStream(filePath);
                 properties.load(is);
                 is.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "An error occurred during loading configuration.", e);
         }
     }
 
@@ -63,7 +66,7 @@ public final class Configuration {
             try {
                 value = type.getConstructor(String.class).newInstance(prop);
             } catch (Exception e) {
-                System.err.println(String.format("Could not parse value as [%s] for key [%s]", type.getName(), key));
+                LOG.log(Level.WARNING, String.format("Could not parse value as [%s] for key [%s]", type.getName(), key));
             }
         }
         return value;

@@ -45,6 +45,8 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -68,6 +70,7 @@ import javax.swing.WindowConstants;
  *
  */
 public final class JPassFrame extends JFrame {
+    private final static Logger LOG = Logger.getLogger(JPassFrame.class.getName());
     private static final long serialVersionUID = -4114209356464342368L;
 
     private static volatile JPassFrame INSTANCE;
@@ -96,7 +99,7 @@ public final class JPassFrame extends JFrame {
         try {
             setIconImage(MessageDialog.getIcon("lock").getImage());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
         this.toolBar = new JToolBar();

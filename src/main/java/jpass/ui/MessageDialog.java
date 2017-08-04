@@ -43,6 +43,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -68,6 +70,7 @@ import jpass.util.StringUtils;
  *
  */
 public final class MessageDialog extends JDialog implements ActionListener {
+    private final static Logger LOG = Logger.getLogger(MessageDialog.class.getName());
     private static final long serialVersionUID = -1860703845867414123L;
 
     public static final int DEFAULT_OPTION = -1;
@@ -309,14 +312,14 @@ public final class MessageDialog extends JDialog implements ActionListener {
                 builder.append(line).append('\n');
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, String.format("An error occurred during reading resource [%s]", name), e);
         } finally {
             try {
                 if (bufferedReader != null) {
                     bufferedReader.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.log(Level.WARNING, String.format("An error occurred during closing reader for resource [%s]", name), e);
             }
         }
         return builder.toString();

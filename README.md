@@ -1,7 +1,5 @@
-JPass
+JPass [![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass)
 =====
-
-[![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass)
 
 Overview
 --------

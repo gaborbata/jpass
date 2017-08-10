@@ -373,8 +373,9 @@ public final class JPassFrame extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component label = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (!Configuration.getInstance().is("fetch.icons", false))
+            if (!Configuration.getInstance().is("fetch.favicons.enabled", false)) {
                 return label;
+            }
             Entry entry = model.getEntryByTitle(value.toString()); // god forgive me
             ImageIcon icon = iconStorage.getIcon(entry.getUrl());
             if (icon != null) {

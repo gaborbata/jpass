@@ -50,6 +50,10 @@ public class JPass {
     private final static Logger LOG = Logger.getLogger(JPass.class.getName());
     private static final String METAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 
+    static {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
+    }
+
     public static void main(final String[] args) {
         try {
             String lookAndFeel;

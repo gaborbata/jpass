@@ -30,6 +30,7 @@ How to compile
 --------------
 * Maven: `mvn clean package`
 * Gradle: `gradle clean build`
+* sbt: `sbt clean package`
 
 Configuration
 -------------

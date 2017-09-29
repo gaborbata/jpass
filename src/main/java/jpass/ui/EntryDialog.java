@@ -53,6 +53,8 @@ import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 import jpass.xml.bind.Entry;
 
+import static jpass.ui.helper.EntryHelper.copyEntryField;
+
 /**
  * A dialog with the entry data.
  *
@@ -64,28 +66,29 @@ public class EntryDialog extends JDialog implements ActionListener {
     private static final long serialVersionUID = -8551022862532925078L;
     private static final char NULL_ECHO = '\0';
 
-    private JPanel fieldPanel;
-    private JPanel notesPanel;
-    private JPanel buttonPanel;
-    private JPanel passwordButtonPanel;
+    private final JPanel fieldPanel;
+    private final JPanel notesPanel;
+    private final JPanel buttonPanel;
+    private final JPanel passwordButtonPanel;
 
-    private JTextField titleField;
-    private JTextField userField;
-    private JPasswordField passwordField;
-    private JPasswordField repeatField;
-    private JTextField urlField;
-    private JTextArea notesField;
+    private final JTextField titleField;
+    private final JTextField userField;
+    private final JPasswordField passwordField;
+    private final JPasswordField repeatField;
+    private final JTextField urlField;
+    private final JTextArea notesField;
 
-    private JButton okButton;
-    private JButton cancelButton;
-    private JToggleButton showButton;
-    private JButton generateButton;
+    private final JButton okButton;
+    private final JButton cancelButton;
+    private final JToggleButton showButton;
+    private final JButton generateButton;
+    private final JButton copyButton;
 
     private final char ORIGINAL_ECHO;
 
     private Entry formData;
 
-    private boolean newEntry;
+    private final boolean newEntry;
 
     private String originalTitle;
 
@@ -139,6 +142,11 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.generateButton.setMnemonic(KeyEvent.VK_G);
         this.generateButton.addActionListener(this);
         this.passwordButtonPanel.add(this.generateButton);
+        this.copyButton = new JButton("Copy", MessageDialog.getIcon("keyring"));
+        this.copyButton.setActionCommand("copy_button");
+        this.copyButton.setMnemonic(KeyEvent.VK_C);
+        this.copyButton.addActionListener(this);
+        this.passwordButtonPanel.add(this.copyButton);
         this.fieldPanel.add(this.passwordButtonPanel);
 
         this.fieldPanel.setLayout(new SpringLayout());
@@ -177,7 +185,7 @@ public class EntryDialog extends JDialog implements ActionListener {
 
         fillDialogData(entry);
         setSize(420, 400);
-        setMinimumSize(new Dimension(300, 300));
+        setMinimumSize(new Dimension(370, 300));
         setLocationRelativeTo(parent);
         setVisible(true);
     }
@@ -213,6 +221,8 @@ public class EntryDialog extends JDialog implements ActionListener {
                 this.passwordField.setText(generatedPassword);
                 this.repeatField.setText(generatedPassword);
             }
+        } else if ("copy_button".equals(command)) {
+            copyEntryField(JPassFrame.getInstance(), String.valueOf(this.passwordField.getPassword()));
         }
     }
 

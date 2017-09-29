@@ -70,7 +70,7 @@ import jpass.util.StringUtils;
  */
 public final class MessageDialog extends JDialog implements ActionListener {
 
-    private final static Logger LOG = Logger.getLogger(MessageDialog.class.getName());
+    private static final Logger LOG = Logger.getLogger(MessageDialog.class.getName());
     private static final long serialVersionUID = -1860703845867414123L;
 
     public static final int DEFAULT_OPTION = -1;
@@ -329,7 +329,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
     }
 
     /**
-     * Shows a textfile from the classpath.
+     * Shows a text file from the class path.
      *
      * @param parent parent component
      * @param title window title

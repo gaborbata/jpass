@@ -146,7 +146,7 @@ public class DataModel {
      *
      * @return list of entry titles
      */
-    public List<String> getListOfTitles() {
+    public List<String> getTitles() {
         List<String> list = new ArrayList<String>(this.entries.getEntry().size());
         for (Entry entry : this.entries.getEntry()) {
             list.add(entry.getTitle());
@@ -161,7 +161,7 @@ public class DataModel {
      * @return entry index
      */
     public int getEntryIndexByTitle(String title) {
-        return getListOfTitles().indexOf(title);
+        return getTitles().indexOf(title);
     }
 
     /**

@@ -41,9 +41,10 @@ import javax.xml.bind.JAXBException;
 
 import jpass.crypt.io.CryptInputStream;
 import jpass.crypt.io.CryptOutputStream;
-import jpass.util.StringUtils;
 import jpass.xml.bind.Entries;
 import jpass.xml.converter.JAXBConverter;
+
+import static jpass.util.StringUtils.stripString;
 
 /**
  * Helper class for reading and writing (encrypted) XML documents.
@@ -120,7 +121,7 @@ public final class DocumentHelper {
             }
             entries = CONVERTER.unmarshal(inputStream);
         } catch (JAXBException e) {
-            throw new DocumentProcessException(StringUtils.stripString(e.getLinkedException() == null ? e.getMessage() : e
+            throw new DocumentProcessException(stripString(e.getLinkedException() == null ? e.getMessage() : e
                     .getLinkedException().getMessage()));
         } finally {
             if (inputStream != null) {
@@ -145,9 +146,9 @@ public final class DocumentHelper {
             } else {
                 outputStream = new GZIPOutputStream(new CryptOutputStream(new FileOutputStream(this.fileName), this.key));
             }
-            CONVERTER.marshal(document, outputStream, Boolean.valueOf(this.key == null));
+            CONVERTER.marshal(document, outputStream, this.key == null);
         } catch (JAXBException e) {
-            throw new DocumentProcessException(StringUtils.stripString(e.getLinkedException() == null ? e.getMessage() : e
+            throw new DocumentProcessException(stripString(e.getLinkedException() == null ? e.getMessage() : e
                     .getLinkedException().getMessage()));
         } catch (Exception e) {
             throw new DocumentProcessException(e.getMessage());

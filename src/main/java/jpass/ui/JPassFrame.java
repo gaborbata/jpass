@@ -71,7 +71,7 @@ import static jpass.ui.MessageDialog.showQuestionMessage;
  */
 public final class JPassFrame extends JFrame {
 
-    private final static Logger LOG = Logger.getLogger(JPassFrame.class.getName());
+    private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
     private static final long serialVersionUID = -4114209356464342368L;
 
     private static volatile JPassFrame INSTANCE;
@@ -277,11 +277,11 @@ public final class JPassFrame extends JFrame {
      */
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleListModel.clear();
-        List<String> titleList = this.model.getListOfTitles();
-        Collections.sort(titleList, String.CASE_INSENSITIVE_ORDER);
+        List<String> titles = this.model.getTitles();
+        Collections.sort(titles, String.CASE_INSENSITIVE_ORDER);
 
         String searchCriteria = this.searchPanel.getSearchCriteria();
-        for (String title : titleList) {
+        for (String title : titles) {
             if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
                 this.entryTitleListModel.addElement(title);
             }
@@ -292,9 +292,9 @@ public final class JPassFrame extends JFrame {
         }
 
         if (searchCriteria.isEmpty()) {
-            this.statusPanel.setText("Entries count: " + titleList.size());
+            this.statusPanel.setText("Entries count: " + titles.size());
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryTitleListModel.size() + " / " + titleList.size());
+            this.statusPanel.setText("Entries found: " + this.entryTitleListModel.size() + " / " + titles.size());
         }
     }
 

@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  */
 public final class Configuration {
 
-    private final static Logger LOG = Logger.getLogger(Configuration.class.getName());
+    private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
     private static volatile Configuration INSTANCE;
     private Properties properties = new Properties();
 

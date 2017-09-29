@@ -47,7 +47,7 @@ import java.util.logging.Logger;
  */
 public class JPass {
 
-    private final static Logger LOG = Logger.getLogger(JPass.class.getName());
+    private static final Logger LOG = Logger.getLogger(JPass.class.getName());
     private static final String METAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 
     static {

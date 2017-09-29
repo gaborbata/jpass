@@ -24,12 +24,12 @@ public class CbcTest {
      * Size of the first random message in <code>byte</code>s. Successive random messages will
      * double their size until {@link CbcTest#RANDOM_MESSAGE_LIMIT_SIZE} is reached.
      */
-    private final static int FIRST_RANDOM_MESSAGE_SIZE = 1;
+    private static final int FIRST_RANDOM_MESSAGE_SIZE = 1;
 
     /**
      * Size above which no random messages will be generated.
      */
-    private final static int RANDOM_MESSAGE_LIMIT_SIZE = 2048;
+    private static final int RANDOM_MESSAGE_LIMIT_SIZE = 2048;
 
     // contains the encrypted data
     private ByteArrayOutputStream _encrypted;

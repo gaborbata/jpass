@@ -234,7 +234,7 @@ public final class Aes256 {
 
     /**
      * Expands the key. The incoming key is {@code KEY_SIZE} {@code byte}s long. It will be expanded
-     * to a length of {@code EXPANDED_KEY_SIZE} {@code byte}s. The expdanded key will be stored in
+     * to a length of {@code EXPANDED_KEY_SIZE} {@code byte}s. The expanded key will be stored in
      * {@link Aes256#_expandedKey}.
      * <p>
      * The encryption and decryption will use the expanded key.
@@ -276,16 +276,16 @@ public final class Aes256 {
     }
 
     /**
-     * The polynom represented by {@code b} will be multiplied by its free variable. This
-     * multiplication takes place in a finite field. The resulting polynom can still be represented
+     * The polynomial represented by {@code b} will be multiplied by its free variable. This
+     * multiplication takes place in a finite field. The resulting polynomial can still be represented
      * in one {@code byte}.
      * <p>
      * The bits {@code 0} to {@code 7} are the coefficients of the powers {@code x} to {@code x**8}.
      * </p>
      *
-     * @param b origin polynom
+     * @param b origin polynomial
      *
-     * @return multiplied polynom
+     * @return multiplied polynomial
      */
     private int times2(int b) {
         int result = b << 1;

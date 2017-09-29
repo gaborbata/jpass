@@ -71,7 +71,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Options for password generation.
      */
-    private static final String[][] passwordOptions = {
+    private static final String[][] PASSWORD_OPTIONS = {
         {"Upper case letters (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
         {"Lower case letters (a-z)", "abcdefghijklmnopqrstuvwxyz"},
         {"Numbers (0-9)", "0123456789"}
@@ -97,7 +97,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 
     private String generatedPassword;
 
-    private Random random = CryptUtils.newRandomNumberGenerator();
+    private final Random random = CryptUtils.newRandomNumberGenerator();
 
     /**
      * Constructor of GeneratePasswordDialog.
@@ -151,9 +151,9 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.charactersPanel = new JPanel();
         this.charactersPanel.setBorder(new TitledBorder("Settings"));
         this.charactersPanel.add(this.lengthPanel);
-        this.checkBoxes = new JCheckBox[passwordOptions.length];
-        for (int i = 0; i < passwordOptions.length; i++) {
-            this.checkBoxes[i] = new JCheckBox(passwordOptions[i][0], true);
+        this.checkBoxes = new JCheckBox[PASSWORD_OPTIONS.length];
+        for (int i = 0; i < PASSWORD_OPTIONS.length; i++) {
+            this.checkBoxes[i] = new JCheckBox(PASSWORD_OPTIONS[i][0], true);
             this.charactersPanel.add(this.checkBoxes[i]);
         }
         this.customSymbolsCheck = new JCheckBox("Custom symbols");
@@ -220,9 +220,9 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
             this.customSymbolsField.setEditable(((JCheckBox) e.getSource()).isSelected());
         } else if ("generate_button".equals(command)) {
             String characterSet = "";
-            for (int i = 0; i < passwordOptions.length; i++) {
+            for (int i = 0; i < PASSWORD_OPTIONS.length; i++) {
                 if (this.checkBoxes[i].isSelected()) {
-                    characterSet += passwordOptions[i][1];
+                    characterSet += PASSWORD_OPTIONS[i][1];
                 }
             }
 

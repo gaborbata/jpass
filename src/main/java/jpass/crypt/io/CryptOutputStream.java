@@ -50,12 +50,12 @@ public class CryptOutputStream extends OutputStream {
     /**
      * Cipher.
      */
-    private Cbc _cipher;
+    private final Cbc _cipher;
 
     /**
      * Buffer for sending single {@code byte}s.
      */
-    private byte[] _buffer = new byte[1];
+    private final byte[] _buffer = new byte[1];
 
     /**
      * Initializes the cipher with the given key and initial values.
@@ -101,7 +101,7 @@ public class CryptOutputStream extends OutputStream {
     /**
      * Encrypts a {@code byte} array.
      *
-     * @param b {@code byte} array te be encrypted
+     * @param b {@code byte} array to be encrypted
      * @throws IOException if encrypted data can't be written to the underlying stream
      */
     @Override

@@ -55,14 +55,14 @@ public class CryptInputStream extends InputStream {
     /**
      * Underlying stream that provides the encrypted data.
      */
-    private InputStream _parent;
+    private final InputStream _parent;
 
     /**
      * Cipher.
      */
-    private Cbc _cipher;
+    private final Cbc _cipher;
 
-    private ByteArrayOutputStream _decrypted;
+    private final ByteArrayOutputStream _decrypted;
 
     /**
      * Buffer of unencrypted data. If the buffer is completely returned, another chunk of data will
@@ -78,7 +78,7 @@ public class CryptInputStream extends InputStream {
     /**
      * Buffer for storing the encrypted data.
      */
-    private byte[] _fetchBuffer = new byte[FETCH_BUFFER_SIZE];
+    private final byte[] _fetchBuffer = new byte[FETCH_BUFFER_SIZE];
 
     /**
      * Signals, if the last encrypted data was read. If we run out of buffers, the stream is at its

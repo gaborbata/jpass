@@ -50,12 +50,12 @@ public class Cbc {
     /**
      * cipher
      */
-    private Aes256 _cipher;
+    private final Aes256 _cipher;
 
     /**
      * last calculated block
      */
-    private byte[] _current;
+    private final byte[] _current;
 
     /**
      * temporary block. It will only be used for decryption.
@@ -65,7 +65,7 @@ public class Cbc {
     /**
      * temporary block.
      */
-    private byte[] _tmp;
+    private final byte[] _tmp;
 
     /**
      * buffer of the last output block. It will only be used for decryption.
@@ -80,14 +80,14 @@ public class Cbc {
     /**
      * temporary buffer to accumulate whole blocks of data
      */
-    private byte[] _overflow;
+    private final byte[] _overflow;
 
     /**
      * How many {@code byte}s of {@link Cbc#_overflow} are used?
      */
     private int _overflowUsed;
 
-    private OutputStream _output;
+    private final OutputStream _output;
 
     /**
      * Creates the temporary buffers.
@@ -129,7 +129,7 @@ public class Cbc {
      * @param inBuffer storage of the encrypted block
      * @param outBuffer storage of the decrypted block
      */
-    private void decryptBlock(byte[] inBuffer, byte[] outBuffer) {
+    private void decryptBlock(byte[] inBuffer) {
         System.arraycopy(inBuffer, 0, this._buffer, 0, BLOCK_SIZE);
         this._cipher.decrypt(this._buffer, 0, this._tmp, 0);
         for (int i = 0; i < BLOCK_SIZE; ++i) {
@@ -205,7 +205,7 @@ public class Cbc {
                 if (this._outBufferUsed) {
                     this._output.write(this._outBuffer);
                 }
-                decryptBlock(this._overflow, this._outBuffer);
+                decryptBlock(this._overflow);
                 this._outBufferUsed = true;
                 this._overflowUsed = 0;
             }

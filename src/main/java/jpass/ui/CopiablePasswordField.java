@@ -26,19 +26,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import javax.swing.JPasswordField;
 
 /**
- * An extension of {@link JPasswordField} which holds an extra attribute
- * which flags if the password field content is allowed to copy to system clipboard.
+ * An extension of {@link JPasswordField} which holds an extra attribute which flags if the password
+ * field content is allowed to copy to system clipboard.
  *
  * @author Gabor_Bata
  *
  */
 public class CopiablePasswordField extends JPasswordField {
+
     private static final long serialVersionUID = 1205118236056025220L;
     private final boolean copyEnabled;
 

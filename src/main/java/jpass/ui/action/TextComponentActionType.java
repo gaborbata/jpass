@@ -26,11 +26,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.action;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
@@ -44,6 +42,9 @@ import javax.swing.text.JTextComponent;
 import jpass.ui.CopiablePasswordField;
 import jpass.util.ClipboardUtils;
 
+import static javax.swing.KeyStroke.getKeyStroke;
+import static java.awt.event.InputEvent.CTRL_MASK;
+
 /**
  * Enumeration which holds text actions and related data.
  *
@@ -51,8 +52,9 @@ import jpass.util.ClipboardUtils;
  *
  */
 public enum TextComponentActionType {
-    CUT("jpass.text.cut_action", new TextComponentAction("Cut", KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK), KeyEvent.VK_T) {
+    CUT(new TextComponentAction("Cut", getKeyStroke(KeyEvent.VK_X, CTRL_MASK), KeyEvent.VK_T) {
         private static final long serialVersionUID = 6463843410774724700L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -76,9 +78,9 @@ public enum TextComponentActionType {
                     && component.getSelectedText() != null;
         }
     }),
-
-    COPY("jpass.text.copy_action", new TextComponentAction("Copy", KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK), KeyEvent.VK_C) {
+    COPY(new TextComponentAction("Copy", getKeyStroke(KeyEvent.VK_C, CTRL_MASK), KeyEvent.VK_C) {
         private static final long serialVersionUID = 8502265220762730908L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -100,9 +102,9 @@ public enum TextComponentActionType {
             return component != null && copyEnabled && component.isEnabled() && component.getSelectedText() != null;
         }
     }),
-
-    PASTE("jpass.text.paste_action", new TextComponentAction("Paste", KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK), KeyEvent.VK_P) {
+    PASTE(new TextComponentAction("Paste", getKeyStroke(KeyEvent.VK_V, CTRL_MASK), KeyEvent.VK_P) {
         private static final long serialVersionUID = -4089879595174370487L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -117,9 +119,9 @@ public enum TextComponentActionType {
                     && ClipboardUtils.getClipboardContent() != null;
         }
     }),
-
-    DELETE("jpass.text.delete_action", new TextComponentAction("Delete", KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), KeyEvent.VK_D) {
+    DELETE(new TextComponentAction("Delete", getKeyStroke(KeyEvent.VK_DELETE, 0), KeyEvent.VK_D) {
         private static final long serialVersionUID = 1227622869347781706L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -155,9 +157,9 @@ public enum TextComponentActionType {
                     && component.getSelectedText() != null;
         }
     }),
-
-    CLEAR_ALL("jpass.text.clear_all_action", new TextComponentAction("Clear All", null, KeyEvent.VK_L) {
+    CLEAR_ALL(new TextComponentAction("Clear All", null, KeyEvent.VK_L) {
         private static final long serialVersionUID = 5810788894068735542L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -181,9 +183,9 @@ public enum TextComponentActionType {
             return result;
         }
     }),
-
-    SELECT_ALL("jpass.text.select_all_action", new TextComponentAction("Select All", KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK), KeyEvent.VK_A) {
+    SELECT_ALL(new TextComponentAction("Select All", getKeyStroke(KeyEvent.VK_A, CTRL_MASK), KeyEvent.VK_A) {
         private static final long serialVersionUID = 7236761124177884500L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -197,10 +199,10 @@ public enum TextComponentActionType {
             boolean result;
             if (component instanceof CopiablePasswordField) {
                 result = component.isEnabled() && ((CopiablePasswordField) component).getPassword() != null
-                    && ((CopiablePasswordField) component).getPassword().length > 0;
+                        && ((CopiablePasswordField) component).getPassword().length > 0;
             } else {
                 result = component != null && component.isEnabled() && component.getText() != null
-                    && !component.getText().isEmpty();
+                        && !component.getText().isEmpty();
             }
             return result;
         }
@@ -209,8 +211,8 @@ public enum TextComponentActionType {
     private final String name;
     private final TextComponentAction action;
 
-    private TextComponentActionType(String name, TextComponentAction action) {
-        this.name = name;
+    private TextComponentActionType(TextComponentAction action) {
+        this.name = String.format("jpass.text.%s_action", this.name().toLowerCase());
         this.action = action;
     }
 

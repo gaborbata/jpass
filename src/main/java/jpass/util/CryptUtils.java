@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.util;
 
 import java.security.MessageDigest;
@@ -59,14 +58,15 @@ public final class CryptUtils {
     /**
      * Calculate SHA-256 hash.
      *
-     * <p>To slow down the computation it is recommended to iterate the hash operation {@code n} times.
-     * While hashing the password {@code n} times does slow down hashing for both attackers
-     * and typical users, typical users don't really notice it being that hashing is such a
-     * small percentage of their total time interacting with the system. On the other hand,
-     * an attacker trying to crack passwords spends nearly 100% of their time hashing so hashing
-     * {@code n} times gives the appearance of slowing the attacker down by a factor of
-     * {@code n} while not noticeably affecting the typical user. A minimum of 1000 operations
-     * is recommended in RSA PKCS5 standard.
+     * <p>
+     * To slow down the computation it is recommended to iterate the hash operation {@code n} times.
+     * While hashing the password {@code n} times does slow down hashing for both attackers and
+     * typical users, typical users don't really notice it being that hashing is such a small
+     * percentage of their total time interacting with the system. On the other hand, an attacker
+     * trying to crack passwords spends nearly 100% of their time hashing so hashing {@code n} times
+     * gives the appearance of slowing the attacker down by a factor of {@code n} while not
+     * noticeably affecting the typical user. A minimum of 1000 operations is recommended in RSA
+     * PKCS5 standard.
      *
      * @param text password text
      * @param iteration number of iterations
@@ -90,8 +90,8 @@ public final class CryptUtils {
      * Get random number generator.
      *
      * <p>
-     *   It tries to return with a nondeterministic secure random generator first,
-     *   if it was unsuccessful for some reason, it returns with the uniform random generator.
+     * It tries to return with a nondeterministic secure random generator first, if it was
+     * unsuccessful for some reason, it returns with the uniform random generator.
      * </p>
      *
      * @return the random number generator.

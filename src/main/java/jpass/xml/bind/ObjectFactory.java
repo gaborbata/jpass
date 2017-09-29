@@ -4,30 +4,26 @@
 // Any modifications to this file will be lost upon recompilation of the source schema.
 // Generated on: 2011.02.26 at 04:17:19 DU CET
 //
-
 package jpass.xml.bind;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the jpass.xml.bind package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java element interface
+ * generated in the {@code jpass.xml.bind} package.
+ * <p>
+ * An ObjectFactory allows you to programmatically construct new instances of the Java representation
+ * for XML content. The Java representation of XML content can consist of schema derived interfaces
+ * and classes representing the binding of schema type definitions, element declarations and model
+ * groups. Factory methods for each of these are provided in this class.
  *
  */
 @XmlRegistry
 public class ObjectFactory {
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: jpass.xml.bind
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes
+     * for package: {@code jpass.xml.bind}
      *
      */
     public ObjectFactory() {
@@ -35,6 +31,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Entry}
+     *
      * @return a new {@link Entry} instance
      */
     public Entry createEntry() {
@@ -43,6 +40,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Entries}
+     *
      * @return a new {@link Entries} instance
      */
     public Entries createEntries() {

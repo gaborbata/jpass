@@ -28,7 +28,6 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.util;
 
 import java.awt.Component;
@@ -47,9 +46,9 @@ public class SpringUtilities {
     }
 
     /**
-     * Aligns the first {@code rows} * {@code cols} components of {@code parent} in a grid.
-     * Each component is as big as the maximum preferred width and height of the components. The parent is
-     * made just big enough to fit them all.
+     * Aligns the first {@code rows} * {@code cols} components of {@code parent} in a grid. Each
+     * component is as big as the maximum preferred width and height of the components. The parent
+     * is made just big enough to fit them all.
      *
      * @param parent parent container
      * @param rows number of rows
@@ -130,9 +129,10 @@ public class SpringUtilities {
     }
 
     /**
-     * Aligns the first {@code rows} * {@code cols} components of {@code parent} in a grid.
-     * Each component in a column is as wide as the maximum preferred width of the components in that column;
-     * height is similarly determined for each row. The parent is made just big enough to fit them all.
+     * Aligns the first {@code rows} * {@code cols} components of {@code parent} in a grid. Each
+     * component in a column is as wide as the maximum preferred width of the components in that
+     * column; height is similarly determined for each row. The parent is made just big enough to
+     * fit them all.
      *
      * @param parent parent container
      * @param rows number of rows

@@ -4,7 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema.
 // Generated on: 2011.02.26 at 04:17:19 DU CET
 //
-
 package jpass.xml.bind;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,9 +12,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for entry complex type.
+ * <p>
+ * Java class for entry complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * &lt;complexType name="entry"&gt;
@@ -61,9 +62,7 @@ public class Entry {
     /**
      * Gets the value of the title property.
      *
-     * @return
-     *     possible object is
-     *     {@link String}
+     * @return possible object is {@link String}
      *
      */
     public String getTitle() {
@@ -73,9 +72,7 @@ public class Entry {
     /**
      * Sets the value of the title property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String}
+     * @param value allowed object is {@link String}
      *
      */
     public void setTitle(String value) {
@@ -85,9 +82,7 @@ public class Entry {
     /**
      * Gets the value of the url property.
      *
-     * @return
-     *     possible object is
-     *     {@link String}
+     * @return possible object is {@link String}
      *
      */
     public String getUrl() {
@@ -97,9 +92,7 @@ public class Entry {
     /**
      * Sets the value of the url property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String}
+     * @param value allowed object is {@link String}
      *
      */
     public void setUrl(String value) {
@@ -109,9 +102,7 @@ public class Entry {
     /**
      * Gets the value of the user property.
      *
-     * @return
-     *     possible object is
-     *     {@link String}
+     * @return possible object is {@link String}
      *
      */
     public String getUser() {
@@ -121,9 +112,7 @@ public class Entry {
     /**
      * Sets the value of the user property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String}
+     * @param value allowed object is {@link String}
      *
      */
     public void setUser(String value) {
@@ -133,9 +122,7 @@ public class Entry {
     /**
      * Gets the value of the password property.
      *
-     * @return
-     *     possible object is
-     *     {@link String}
+     * @return possible object is {@link String}
      *
      */
     public String getPassword() {
@@ -145,9 +132,7 @@ public class Entry {
     /**
      * Sets the value of the password property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String}
+     * @param value allowed object is {@link String}
      *
      */
     public void setPassword(String value) {
@@ -157,9 +142,7 @@ public class Entry {
     /**
      * Gets the value of the notes property.
      *
-     * @return
-     *     possible object is
-     *     {@link String}
+     * @return possible object is {@link String}
      *
      */
     public String getNotes() {
@@ -169,9 +152,7 @@ public class Entry {
     /**
      * Sets the value of the notes property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String}
+     * @param value allowed object is {@link String}
      *
      */
     public void setNotes(String value) {

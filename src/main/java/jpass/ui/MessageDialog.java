@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import java.awt.BorderLayout;
@@ -70,6 +69,7 @@ import jpass.util.StringUtils;
  *
  */
 public final class MessageDialog extends JDialog implements ActionListener {
+
     private final static Logger LOG = Logger.getLogger(MessageDialog.class.getName());
     private static final long serialVersionUID = -1860703845867414123L;
 
@@ -105,26 +105,26 @@ public final class MessageDialog extends JDialog implements ActionListener {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         JButton defaultButton;
         switch (optionType) {
-        case YES_NO_OPTION:
-            defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
-            buttonPanel.add(defaultButton);
-            buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
-            break;
-        case YES_NO_CANCEL_OPTION:
-            defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
-            buttonPanel.add(defaultButton);
-            buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
-            buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
-            break;
-        case OK_CANCEL_OPTION:
-            defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
-            buttonPanel.add(defaultButton);
-            buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
-            break;
-        default:
-            defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
-            buttonPanel.add(defaultButton);
-            break;
+            case YES_NO_OPTION:
+                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+                buttonPanel.add(defaultButton);
+                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
+                break;
+            case YES_NO_CANCEL_OPTION:
+                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+                buttonPanel.add(defaultButton);
+                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
+                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+                break;
+            case OK_CANCEL_OPTION:
+                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+                buttonPanel.add(defaultButton);
+                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+                break;
+            default:
+                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+                buttonPanel.add(defaultButton);
+                break;
         }
         getRootPane().setDefaultButton(defaultButton);
 
@@ -141,7 +141,8 @@ public final class MessageDialog extends JDialog implements ActionListener {
         } else {
             widthMultiplier = 1.0f;
             messagePanel.setBorder(new EmptyBorder(10, 0, 10, 10));
-            messagePanel.add(new JLabel("<html>" + String.valueOf(message).replaceAll("\\n", "<br />") + "</html>"), BorderLayout.CENTER);
+            messagePanel.add(new JLabel("<html>" + String.valueOf(message)
+                    .replaceAll("\\n", "<br />") + "</html>"), BorderLayout.CENTER);
         }
         mainPanel.add(messagePanel, BorderLayout.CENTER);
 
@@ -300,7 +301,9 @@ public final class MessageDialog extends JDialog implements ActionListener {
         }
     }
 
-    /** Get resource as string */
+    /**
+     * Get resource as string
+     */
     private static String getResourceAsString(String name) {
         StringBuilder builder = new StringBuilder();
         BufferedReader bufferedReader = null;

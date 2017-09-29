@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.util;
 
 import java.io.File;
@@ -37,11 +36,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class for loading configurations from jpass.properties.
+ * Class for loading configurations from {@code jpass.properties}.
  *
  * @author Gabor_Bata
  */
 public final class Configuration {
+
     private final static Logger LOG = Logger.getLogger(Configuration.class.getName());
     private static volatile Configuration INSTANCE;
     private Properties properties = new Properties();

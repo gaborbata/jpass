@@ -35,3 +35,12 @@ local.properties
 
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nb-configuration.xml

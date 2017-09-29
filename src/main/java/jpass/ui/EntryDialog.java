@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import java.awt.BorderLayout;
@@ -61,6 +60,7 @@ import jpass.xml.bind.Entry;
  *
  */
 public class EntryDialog extends JDialog implements ActionListener {
+
     private static final long serialVersionUID = -8551022862532925078L;
     private static final char NULL_ECHO = '\0';
 
@@ -128,7 +128,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.fieldPanel.add(this.repeatField);
 
         this.fieldPanel.add(new JLabel(""));
-        this.passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT ,0, 0));
+        this.passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         this.showButton = new JToggleButton("Show", MessageDialog.getIcon("show"));
         this.showButton.setActionCommand("show_button");
         this.showButton.setMnemonic(KeyEvent.VK_S);
@@ -143,8 +143,8 @@ public class EntryDialog extends JDialog implements ActionListener {
 
         this.fieldPanel.setLayout(new SpringLayout());
         SpringUtilities.makeCompactGrid(this.fieldPanel,
-                6, 2,    //rows, columns
-                5, 5,    //initX, initY
+                6, 2, //rows, columns
+                5, 5, //initX, initY
                 5, 5);    //xPad, yPad
 
         this.notesPanel = new JPanel(new BorderLayout(5, 5));
@@ -270,8 +270,7 @@ public class EntryDialog extends JDialog implements ActionListener {
     /**
      * Gets the form data (entry) of this dialog.
      *
-     * @return nonempty form data if the 'OK1 button is pressed,
-     * otherwise an empty data
+     * @return nonempty form data if the 'OK1 button is pressed, otherwise an empty data
      */
     public Entry getFormData() {
         return this.formData;
@@ -280,8 +279,8 @@ public class EntryDialog extends JDialog implements ActionListener {
     /**
      * Checks the entry title.
      *
-     * @return if the entry title is already exists in the data model
-     * than returns {@code false}, otherwise {@code true}
+     * @return if the entry title is already exists in the data model than returns {@code false},
+     * otherwise {@code true}
      */
     private boolean checkEntryTitle() {
         boolean titleIsOk = true;

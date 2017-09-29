@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.data;
 
 import java.io.FileInputStream;
@@ -54,13 +53,19 @@ import jpass.xml.converter.JAXBConverter;
  */
 public final class DocumentHelper {
 
-    /** File name to read/write. */
+    /**
+     * File name to read/write.
+     */
     private final String fileName;
 
-    /** Key for encryption. */
+    /**
+     * Key for encryption.
+     */
     private final byte[] key;
 
-    /** Converter between JAXB objects and streams representing XMLs */
+    /**
+     * Converter between JAXB objects and streams representing XMLs
+     */
     private static final JAXBConverter<Entries> CONVERTER = new JAXBConverter<Entries>(Entries.class,
             "resources/schemas/entries.xsd");
 

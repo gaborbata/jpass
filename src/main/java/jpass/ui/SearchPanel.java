@@ -26,28 +26,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import jpass.ui.action.Callback;
+
+import static javax.swing.KeyStroke.getKeyStroke;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 
 /**
  * Class for representing search panel. Search panel is hidden by default.
@@ -56,6 +56,7 @@ import jpass.ui.action.Callback;
  *
  */
 public class SearchPanel extends JPanel implements ActionListener {
+
     private static final long serialVersionUID = 5455248210301851210L;
 
     private static final String CLOSE_BUTTON_ACTION_COMMAND = "close_search_panel_button";
@@ -81,7 +82,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 
         this.criteriaField = TextComponentFactory.newTextField();
 
-        if (this.callback != null)  {
+        if (this.callback != null) {
             this.criteriaField.getDocument().addDocumentListener(new DocumentListener() {
                 @Override
                 public void changedUpdate(DocumentEvent e) {
@@ -114,7 +115,7 @@ public class SearchPanel extends JPanel implements ActionListener {
                 setVisible(false);
             }
         };
-        this.closeButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), SEARCH_PANEL_CLOSE_ACTION);
+        this.closeButton.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), SEARCH_PANEL_CLOSE_ACTION);
         this.closeButton.getActionMap().put(SEARCH_PANEL_CLOSE_ACTION, closeAction);
 
         add(this.label, BorderLayout.WEST);

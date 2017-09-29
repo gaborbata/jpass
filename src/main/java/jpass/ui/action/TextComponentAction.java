@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.action;
 
 import javax.swing.KeyStroke;
@@ -34,6 +33,7 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
 public abstract class TextComponentAction extends TextAction {
+
     private static final long serialVersionUID = -2061559337477351379L;
 
     public TextComponentAction(String text, KeyStroke accelerator, int mnemonic) {

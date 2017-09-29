@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.helper;
 
 import java.io.File;
@@ -64,8 +63,8 @@ public final class FileHelper {
         if (parent.getModel().isModified()) {
             int option = MessageDialog.showQuestionMessage(
                     parent,
-                    "The current file has been modified.\n" +
-                    "Do you want to save the changes before closing?",
+                    "The current file has been modified.\n"
+                    + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
                 saveFile(parent, false, new Callback() {
@@ -89,7 +88,7 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog and exports the file.
+     * Shows a file chooser dialog and exports the file.
      *
      * @param parent parent component
      */
@@ -119,7 +118,7 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog and exports the file.
+     * Shows a file chooser dialog and exports the file.
      *
      * @param parent parent component
      */
@@ -132,8 +131,8 @@ public final class FileHelper {
         if (parent.getModel().isModified()) {
             int option = MessageDialog.showQuestionMessage(
                     parent,
-                    "The current file has been modified.\n" +
-                    "Do you want to save the changes before closing?",
+                    "The current file has been modified.\n"
+                    + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
                 saveFile(parent, false, new Callback() {
@@ -178,7 +177,7 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog and saves a file.
+     * Shows a file chooser dialog and saves a file.
      *
      * @param parent parent component
      * @param saveAs normal 'Save' dialog or 'Save as'
@@ -193,12 +192,12 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog and saves a file.
+     * Shows a file chooser dialog and saves a file.
      *
      * @param parent parent component
      * @param saveAs normal 'Save' dialog or 'Save as'
-     * @param callback callback function with the result; the result is
-     *         {@code true} if the file successfully saved; otherwise {@code false}
+     * @param callback callback function with the result; the result is {@code true} if the file
+     * successfully saved; otherwise {@code false}
      */
     public static void saveFile(final JPassFrame parent, final boolean saveAs, final Callback callback) {
         final String fileName;
@@ -240,6 +239,7 @@ public final class FileHelper {
                 }
                 return null;
             }
+
             @Override
             protected void done() {
                 stopProcessing();
@@ -257,7 +257,7 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog and opens a file.
+     * Shows a file chooser dialog and opens a file.
      *
      * @param parent parent component
      */
@@ -269,8 +269,8 @@ public final class FileHelper {
         if (parent.getModel().isModified()) {
             int option = MessageDialog.showQuestionMessage(
                     parent,
-                    "The current file has been modified.\n" +
-                    "Do you want to save the changes before closing?",
+                    "The current file has been modified.\n"
+                    + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
                 saveFile(parent, false, new Callback() {
@@ -321,6 +321,7 @@ public final class FileHelper {
                 }
                 return null;
             }
+
             @Override
             protected void done() {
                 stopProcessing();
@@ -368,7 +369,7 @@ public final class FileHelper {
     }
 
     /**
-     * Shows a filechooser dialog.
+     * Shows a file chooser dialog.
      *
      * @param parent parent component
      * @param taskName name of the task
@@ -385,6 +386,7 @@ public final class FileHelper {
             public boolean accept(File f) {
                 return f.isDirectory() || f.getName().toLowerCase().endsWith("." + extension);
             }
+
             @Override
             public String getDescription() {
                 return description;
@@ -422,7 +424,7 @@ public final class FileHelper {
      *
      * @param fileName file name
      * @param extension extension
-     * @return file name ending with the given extenson
+     * @return file name ending with the given extension
      */
     private static String checkExtension(final String fileName, final String extension) {
         String separator = fileName.endsWith(".") ? "" : ".";

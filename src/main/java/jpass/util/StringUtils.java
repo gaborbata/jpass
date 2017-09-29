@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.util;
 
 /**
@@ -42,11 +41,10 @@ public final class StringUtils {
     }
 
     /**
-     * This method ensures that the output String has only valid XML unicode
-     * characters as specified by the XML 1.0 standard. For reference, please
-     * see <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty String if the input is
-     * null or empty.
+     * This method ensures that the output String has only valid XML unicode characters as specified
+     * by the XML 1.0 standard. For reference, please see
+     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the standard</a>. This method
+     * will return an empty String if the input is null or empty.
      *
      * @param in The String whose non-valid characters we want to remove.
      * @return The in String, stripped of non-valid characters.

@@ -28,17 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.crypt;
 
 /**
- * Exception, if the decryption fails. {@link Cbc} throws this exception, if the
- * last block is not a legal conclusion of a decryption stream.
+ * Exception, if the decryption fails. {@link Cbc} throws this exception, if the last block is not a
+ * legal conclusion of a decryption stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.3 $
  */
 public final class DecryptException extends Exception {
+
     private static final long serialVersionUID = -935882404526228391L;
 
     /**

@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import jpass.data.DataModel;
@@ -63,6 +62,12 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
+import static jpass.ui.MessageDialog.NO_OPTION;
+import static jpass.ui.MessageDialog.YES_NO_CANCEL_OPTION;
+import static jpass.ui.MessageDialog.YES_OPTION;
+import static jpass.ui.MessageDialog.getIcon;
+import static jpass.ui.MessageDialog.showQuestionMessage;
+
 /**
  * The main frame for JPass.
  *
@@ -70,6 +75,7 @@ import javax.swing.WindowConstants;
  *
  */
 public final class JPassFrame extends JFrame {
+
     private final static Logger LOG = Logger.getLogger(JPassFrame.class.getName());
     private static final long serialVersionUID = -4114209356464342368L;
 
@@ -97,7 +103,7 @@ public final class JPassFrame extends JFrame {
 
     private JPassFrame(String fileName) {
         try {
-            setIconImage(MessageDialog.getIcon("lock").getImage());
+            setIconImage(getIcon("lock").getImage());
         } catch (Exception e) {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
@@ -256,7 +262,8 @@ public final class JPassFrame extends JFrame {
      * Refresh frame title based on data model.
      */
     public void refreshFrameTitle() {
-        setTitle((getModel().isModified() ? "*" : "") + (getModel().getFileName() == null ? "Untitled" : getModel().getFileName()) + " - "
+        setTitle((getModel().isModified() ? "*" : "")
+                + (getModel().getFileName() == null ? "Untitled" : getModel().getFileName()) + " - "
                 + PROGRAM_NAME);
     }
 
@@ -308,9 +315,9 @@ public final class JPassFrame extends JFrame {
             return;
         }
         if (this.model.isModified()) {
-            int option = MessageDialog.showQuestionMessage(this,
-                    "The current file has been modified.\nDo you want to save the changes before closing?", MessageDialog.YES_NO_CANCEL_OPTION);
-            if (option == MessageDialog.YES_OPTION) {
+            int option = showQuestionMessage(this,
+                    "The current file has been modified.\nDo you want to save the changes before closing?", YES_NO_CANCEL_OPTION);
+            if (option == YES_OPTION) {
                 FileHelper.saveFile(this, false, new Callback() {
                     @Override
                     public void call(boolean result) {
@@ -320,7 +327,7 @@ public final class JPassFrame extends JFrame {
                     }
                 });
                 return;
-            } else if (option != MessageDialog.NO_OPTION) {
+            } else if (option != NO_OPTION) {
                 return;
             }
         }
@@ -370,13 +377,14 @@ public final class JPassFrame extends JFrame {
      * @author Daniil Bubnov
      */
     private class IconedListCellRenderer extends DefaultListCellRenderer {
+
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component label = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (!Configuration.getInstance().is("fetch.favicons.enabled", false)) {
                 return label;
             }
-            Entry entry = model.getEntryByTitle(value.toString()); // god forgive me
+            Entry entry = model.getEntryByTitle(value.toString());
             ImageIcon icon = iconStorage.getIcon(entry.getUrl());
             if (icon != null) {
                 JPanel row = new JPanel(new BorderLayout());

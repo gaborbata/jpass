@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.action;
 
 import java.awt.Point;
@@ -63,7 +62,7 @@ public class ListListener extends MouseAdapter {
     }
 
     /**
-     * Handle popup.
+     * Handle pop-up.
      *
      * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
      */
@@ -73,7 +72,7 @@ public class ListListener extends MouseAdapter {
     }
 
     /**
-     * Handle popup.
+     * Handle pop-up.
      *
      * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
      */
@@ -83,7 +82,7 @@ public class ListListener extends MouseAdapter {
     }
 
     /**
-     * Checks popup trigger.
+     * Checks pop-up trigger.
      *
      * @param evt mouse event
      */

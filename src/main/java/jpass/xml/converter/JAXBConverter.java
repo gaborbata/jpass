@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.xml.converter;
 
 import java.io.InputStream;
@@ -50,6 +49,7 @@ import javax.xml.validation.SchemaFactory;
  * @param <T> the type of object to marshal/unmarshal
  */
 public class JAXBConverter<T> {
+
     private final Class<T> documentClass;
     private final Schema schema;
 
@@ -91,9 +91,11 @@ public class JAXBConverter<T> {
     }
 
     /**
-     * Gets schema from the classpath.
+     * Gets schema from the class path.
      *
-     * <p>If any error occurred during creating the schema object, the method silently returns {@code null}.</p>
+     * <p>
+     * If any error occurred during creating the schema object, the method silently returns
+     * {@code null}.</p>
      *
      * @param schemaLocation the path of the schema
      * @return the schema

@@ -28,7 +28,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.crypt.io;
 
 import java.io.ByteArrayOutputStream;
@@ -39,15 +38,15 @@ import jpass.crypt.Cbc;
 import jpass.crypt.DecryptException;
 
 /**
- * Reads from an encrypted {@link java.io.InputStream} and provides the
- * decrypted data. The encryption key is provided with the constructor. The
- * initialization vector can also be provided. Otherwise this vector is readed
- * from the stream.
+ * Reads from an encrypted {@link java.io.InputStream} and provides the decrypted data. The
+ * encryption key is provided with the constructor. The initialization vector can also be provided.
+ * Otherwise this vector is read from the stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.5 $
  */
 public class CryptInputStream extends InputStream {
+
     /**
      * Maximum size of data that will be read from the underlying stream.
      */
@@ -66,14 +65,13 @@ public class CryptInputStream extends InputStream {
     private ByteArrayOutputStream _decrypted;
 
     /**
-     * Buffer of unencrypted data. If the buffer is completly returned, another
-     * chunk of data will be decrypted.
+     * Buffer of unencrypted data. If the buffer is completely returned, another chunk of data will
+     * be decrypted.
      */
     private byte[] _buffer = null;
 
     /**
-     * Number of {@code byte}s that are already returned from
-     * {@link CryptInputStream#_buffer}.
+     * Number of {@code byte}s that are already returned from {@link CryptInputStream#_buffer}.
      */
     private int _bufferUsed = 0;
 
@@ -83,8 +81,8 @@ public class CryptInputStream extends InputStream {
     private byte[] _fetchBuffer = new byte[FETCH_BUFFER_SIZE];
 
     /**
-     * Signals, if the last encrypted data was read. If we run out of buffers,
-     * the stream is at its end.
+     * Signals, if the last encrypted data was read. If we run out of buffers, the stream is at its
+     * end.
      */
     private boolean _lastBufferRead = false;
 
@@ -102,9 +100,8 @@ public class CryptInputStream extends InputStream {
     }
 
     /**
-     * Creates a chipher with the key. The iv will be read from the
-     * {@code parent} stream. If there are not enough {@code byte}s in
-     * the stream, an {@link java.io.IOException} will be raised.
+     * Creates a cipher with the key. The iv will be read from the {@code parent} stream. If there
+     * are not enough {@code byte}s in the stream, an {@link java.io.IOException} will be raised.
      *
      * @param parent Stream that provides the encrypted data
      * @param key key for the cipher algorithm
@@ -136,10 +133,9 @@ public class CryptInputStream extends InputStream {
     }
 
     /**
-     * Returns the next decrypted {@code byte}. If there is no more data,
-     * {@code -1} will be returned. If the decrytion fails or the
-     * underlying stream throws an {@link java.io.IOException}, an
-     * {@link java.io.IOException} will be thrown.
+     * Returns the next decrypted {@code byte}. If there is no more data, {@code -1} will be
+     * returned. If the decryption fails or the underlying stream throws an
+     * {@link java.io.IOException}, an {@link java.io.IOException} will be thrown.
      *
      * @return next decrypted {@code byte} or {@code -1}
      * @throws IOException if the decryption fails or the underlying stream throws an exception

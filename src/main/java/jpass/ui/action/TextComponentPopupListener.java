@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.action;
 
 import java.awt.event.MouseAdapter;
@@ -38,10 +37,12 @@ import javax.swing.text.JTextComponent;
 
 /**
  * A listener which adds context menu capability to text components.
+ *
  * @author Gabor_Bata
  *
  */
 public class TextComponentPopupListener extends MouseAdapter {
+
     private final JPopupMenu popup;
     private final JMenuItem cutItem;
     private final JMenuItem copyItem;

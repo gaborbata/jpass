@@ -28,7 +28,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.crypt.io;
 
 import java.io.IOException;
@@ -39,15 +38,15 @@ import jpass.crypt.Cbc;
 import jpass.util.CryptUtils;
 
 /**
- * Encrypts the passed data and stores it into the underlying
- * {@link java.io.OutputStream}. If no initial vector is provided in the
- * constructor, the cipher will be initialized with random data and this data
- * will be sent directly to the underlying stream.
+ * Encrypts the passed data and stores it into the underlying {@link java.io.OutputStream}. If no
+ * initial vector is provided in the constructor, the cipher will be initialized with random data
+ * and this data will be sent directly to the underlying stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.5 $
  */
 public class CryptOutputStream extends OutputStream {
+
     /**
      * Cipher.
      */
@@ -63,15 +62,15 @@ public class CryptOutputStream extends OutputStream {
      *
      * @param parent underlying {@link java.io.OutputStream}
      * @param key key for the cipher algorithm
-     * @param iv intial values for the CBC scheme
+     * @param iv initial values for the CBC scheme
      */
     public CryptOutputStream(OutputStream parent, byte[] key, byte[] iv) {
         this._cipher = new Cbc(iv, key, parent);
     }
 
     /**
-     * Initializes the cipher with the given key. The initial values for the CBC
-     * scheme will be random and sent to the underlying stream.
+     * Initializes the cipher with the given key. The initial values for the CBC scheme will be
+     * random and sent to the underlying stream.
      *
      * @param parent underlying {@link java.io.OutputStream}
      * @param key key for the cipher algorithm
@@ -113,7 +112,8 @@ public class CryptOutputStream extends OutputStream {
     /**
      * Finalizes the encryption and closes the underlying stream.
      *
-     * @throws IOException if the encryption fails or the encrypted data can't be written to the underlying stream
+     * @throws IOException if the encryption fails or the encrypted data can't be written to the
+     * underlying stream
      */
     @Override
     public void close() throws IOException {

@@ -13,15 +13,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.awt.image.BufferedImage.TYPE_4BYTE_ABGR;
+
 /**
  * Icon storage for getting and caching image data from a favicon provider.
  *
  * @author Daniil Bubnov
  */
 public class IconStorage {
+
     private final static Logger LOG = Logger.getLogger(IconStorage.class.getName());
     private static final String GET_ICON = "https://www.google.com/s2/favicons?domain=";
-    private static final ImageIcon DEFAULT_ICON = new ImageIcon(IconStorage.class.getClassLoader().getResource("resources/images/keyring.png"));
+    private static final ImageIcon DEFAULT_ICON = new ImageIcon(IconStorage.class.getClassLoader()
+            .getResource("resources/images/keyring.png"));
     private static final String ICONS = "icons";
     private final Map<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
 
@@ -56,7 +60,7 @@ public class IconStorage {
             String iconUrl = GET_ICON + url;
             imageIcon = new ImageIcon(new URL(iconUrl));
             Image image = imageIcon.getImage();
-            BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_4BYTE_ABGR);
+            BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), TYPE_4BYTE_ABGR);
             Graphics2D g2 = bi.createGraphics();
             g2.drawImage(image, 0, 0, null);
             g2.dispose();
@@ -64,10 +68,9 @@ public class IconStorage {
             icons.put(url, imageIcon);
         } catch (Exception e) {
             LOG.log(Level.WARNING, "Could not get favicon.");
-            // so, impossible happened...
-            // we put a standard icon to cache.
-            // note that on the next application run we will try to retrieve the icon again,
-            // this will save us from occasional connection problems
+            // We put a standard icon to cache.
+            // Note that on the next application run we will try to retrieve the icon again,
+            // this will save us from occasional connection problems.
             imageIcon = DEFAULT_ICON;
             icons.put(url, imageIcon);
         }

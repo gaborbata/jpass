@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui.action;
 
 import javax.swing.AbstractAction;
@@ -40,6 +39,7 @@ import javax.swing.KeyStroke;
  *
  */
 public abstract class AbstractMenuAction extends AbstractAction {
+
     private static final long serialVersionUID = 5470805628583386182L;
 
     /**

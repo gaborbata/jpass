@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass;
 
 import javax.swing.SwingUtilities;
@@ -47,6 +46,7 @@ import java.util.logging.Logger;
  *
  */
 public class JPass {
+
     private final static Logger LOG = Logger.getLogger(JPass.class.getName());
     private static final String METAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 
@@ -57,7 +57,7 @@ public class JPass {
     public static void main(final String[] args) {
         try {
             String lookAndFeel;
-            if (Configuration.getInstance().is("system.look.and.feel.enabled", false)) {
+            if (Configuration.getInstance().is("system.look.and.feel.enabled", true)) {
                 lookAndFeel = UIManager.getSystemLookAndFeelClassName();
             } else {
                 lookAndFeel = METAL_LOOK_AND_FEEL;

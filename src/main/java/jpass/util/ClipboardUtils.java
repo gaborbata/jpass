@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.util;
 
 import java.awt.Toolkit;
@@ -44,7 +43,10 @@ import java.awt.datatransfer.UnsupportedFlavorException;
  *
  */
 public final class ClipboardUtils {
-    /** Empty clipboard content. */
+
+    /**
+     * Empty clipboard content.
+     */
     private static final EmptyClipboardContent EMPTY_CONTENT = new EmptyClipboardContent();
 
     private ClipboardUtils() {
@@ -102,13 +104,14 @@ public final class ClipboardUtils {
     }
 
     /**
-     * Class representing an empty clipboard content.
-     * With the help of this class, the content of clipboard can be cleared.
+     * Class representing an empty clipboard content. With the help of this class, the content of
+     * clipboard can be cleared.
      *
      * @author Gabor_Bata
      *
      */
     protected static final class EmptyClipboardContent implements Transferable, ClipboardOwner {
+
         @Override
         public DataFlavor[] getTransferDataFlavors() {
             return new DataFlavor[0];

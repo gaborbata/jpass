@@ -26,7 +26,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jpass.ui;
 
 import java.awt.BorderLayout;
@@ -61,16 +60,21 @@ import jpass.util.SpringUtilities;
  *
  */
 public final class GeneratePasswordDialog extends JDialog implements ActionListener {
+
     private static final long serialVersionUID = -1807066563698740446L;
 
-    /** Characters for custom symbols generation. */
+    /**
+     * Characters for custom symbols generation.
+     */
     private static final String SYMBOLS = "!\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~";
 
-    /** Options for password generation. */
+    /**
+     * Options for password generation.
+     */
     private static final String[][] passwordOptions = {
-        { "Upper case letters (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-        { "Lower case letters (a-z)", "abcdefghijklmnopqrstuvwxyz" },
-        { "Numbers (0-9)", "0123456789" }
+        {"Upper case letters (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
+        {"Lower case letters (a-z)", "abcdefghijklmnopqrstuvwxyz"},
+        {"Numbers (0-9)", "0123456789"}
     };
 
     private JCheckBox[] checkBoxes;
@@ -98,8 +102,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Constructor of GeneratePasswordDialog.
      *
-     * @param parent
-     *            JFrame parent component
+     * @param parent JFrame parent component
      */
     public GeneratePasswordDialog(JFrame parent) {
         super(parent);
@@ -109,8 +112,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Constructor of GeneratePasswordDialog.
      *
-     * @param parent
-     *            JDialog parent component
+     * @param parent JDialog parent component
      */
     public GeneratePasswordDialog(JDialog parent) {
         super(parent);
@@ -120,11 +122,9 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Initializes the GeneratePasswordDialog instance.
      *
-     * @param parent
-     *            parent component
-     * @param showAcceptButton
-     *            if true then the dialog shows an "Accept" and "Cancel" button,
-     *            otherwise only a "Close" button
+     * @param parent parent component
+     * @param showAcceptButton if true then the dialog shows an "Accept" and "Cancel" button,
+     * otherwise only a "Close" button
      *
      */
     private void initDialog(final Component parent, final boolean showAcceptButton) {
@@ -256,8 +256,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Gets the generated password.
      *
-     * @return if the password is not generated than the return value is
-     *         {@code null}, otherwise the generated password
+     * @return if the password is not generated than the return value is {@code null}, otherwise the
+     * generated password
      */
     public String getGeneratedPassword() {
         return this.generatedPassword;

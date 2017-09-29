@@ -71,7 +71,7 @@ public final class FileHelper {
                     @Override
                     public void call(boolean result) {
                         if (result) {
-                            parent.getModel().clear();
+                            parent.clearModel();
                             parent.getSearchPanel().setVisible(false);
                             parent.refreshAll();
                         }
@@ -82,7 +82,7 @@ public final class FileHelper {
                 return;
             }
         }
-        parent.getModel().clear();
+        parent.clearModel();
         parent.getSearchPanel().setVisible(false);
         parent.refreshAll();
     }
@@ -296,7 +296,7 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void doOpenFile(final String fileName, final JPassFrame parent) {
-        parent.getModel().clear();
+        parent.clearModel();
         if (fileName == null) {
             return;
         }

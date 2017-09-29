@@ -168,9 +168,13 @@ public class DataModel {
      * Gets entry by title.
      *
      * @param title entry title
-     * @return entry
+     * @return entry (can be null)
      */
     public Entry getEntryByTitle(String title) {
-        return this.entries.getEntry().get(getEntryIndexByTitle(title));
+        int entryIndex = getEntryIndexByTitle(title);
+        if (entryIndex != -1) {
+            return this.entries.getEntry().get(entryIndex);
+        }
+        return null;
     }
 }

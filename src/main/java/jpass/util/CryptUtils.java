@@ -58,6 +58,17 @@ public final class CryptUtils {
     /**
      * Calculate SHA-256 hash.
      *
+     * @param text password text
+     * @return hash of the password
+     * @throws Exception if error occurred
+     */
+    public static byte[] getSha256Hash(final char[] text) throws Exception {
+        return getSha256Hash(text, 0);
+    }
+
+    /**
+     * Calculate SHA-256 hash.
+     *
      * <p>
      * To slow down the computation it is recommended to iterate the hash operation {@code n} times.
      * While hashing the password {@code n} times does slow down hashing for both attackers and

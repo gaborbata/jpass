@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import java.net.URI;
 
 import static java.awt.image.BufferedImage.TYPE_4BYTE_ABGR;
-import static jpass.util.CryptUtils.getPKCS5Sha256Hash;
+import static jpass.util.CryptUtils.getSha256Hash;
 import static jpass.util.StringUtils.byteArrayToHex;
 
 /**
@@ -75,7 +75,7 @@ public class IconStorage {
         // check file
         String iconFileName;
         try {
-            iconFileName = byteArrayToHex(getPKCS5Sha256Hash(domain.toCharArray())) + ".png";
+            iconFileName = byteArrayToHex(getSha256Hash(domain.toCharArray())) + ".png";
         } catch (Exception e) {
             return DEFAULT_ICON;
         }

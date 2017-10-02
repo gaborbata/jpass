@@ -31,6 +31,7 @@ package jpass.ui.helper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -40,7 +41,9 @@ import jpass.ui.JPassFrame;
 import jpass.ui.MessageDialog;
 import jpass.ui.action.Callback;
 import jpass.ui.action.Worker;
+import jpass.util.IconStorage;
 import jpass.util.StringUtils;
+import jpass.xml.bind.Entry;
 
 /**
  * Helper utils for file operations.
@@ -167,6 +170,7 @@ public final class FileHelper {
                     parent.getModel().setFileName(null);
                     parent.getModel().setPassword(null);
                     parent.getSearchPanel().setVisible(false);
+                    preloadDomainIcons(parent.getModel().getEntries().getEntry());
                 } catch (Throwable e) {
                     throw new Exception("An error occured during the import operation:\n" + e.getMessage());
                 }
@@ -312,6 +316,7 @@ public final class FileHelper {
                     parent.getModel().setFileName(fileName);
                     parent.getModel().setPassword(password);
                     parent.getSearchPanel().setVisible(false);
+                    preloadDomainIcons(parent.getModel().getEntries().getEntry());
                 } catch (FileNotFoundException e) {
                     throw e;
                 } catch (IOException e) {
@@ -432,5 +437,17 @@ public final class FileHelper {
             return fileName + separator + extension;
         }
         return fileName;
+    }
+
+    /**
+     * Preload favicon image icons for domains.
+     *
+     * @param entries the entries
+     */
+    private static void preloadDomainIcons(List<Entry> entries) {
+        IconStorage iconStorage = IconStorage.newInstance();
+        for (Entry entry : entries) {
+            iconStorage.getIcon(entry.getUrl());
+        }
     }
 }

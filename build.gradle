@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'distribution'
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.6
@@ -23,6 +24,17 @@ jar {
 task copyConfig(type: Copy) {
     from 'src/main/config'
     into 'build/libs'
+}
+
+distributions {
+    main {
+        baseName = "$jar.baseName-$jar.version-dist"
+        contents {
+            from jar
+            from { 'src/main/config' }
+            into '/'
+        }
+    }
 }
 
 build.dependsOn copyConfig

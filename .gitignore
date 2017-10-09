@@ -40,7 +40,6 @@ local.properties
 nbproject/private/
 build/
 nbbuild/
-dist/
 nbdist/
 .nb-gradle/
 nb-configuration.xml

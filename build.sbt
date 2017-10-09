@@ -2,7 +2,7 @@ organization:= "jpass.id"
 
 name := "JPass"
 
-version := "0.1.15-RELEASE"
+version := "0.1.16-SNAPSHOT"
 
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 

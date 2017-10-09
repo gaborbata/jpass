@@ -46,7 +46,7 @@ task bumpVersion {
         def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)
         files.each { versionedFile ->
             def file = new File(versionedFile)
-            file.write file.text.replaceAll("$jar.version", "$toVersion")
+            file.write(file.getText('UTF-8').replaceAll("$jar.version", "$toVersion"), 'UTF-8')
         }
     }
 }

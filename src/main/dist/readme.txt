@@ -140,3 +140,13 @@ http://tango.freedesktop.org/Tango_Desktop_Project
 The Tango base icon theme is licensed under the Creative Commons Attribution
 Share-Alike license.
 http://creativecommons.org/licenses/by-sa/2.5/
+
+---
+
+This software includes Jackson JSON processor databind module,
+licensed under the Apache (Software) License, version 2.0 ("the License").
+See the License for details about distribution rights,
+and the specific rights regarding derivate works.
+
+You may obtain a copy of the License at:
+http://www.apache.org/licenses/LICENSE-2.0

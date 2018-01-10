@@ -17,6 +17,7 @@ dependencies {
 jar {
     baseName = 'jpass'
     version = '0.1.16-RELEASE'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes('Main-Class': 'jpass.JPass')
     }

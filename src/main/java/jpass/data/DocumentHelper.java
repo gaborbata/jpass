@@ -37,12 +37,10 @@ import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import javax.xml.bind.JAXBException;
-
 import jpass.crypt.io.CryptInputStream;
 import jpass.crypt.io.CryptOutputStream;
 import jpass.xml.bind.Entries;
-import jpass.xml.converter.JAXBConverter;
+import jpass.xml.converter.XmlConverter;
 
 import static jpass.util.StringUtils.stripString;
 
@@ -65,10 +63,9 @@ public final class DocumentHelper {
     private final byte[] key;
 
     /**
-     * Converter between JAXB objects and streams representing XMLs
+     * Converter between document objects and streams representing XMLs
      */
-    private static final JAXBConverter<Entries> CONVERTER = new JAXBConverter<Entries>(Entries.class,
-            "resources/schemas/entries.xsd");
+    private static final XmlConverter<Entries> CONVERTER = new XmlConverter<Entries>(Entries.class);
 
     /**
      * Creates a DocumentHelper instance.
@@ -119,10 +116,9 @@ public final class DocumentHelper {
             } else {
                 inputStream = new GZIPInputStream(new CryptInputStream(new FileInputStream(this.fileName), this.key));
             }
-            entries = CONVERTER.unmarshal(inputStream);
-        } catch (JAXBException e) {
-            throw new DocumentProcessException(stripString(e.getLinkedException() == null ? e.getMessage() : e
-                    .getLinkedException().getMessage()));
+            entries = CONVERTER.read(inputStream);
+        } catch (Exception e) {
+            throw new DocumentProcessException(stripString(e.getMessage()));
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -146,12 +142,9 @@ public final class DocumentHelper {
             } else {
                 outputStream = new GZIPOutputStream(new CryptOutputStream(new FileOutputStream(this.fileName), this.key));
             }
-            CONVERTER.marshal(document, outputStream, this.key == null);
-        } catch (JAXBException e) {
-            throw new DocumentProcessException(stripString(e.getLinkedException() == null ? e.getMessage() : e
-                    .getLinkedException().getMessage()));
+            CONVERTER.write(document, outputStream);
         } catch (Exception e) {
-            throw new DocumentProcessException(e.getMessage());
+            throw new DocumentProcessException(stripString(e.getMessage()));
         } finally {
             if (outputStream != null) {
                 outputStream.close();

@@ -1,4 +1,4 @@
-# JPass - Password Manager 0.1.16-SNAPSHOT
+# JPass - Password Manager 0.1.16-RELEASE
 
 Overview
 --------
@@ -17,11 +17,11 @@ Features:
 Usage
 -----
 Java 6 or later is recommended to run JPass. Most platforms have a mechanism
-to execute `.jar` files (e.g. double click the `jpass-0.1.16-SNAPSHOT.jar`).
+to execute `.jar` files (e.g. double click the `jpass-0.1.16-RELEASE.jar`).
 You can also run the application from the command line by typing (the password
 file is optional):
 
-    java -jar jpass-0.1.16-SNAPSHOT.jar [password_file]
+    java -jar jpass-0.1.16-RELEASE.jar [password_file]
 
 Configuration
 -------------
@@ -36,7 +36,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 License
 -------
-Copyright (c) 2009-2017 Gabor Bata
+Copyright (c) 2009-2018 Gabor Bata
 
 All rights reserved.
 
@@ -140,3 +140,13 @@ http://tango.freedesktop.org/Tango_Desktop_Project
 The Tango base icon theme is licensed under the Creative Commons Attribution
 Share-Alike license.
 http://creativecommons.org/licenses/by-sa/2.5/
+
+---
+
+This software includes Jackson JSON processor databind module,
+licensed under the Apache (Software) License, version 2.0 ("the License").
+See the License for details about distribution rights,
+and the specific rights regarding derivate works.
+
+You may obtain a copy of the License at:
+http://www.apache.org/licenses/LICENSE-2.0

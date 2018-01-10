@@ -45,7 +45,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 License
 -------
-Copyright (c) 2009-2017 Gabor Bata
+Copyright (c) 2009-2018 Gabor Bata
 
 All rights reserved.
 

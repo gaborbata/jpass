@@ -28,6 +28,8 @@
  */
 package jpass.data;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -107,14 +109,14 @@ public final class DocumentHelper {
      * @throws IOException when I/O error occurred
      * @throws DocumentProcessException when file format or password is incorrect
      */
-    public Entries readDocument() throws FileNotFoundException, IOException, DocumentProcessException {
+    public Entries readDocument() throws IOException, DocumentProcessException {
         InputStream inputStream = null;
         Entries entries;
         try {
             if (this.key == null) {
                 inputStream = new FileInputStream(this.fileName);
             } else {
-                inputStream = new GZIPInputStream(new CryptInputStream(new FileInputStream(this.fileName), this.key));
+                inputStream = new GZIPInputStream(new CryptInputStream(new BufferedInputStream(new FileInputStream(this.fileName)), this.key));
             }
             entries = CONVERTER.read(inputStream);
         } catch (Exception e) {
@@ -140,7 +142,7 @@ public final class DocumentHelper {
             if (this.key == null) {
                 outputStream = new FileOutputStream(this.fileName);
             } else {
-                outputStream = new GZIPOutputStream(new CryptOutputStream(new FileOutputStream(this.fileName), this.key));
+                outputStream = new GZIPOutputStream(new CryptOutputStream(new BufferedOutputStream(new FileOutputStream(this.fileName)), this.key));
             }
             CONVERTER.write(document, outputStream);
         } catch (Exception e) {

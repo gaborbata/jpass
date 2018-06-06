@@ -1,5 +1,5 @@
 <p align="center">
- <img src="https://raw.githubusercontent.com/jbeguna04/jpass/master/LogoDesign/bannerReadMe.png" width=750 align="center">
+ <img src="https://raw.githubusercontent.com/gaborbata/jpass/master/LogoDesign/bannerReadMe.png" width=750 align="center">
 </p>
 
 JPass [![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass)
@@ -46,3 +46,7 @@ Default configurations can be overridden in `jpass.properties` file:
 | clear.clipboard.on.exit.enabled    | boolean    | false         |
 | default.password.generation.length | integer    | 14            |
 | fetch.favicons.enabled             | boolean    | false         |
+
+Contributors
+------------
+Thanks for Jibbie R. Eguna (@jbeguna04) for the nice application logo.

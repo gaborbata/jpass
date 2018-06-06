@@ -1,3 +1,7 @@
+<p align="center">
+ <img src="https://raw.githubusercontent.com/jbeguna04/jpass/master/LogoDesign/bannerReadMe.png" width=750 align="center">
+</p>
+
 JPass [![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass)
 =====
 

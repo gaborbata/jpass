@@ -4,7 +4,7 @@
     <groupId>jpass</groupId>
     <artifactId>jpass</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.18-SNAPSHOT</version>
+    <version>0.1.18-RELEASE</version>
     <name>JPass</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

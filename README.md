@@ -42,7 +42,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 | Configuration key                  | Value type | Default value |
 | ---------------------------------- | ---------- | ------------- |
-| system.look.and.feel.enabled       | boolean    | true          |
+| ui.theme.dark.mode.enabled         | boolean    | false         |
 | clear.clipboard.on.exit.enabled    | boolean    | false         |
 | default.password.generation.length | integer    | 14            |
 | fetch.favicons.enabled             | boolean    | false         |

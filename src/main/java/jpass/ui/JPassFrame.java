@@ -194,7 +194,6 @@ public final class JPassFrame extends JFrame {
         this.entryTitleList = new JList(this.entryTitleListModel);
         this.entryTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entryTitleList.addMouseListener(new ListListener());
-        this.entryTitleList.setCellRenderer(new IconedListCellRenderer());
 
         this.scrollPane = new JScrollPane(this.entryTitleList);
         MenuActionType.bindAllActions(this.entryTitleList);

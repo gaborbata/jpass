@@ -131,7 +131,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.fieldPanel.add(this.repeatField);
 
         this.fieldPanel.add(new JLabel(""));
-        this.passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        this.passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         this.showButton = new JToggleButton("Show", MessageDialog.getIcon("show"));
         this.showButton.setActionCommand("show_button");
         this.showButton.setMnemonic(KeyEvent.VK_S);

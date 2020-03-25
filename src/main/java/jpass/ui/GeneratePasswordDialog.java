@@ -176,7 +176,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.generateButton.setActionCommand("generate_button");
         this.generateButton.addActionListener(this);
         this.generateButton.setMnemonic(KeyEvent.VK_G);
-        JPanel generateButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        JPanel generateButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 5));
         generateButtonPanel.add(this.generateButton);
         this.passwordPanel.add(generateButtonPanel, BorderLayout.SOUTH);
 

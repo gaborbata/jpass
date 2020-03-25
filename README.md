@@ -45,7 +45,6 @@ Default configurations can be overridden in `jpass.properties` file:
 | ui.theme.dark.mode.enabled         | boolean    | false         |
 | clear.clipboard.on.exit.enabled    | boolean    | false         |
 | default.password.generation.length | integer    | 14            |
-| fetch.favicons.enabled             | boolean    | false         |
 
 Contributors
 ------------

@@ -8,6 +8,8 @@ libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-
 
 libraryDependencies += "com.formdev" % "flatlaf" % "0.28"
 
+libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.2.1"
+
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.10" % "test"

@@ -260,9 +260,9 @@ public final class MessageDialog extends JDialog implements ActionListener {
         }
         panel.setLayout(new SpringLayout());
         SpringUtilities.makeCompactGrid(panel, confirm ? 2 : 1, 2, 5, 5, 5, 5);
-        boolean notCorrect = true;
+        boolean incorrect = true;
 
-        while (notCorrect) {
+        while (incorrect) {
             int option = showMessageDialog(parent, panel, "Enter Password", getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
                 if (password.getPassword().length == 0) {
@@ -270,7 +270,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
                 } else if (confirm && !Arrays.equals(password.getPassword(), repeat.getPassword())) {
                     showWarningMessage(parent, "Password and repeated password are not identical.");
                 } else {
-                    notCorrect = false;
+                    incorrect = false;
                 }
             } else {
                 return null;
@@ -295,7 +295,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      */
     public static ImageIcon getIcon(String name) {
         try {
-            return new ImageIcon(MessageDialog.class.getClassLoader().getResource("resources/images/" + name + ".png"));
+            return new SvgImageIcon("resources/images/" + name + ".svg");
         } catch (Exception e) {
             return null;
         }

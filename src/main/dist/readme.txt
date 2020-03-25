@@ -32,11 +32,10 @@ Default configurations can be overridden in `jpass.properties` file:
 | ui.theme.dark.mode.enabled         | boolean    | false         |
 | clear.clipboard.on.exit.enabled    | boolean    | false         |
 | default.password.generation.length | integer    | 14            |
-| fetch.favicons.enabled             | boolean    | false         |
 
 License
 -------
-Copyright (c) 2009-2019 Gabor Bata
+Copyright (c) 2009-2020 Gabor Bata
 
 All rights reserved.
 
@@ -126,20 +125,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-This software uses icons from the Silk icon set by Mark James.
-http://www.famfamfam.com/lab/icons/silk/
+This software uses icons from the elementary Icons project.
 
-The Silk icon set is licensed under a Creative Commons Attribution 2.5 License.
-http://creativecommons.org/licenses/by/2.5/
+These icons are licensed openly under the terms of
+the GNU General Public License.
 
----
-
-This software uses icons from the Tango base icon theme.
-http://tango.freedesktop.org/Tango_Desktop_Project
-
-The Tango base icon theme is licensed under the Creative Commons Attribution
-Share-Alike license.
-http://creativecommons.org/licenses/by-sa/2.5/
+You may obtain a copy of the License at:
+https://www.gnu.org/licenses/gpl-3.0.html
 
 ---
 

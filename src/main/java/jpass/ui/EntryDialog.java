@@ -184,7 +184,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         getContentPane().add(this.buttonPanel, BorderLayout.SOUTH);
 
         fillDialogData(entry);
-        setSize(420, 400);
+        setSize(450, 400);
         setMinimumSize(new Dimension(370, 300));
         setLocationRelativeTo(parent);
         setVisible(true);

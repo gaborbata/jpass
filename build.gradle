@@ -12,6 +12,8 @@ repositories {
 dependencies {
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.3'
     compile group: 'com.formdev', name: 'flatlaf', version: '0.28'
+    compile group: 'com.formdev', name: 'svgSalamander', version: '1.1.2.1'
+
     testCompile 'junit:junit:4.11'
 }
 

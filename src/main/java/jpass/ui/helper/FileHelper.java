@@ -31,6 +31,7 @@ package jpass.ui.helper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -38,7 +39,6 @@ import javax.swing.filechooser.FileFilter;
 import jpass.data.DocumentRepository;
 import jpass.ui.JPassFrame;
 import jpass.ui.MessageDialog;
-import jpass.ui.action.Callback;
 import jpass.ui.action.Worker;
 import jpass.util.StringUtils;
 
@@ -67,14 +67,11 @@ public final class FileHelper {
                     + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, new Callback() {
-                    @Override
-                    public void call(boolean result) {
-                        if (result) {
-                            parent.clearModel();
-                            parent.getSearchPanel().setVisible(false);
-                            parent.refreshAll();
-                        }
+                saveFile(parent, false, result -> {
+                    if (result) {
+                        parent.clearModel();
+                        parent.getSearchPanel().setVisible(false);
+                        parent.refreshAll();
                     }
                 });
                 return;
@@ -135,12 +132,9 @@ public final class FileHelper {
                     + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, new Callback() {
-                    @Override
-                    public void call(boolean result) {
-                        if (result) {
-                            doImportFile(fileName, parent);
-                        }
+                saveFile(parent, false, result -> {
+                    if (result) {
+                        doImportFile(fileName, parent);
                     }
                 });
                 return;
@@ -183,11 +177,8 @@ public final class FileHelper {
      * @param saveAs normal 'Save' dialog or 'Save as'
      */
     public static void saveFile(final JPassFrame parent, final boolean saveAs) {
-        saveFile(parent, saveAs, new Callback() {
-            @Override
-            public void call(boolean result) {
-                //default empty call
-            }
+        saveFile(parent, saveAs, result -> {
+            //default empty call
         });
     }
 
@@ -199,17 +190,17 @@ public final class FileHelper {
      * @param callback callback function with the result; the result is {@code true} if the file
      * successfully saved; otherwise {@code false}
      */
-    public static void saveFile(final JPassFrame parent, final boolean saveAs, final Callback callback) {
+    public static void saveFile(final JPassFrame parent, final boolean saveAs, final Consumer<Boolean> callback) {
         final String fileName;
         if (saveAs || parent.getModel().getFileName() == null) {
             File file = showFileChooser(parent, "Save", "jpass", "JPass Data Files (*.jpass)");
             if (file == null) {
-                callback.call(false);
+                callback.accept(false);
                 return;
             }
             fileName = checkExtension(file.getPath(), "jpass");
             if (!checkFileOverwrite(fileName, parent)) {
-                callback.call(false);
+                callback.accept(false);
                 return;
             }
         } else {
@@ -220,7 +211,7 @@ public final class FileHelper {
         if (parent.getModel().getPassword() == null) {
             password = MessageDialog.showPasswordDialog(parent, true);
             if (password == null) {
-                callback.call(false);
+                callback.accept(false);
                 return;
             }
         } else {
@@ -250,7 +241,7 @@ public final class FileHelper {
                     result = false;
                     showErrorMessage(e);
                 }
-                callback.call(result);
+                callback.accept(result);
             }
         };
         worker.execute();
@@ -273,12 +264,9 @@ public final class FileHelper {
                     + "Do you want to save the changes before closing?",
                     MessageDialog.YES_NO_CANCEL_OPTION);
             if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, new Callback() {
-                    @Override
-                    public void call(boolean result) {
-                        if (result) {
-                            doOpenFile(file.getPath(), parent);
-                        }
+                saveFile(parent, false, result -> {
+                    if (result) {
+                        doOpenFile(file.getPath(), parent);
                     }
                 });
                 return;
@@ -328,7 +316,7 @@ public final class FileHelper {
                 try {
                     get();
                 } catch (Exception e) {
-                    if (e.getCause() != null && e.getCause() instanceof FileNotFoundException) {
+                    if (e.getCause() instanceof FileNotFoundException) {
                         handleFileNotFound(parent, fileName, password);
                     } else {
                         showErrorMessage(e);
@@ -358,7 +346,7 @@ public final class FileHelper {
                         parent.getModel().setFileName(fileName);
                         parent.getModel().setPassword(password);
                     } catch (Exception ex) {
-                        throw new Exception("An error occured during the open operation:\n" + ex.getMessage());
+                        throw new Exception("An error occurred during the open operation:\n" + ex.getMessage());
                     }
                     return null;
                 }

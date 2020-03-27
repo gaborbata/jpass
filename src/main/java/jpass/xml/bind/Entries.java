@@ -51,7 +51,7 @@ public class Entries {
      */
     public List<Entry> getEntry() {
         if (entry == null) {
-            entry = new ArrayList<Entry>();
+            entry = new ArrayList<>();
         }
         return this.entry;
     }

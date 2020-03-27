@@ -24,8 +24,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -65,13 +63,13 @@ public class SvgImageIcon extends ImageIcon {
 
         dark = isDarkLaf();
         URL url = getIconURL(name, dark);
-        if (url == null & dark)
+        if (url == null && dark)
             url = getIconURL(name, false);
 
         // load/get image
         try {
             diagram = svgUniverse.getDiagram(url.toURI());
-        } catch (URISyntaxException ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING, String.format("Could not get SVG image [%s] due to [%s]", url.toString(), ex.getMessage()));
         }
     }
@@ -159,13 +157,7 @@ public class SvgImageIcon extends ImageIcon {
     private static boolean isDarkLaf() {
         if (darkLaf == null) {
             lafChanged();
-
-            UIManager.addPropertyChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    lafChanged();
-                }
-            });
+            UIManager.addPropertyChangeListener(evt -> lafChanged());
         }
         return darkLaf;
     }

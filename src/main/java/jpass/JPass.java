@@ -68,11 +68,6 @@ public class JPass {
             LOG.log(Level.CONFIG, "Could not set look and feel for the application", e);
         }
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JPassFrame.getInstance((args.length > 0) ? args[0] : null);
-            }
-        });
+        SwingUtilities.invokeLater(() -> JPassFrame.getInstance((args.length > 0) ? args[0] : null));
     }
 }

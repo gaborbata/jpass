@@ -29,7 +29,6 @@
 package jpass.ui;
 
 import jpass.data.DataModel;
-import jpass.ui.action.Callback;
 import jpass.ui.action.CloseListener;
 import jpass.ui.action.ListListener;
 import jpass.ui.action.MenuActionType;
@@ -74,14 +73,14 @@ public final class JPassFrame extends JFrame {
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
     private static final long serialVersionUID = -4114209356464342368L;
 
-    private static volatile JPassFrame INSTANCE;
+    private static JPassFrame INSTANCE;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
     public static final String PROGRAM_VERSION = "0.1.19-SNAPSHOT";
 
     private final JPopupMenu popup;
     private final JPanel topContainerPanel;
-    private final JMenuBar menuBar;
+    private final JMenuBar jpassMenuBar;
     private final SearchPanel searchPanel;
     private final JMenu fileMenu;
     private final JMenu editMenu;
@@ -89,8 +88,8 @@ public final class JPassFrame extends JFrame {
     private final JMenu helpMenu;
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
-    private final JList entryTitleList;
-    private final DefaultListModel entryTitleListModel;
+    private final JList<String> entryTitleList;
+    private final DefaultListModel<String> entryTitleListModel;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
@@ -121,12 +120,9 @@ public final class JPassFrame extends JFrame {
         this.toolBar.add(MenuActionType.ABOUT.getAction());
         this.toolBar.add(MenuActionType.EXIT.getAction());
 
-        this.searchPanel = new SearchPanel(new Callback() {
-            @Override
-            public void call(boolean enabled) {
-                if (enabled) {
-                    refreshEntryTitleList(null);
-                }
+        this.searchPanel = new SearchPanel(enabled -> {
+            if (enabled) {
+                refreshEntryTitleList(null);
             }
         });
 
@@ -134,7 +130,7 @@ public final class JPassFrame extends JFrame {
         this.topContainerPanel.add(this.toolBar, BorderLayout.NORTH);
         this.topContainerPanel.add(this.searchPanel, BorderLayout.SOUTH);
 
-        this.menuBar = new JMenuBar();
+        this.jpassMenuBar = new JMenuBar();
 
         this.fileMenu = new JMenu("File");
         this.fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -149,7 +145,7 @@ public final class JPassFrame extends JFrame {
         this.fileMenu.add(MenuActionType.CHANGE_PASSWORD.getAction());
         this.fileMenu.addSeparator();
         this.fileMenu.add(MenuActionType.EXIT.getAction());
-        this.menuBar.add(this.fileMenu);
+        this.jpassMenuBar.add(this.fileMenu);
 
         this.editMenu = new JMenu("Edit");
         this.editMenu.setMnemonic(KeyEvent.VK_E);
@@ -163,20 +159,20 @@ public final class JPassFrame extends JFrame {
         this.editMenu.add(MenuActionType.COPY_PASSWORD.getAction());
         this.editMenu.addSeparator();
         this.editMenu.add(MenuActionType.FIND_ENTRY.getAction());
-        this.menuBar.add(this.editMenu);
+        this.jpassMenuBar.add(this.editMenu);
 
         this.toolsMenu = new JMenu("Tools");
         this.toolsMenu.setMnemonic(KeyEvent.VK_T);
         this.toolsMenu.add(MenuActionType.GENERATE_PASSWORD.getAction());
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
-        this.menuBar.add(this.toolsMenu);
+        this.jpassMenuBar.add(this.toolsMenu);
 
         this.helpMenu = new JMenu("Help");
         this.helpMenu.setMnemonic(KeyEvent.VK_H);
         this.helpMenu.add(MenuActionType.LICENSE.getAction());
         this.helpMenu.addSeparator();
         this.helpMenu.add(MenuActionType.ABOUT.getAction());
-        this.menuBar.add(this.helpMenu);
+        this.jpassMenuBar.add(this.helpMenu);
 
         this.popup = new JPopupMenu();
         this.popup.add(MenuActionType.ADD_ENTRY.getAction());
@@ -190,8 +186,8 @@ public final class JPassFrame extends JFrame {
         this.popup.addSeparator();
         this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
-        this.entryTitleListModel = new DefaultListModel();
-        this.entryTitleList = new JList(this.entryTitleListModel);
+        this.entryTitleListModel = new DefaultListModel<>();
+        this.entryTitleList = new JList<>(this.entryTitleListModel);
         this.entryTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entryTitleList.addMouseListener(new ListListener());
 
@@ -206,7 +202,7 @@ public final class JPassFrame extends JFrame {
         getContentPane().add(this.scrollPane, BorderLayout.CENTER);
         getContentPane().add(this.statusPanel, BorderLayout.SOUTH);
 
-        setJMenuBar(this.menuBar);
+        setJMenuBar(this.jpassMenuBar);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setSize(450, 400);
         setMinimumSize(new Dimension(420, 200));
@@ -223,13 +219,9 @@ public final class JPassFrame extends JFrame {
         return getInstance(null);
     }
 
-    public static JPassFrame getInstance(String fileName) {
+    public static synchronized JPassFrame getInstance(String fileName) {
         if (INSTANCE == null) {
-            synchronized (JPassFrame.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new JPassFrame(fileName);
-                }
-            }
+            INSTANCE = new JPassFrame(fileName);
         }
         return INSTANCE;
     }
@@ -239,7 +231,7 @@ public final class JPassFrame extends JFrame {
      *
      * @return entry title list
      */
-    public JList getEntryTitleList() {
+    public JList<String> getEntryTitleList() {
         return this.entryTitleList;
     }
 
@@ -320,12 +312,9 @@ public final class JPassFrame extends JFrame {
             int option = showQuestionMessage(this,
                     "The current file has been modified.\nDo you want to save the changes before closing?", YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
-                FileHelper.saveFile(this, false, new Callback() {
-                    @Override
-                    public void call(boolean result) {
-                        if (result) {
-                            System.exit(0);
-                        }
+                FileHelper.saveFile(this, false, result -> {
+                    if (result) {
+                        System.exit(0);
                     }
                 });
                 return;

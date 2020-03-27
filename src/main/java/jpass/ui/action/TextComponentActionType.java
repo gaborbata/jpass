@@ -43,7 +43,7 @@ import jpass.ui.CopiablePasswordField;
 import jpass.util.ClipboardUtils;
 
 import static javax.swing.KeyStroke.getKeyStroke;
-import static java.awt.event.InputEvent.CTRL_MASK;
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 
 /**
  * Enumeration which holds text actions and related data.
@@ -52,7 +52,7 @@ import static java.awt.event.InputEvent.CTRL_MASK;
  *
  */
 public enum TextComponentActionType {
-    CUT(new TextComponentAction("Cut", getKeyStroke(KeyEvent.VK_X, CTRL_MASK), KeyEvent.VK_T) {
+    CUT(new TextComponentAction("Cut", getKeyStroke(KeyEvent.VK_X, CTRL_DOWN_MASK), KeyEvent.VK_T) {
         private static final long serialVersionUID = 6463843410774724700L;
 
         @Override
@@ -78,7 +78,7 @@ public enum TextComponentActionType {
                     && component.getSelectedText() != null;
         }
     }),
-    COPY(new TextComponentAction("Copy", getKeyStroke(KeyEvent.VK_C, CTRL_MASK), KeyEvent.VK_C) {
+    COPY(new TextComponentAction("Copy", getKeyStroke(KeyEvent.VK_C, CTRL_DOWN_MASK), KeyEvent.VK_C) {
         private static final long serialVersionUID = 8502265220762730908L;
 
         @Override
@@ -102,7 +102,7 @@ public enum TextComponentActionType {
             return component != null && copyEnabled && component.isEnabled() && component.getSelectedText() != null;
         }
     }),
-    PASTE(new TextComponentAction("Paste", getKeyStroke(KeyEvent.VK_V, CTRL_MASK), KeyEvent.VK_P) {
+    PASTE(new TextComponentAction("Paste", getKeyStroke(KeyEvent.VK_V, CTRL_DOWN_MASK), KeyEvent.VK_P) {
         private static final long serialVersionUID = -4089879595174370487L;
 
         @Override
@@ -183,7 +183,7 @@ public enum TextComponentActionType {
             return result;
         }
     }),
-    SELECT_ALL(new TextComponentAction("Select All", getKeyStroke(KeyEvent.VK_A, CTRL_MASK), KeyEvent.VK_A) {
+    SELECT_ALL(new TextComponentAction("Select All", getKeyStroke(KeyEvent.VK_A, CTRL_DOWN_MASK), KeyEvent.VK_A) {
         private static final long serialVersionUID = 7236761124177884500L;
 
         @Override
@@ -228,7 +228,7 @@ public enum TextComponentActionType {
         return (KeyStroke) this.action.getValue(Action.ACCELERATOR_KEY);
     }
 
-    public static final void bindAllActions(JTextComponent component) {
+    public static void bindAllActions(JTextComponent component) {
         ActionMap actionMap = component.getActionMap();
         InputMap inputMap = component.getInputMap();
         for (TextComponentActionType type : values()) {

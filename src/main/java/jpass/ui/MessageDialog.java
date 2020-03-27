@@ -41,6 +41,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -309,7 +310,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
         BufferedReader bufferedReader = null;
         try {
             InputStream is = MessageDialog.class.getClassLoader().getResourceAsStream("resources/" + name);
-            bufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line).append('\n');

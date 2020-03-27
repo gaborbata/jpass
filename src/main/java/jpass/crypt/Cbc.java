@@ -127,7 +127,6 @@ public class Cbc {
      * Decrypts a block. {@link Cbc#_current} will be modified.
      *
      * @param inBuffer storage of the encrypted block
-     * @param outBuffer storage of the decrypted block
      */
     private void decryptBlock(byte[] inBuffer) {
         System.arraycopy(inBuffer, 0, this._buffer, 0, BLOCK_SIZE);

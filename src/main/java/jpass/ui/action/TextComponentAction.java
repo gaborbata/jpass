@@ -41,7 +41,7 @@ public abstract class TextComponentAction extends TextAction {
         if (accelerator != null) {
             putValue(ACCELERATOR_KEY, accelerator);
         }
-        putValue(MNEMONIC_KEY, Integer.valueOf(mnemonic));
+        putValue(MNEMONIC_KEY, mnemonic);
     }
 
     public abstract boolean isEnabled(JTextComponent component);

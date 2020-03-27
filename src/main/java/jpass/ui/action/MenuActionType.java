@@ -50,8 +50,8 @@ import static jpass.ui.helper.FileHelper.openFile;
 import static jpass.ui.helper.FileHelper.saveFile;
 import static jpass.ui.helper.FileHelper.createNew;
 import static jpass.ui.MessageDialog.getIcon;
-import static java.awt.event.InputEvent.CTRL_MASK;
-import static java.awt.event.InputEvent.ALT_MASK;
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
+import static java.awt.event.InputEvent.ALT_DOWN_MASK;
 
 /**
  * Enumeration which holds menu actions and related data.
@@ -60,7 +60,7 @@ import static java.awt.event.InputEvent.ALT_MASK;
  *
  */
 public enum MenuActionType {
-    NEW_FILE(new AbstractMenuAction("New", getIcon("new"), getKeyStroke(KeyEvent.VK_N, CTRL_MASK)) {
+    NEW_FILE(new AbstractMenuAction("New", getIcon("new"), getKeyStroke(KeyEvent.VK_N, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -8823457568905830188L;
 
         @Override
@@ -68,7 +68,7 @@ public enum MenuActionType {
             createNew(JPassFrame.getInstance());
         }
     }),
-    OPEN_FILE(new AbstractMenuAction("Open File...", getIcon("open"), getKeyStroke(KeyEvent.VK_O, CTRL_MASK)) {
+    OPEN_FILE(new AbstractMenuAction("Open File...", getIcon("open"), getKeyStroke(KeyEvent.VK_O, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -441032579227887886L;
 
         @Override
@@ -76,7 +76,7 @@ public enum MenuActionType {
             openFile(JPassFrame.getInstance());
         }
     }),
-    SAVE_FILE(new AbstractMenuAction("Save", getIcon("save"), getKeyStroke(KeyEvent.VK_S, CTRL_MASK)) {
+    SAVE_FILE(new AbstractMenuAction("Save", getIcon("save"), getKeyStroke(KeyEvent.VK_S, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 8657273941022043906L;
 
         @Override
@@ -126,7 +126,7 @@ public enum MenuActionType {
             }
         }
     }),
-    GENERATE_PASSWORD(new AbstractMenuAction("Generate Password...", getIcon("generate"), getKeyStroke(KeyEvent.VK_Z, CTRL_MASK)) {
+    GENERATE_PASSWORD(new AbstractMenuAction("Generate Password...", getIcon("generate"), getKeyStroke(KeyEvent.VK_Z, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 2865402858056954304L;
 
         @Override
@@ -134,7 +134,7 @@ public enum MenuActionType {
             new GeneratePasswordDialog(JPassFrame.getInstance());
         }
     }),
-    EXIT(new AbstractMenuAction("Exit", getIcon("exit"), getKeyStroke(KeyEvent.VK_F4, ALT_MASK)) {
+    EXIT(new AbstractMenuAction("Exit", getIcon("exit"), getKeyStroke(KeyEvent.VK_F4, ALT_DOWN_MASK)) {
         private static final long serialVersionUID = -2741659403416846295L;
 
         @Override
@@ -165,7 +165,7 @@ public enum MenuActionType {
             MessageDialog.showTextFile(JPassFrame.getInstance(), "License", "license.txt");
         }
     }),
-    ADD_ENTRY(new AbstractMenuAction("Add Entry...", getIcon("entry_new"), getKeyStroke(KeyEvent.VK_Y, CTRL_MASK)) {
+    ADD_ENTRY(new AbstractMenuAction("Add Entry...", getIcon("entry_new"), getKeyStroke(KeyEvent.VK_Y, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 6793989246928698613L;
 
         @Override
@@ -173,7 +173,7 @@ public enum MenuActionType {
             EntryHelper.addEntry(JPassFrame.getInstance());
         }
     }),
-    EDIT_ENTRY(new AbstractMenuAction("Edit Entry...", getIcon("entry_edit"), getKeyStroke(KeyEvent.VK_E, CTRL_MASK)) {
+    EDIT_ENTRY(new AbstractMenuAction("Edit Entry...", getIcon("entry_edit"), getKeyStroke(KeyEvent.VK_E, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -3234220812811327191L;
 
         @Override
@@ -181,7 +181,7 @@ public enum MenuActionType {
             EntryHelper.editEntry(JPassFrame.getInstance());
         }
     }),
-    DUPLICATE_ENTRY(new AbstractMenuAction("Duplicate Entry...", getIcon("entry_duplicate"), getKeyStroke(KeyEvent.VK_K, CTRL_MASK)) {
+    DUPLICATE_ENTRY(new AbstractMenuAction("Duplicate Entry...", getIcon("entry_duplicate"), getKeyStroke(KeyEvent.VK_K, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 6728896867346523861L;
 
         @Override
@@ -189,7 +189,7 @@ public enum MenuActionType {
             EntryHelper.duplicateEntry(JPassFrame.getInstance());
         }
     }),
-    DELETE_ENTRY(new AbstractMenuAction("Delete Entry...", getIcon("entry_delete"), getKeyStroke(KeyEvent.VK_D, CTRL_MASK)) {
+    DELETE_ENTRY(new AbstractMenuAction("Delete Entry...", getIcon("entry_delete"), getKeyStroke(KeyEvent.VK_D, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -1306116722130641659L;
 
         @Override
@@ -197,7 +197,7 @@ public enum MenuActionType {
             EntryHelper.deleteEntry(JPassFrame.getInstance());
         }
     }),
-    COPY_URL(new AbstractMenuAction("Copy URL", getIcon("url"), getKeyStroke(KeyEvent.VK_U, CTRL_MASK)) {
+    COPY_URL(new AbstractMenuAction("Copy URL", getIcon("url"), getKeyStroke(KeyEvent.VK_U, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 3321559756310744862L;
 
         @Override
@@ -209,7 +209,7 @@ public enum MenuActionType {
             }
         }
     }),
-    COPY_USER(new AbstractMenuAction("Copy User Name", getIcon("user"), getKeyStroke(KeyEvent.VK_B, CTRL_MASK)) {
+    COPY_USER(new AbstractMenuAction("Copy User Name", getIcon("user"), getKeyStroke(KeyEvent.VK_B, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -1126080607846730912L;
 
         @Override
@@ -221,7 +221,7 @@ public enum MenuActionType {
             }
         }
     }),
-    COPY_PASSWORD(new AbstractMenuAction("Copy Password", getIcon("keyring"), getKeyStroke(KeyEvent.VK_C, CTRL_MASK)) {
+    COPY_PASSWORD(new AbstractMenuAction("Copy Password", getIcon("keyring"), getKeyStroke(KeyEvent.VK_C, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = 2719136744084762599L;
 
         @Override
@@ -233,7 +233,7 @@ public enum MenuActionType {
             }
         }
     }),
-    CLEAR_CLIPBOARD(new AbstractMenuAction("Clear Clipboard", getIcon("clear"), getKeyStroke(KeyEvent.VK_X, CTRL_MASK)) {
+    CLEAR_CLIPBOARD(new AbstractMenuAction("Clear Clipboard", getIcon("clear"), getKeyStroke(KeyEvent.VK_X, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -7621614933053924326L;
 
         @Override
@@ -241,7 +241,7 @@ public enum MenuActionType {
             EntryHelper.copyEntryField(JPassFrame.getInstance(), null);
         }
     }),
-    FIND_ENTRY(new AbstractMenuAction("Find Entry", getIcon("find"), getKeyStroke(KeyEvent.VK_F, CTRL_MASK)) {
+    FIND_ENTRY(new AbstractMenuAction("Find Entry", getIcon("find"), getKeyStroke(KeyEvent.VK_F, CTRL_DOWN_MASK)) {
         private static final long serialVersionUID = -7621614933053924326L;
 
         @Override
@@ -270,7 +270,7 @@ public enum MenuActionType {
         return (KeyStroke) this.action.getValue(Action.ACCELERATOR_KEY);
     }
 
-    public static final void bindAllActions(JComponent component) {
+    public static void bindAllActions(JComponent component) {
         ActionMap actionMap = component.getActionMap();
         InputMap inputMap = component.getInputMap();
         for (MenuActionType type : values()) {

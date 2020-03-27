@@ -42,11 +42,11 @@ import jpass.xml.bind.Entry;
  */
 public class DataModel {
 
-    private static volatile DataModel INSTANCE;
+    private static DataModel INSTANCE;
 
     private Entries entries = new Entries();
     private String fileName = null;
-    private transient byte[] password = null;
+    private byte[] password = null;
     private boolean modified = false;
 
     private DataModel() {
@@ -58,13 +58,9 @@ public class DataModel {
      *
      * @return instance of the DataModel
      */
-    public static DataModel getInstance() {
+    public static synchronized DataModel getInstance() {
         if (INSTANCE == null) {
-            synchronized (DataModel.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new DataModel();
-                }
-            }
+            INSTANCE = new DataModel();
         }
         return INSTANCE;
     }

@@ -136,7 +136,7 @@ public final class EntryHelper {
             MessageDialog.showWarningMessage(parent, "Please select an entry.");
             return null;
         }
-        return parent.getModel().getEntryByTitle((String) parent.getEntryTitleList().getSelectedValue());
+        return parent.getModel().getEntryByTitle(parent.getEntryTitleList().getSelectedValue());
     }
 
     /**

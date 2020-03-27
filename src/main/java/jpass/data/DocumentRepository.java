@@ -47,7 +47,7 @@ import jpass.xml.converter.XmlConverter;
 import static jpass.util.StringUtils.stripString;
 
 /**
- * Helper class for reading and writing (encrypted) XML documents.
+ * Repository class for reading and writing (encrypted) XML documents.
  *
  * @author Gabor_Bata
  *
@@ -67,10 +67,10 @@ public final class DocumentRepository {
     /**
      * Converter between document objects and streams representing XMLs
      */
-    private static final XmlConverter<Entries> CONVERTER = new XmlConverter<Entries>(Entries.class);
+    private static final XmlConverter<Entries> CONVERTER = new XmlConverter<>(Entries.class);
 
     /**
-     * Creates a DocumentHelper instance.
+     * Creates a DocumentRepository instance.
      *
      * @param fileName file name
      * @param key key for encryption
@@ -81,7 +81,7 @@ public final class DocumentRepository {
     }
 
     /**
-     * Creates a document helper with no encryption.
+     * Creates a document repository with no encryption.
      *
      * @param fileName file name
      * @return a new DocumentHelper object
@@ -91,7 +91,7 @@ public final class DocumentRepository {
     }
 
     /**
-     * Creates a document helper with encryption.
+     * Creates a document repository with encryption.
      *
      * @param fileName file name
      * @param key key for encryption

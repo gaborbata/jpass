@@ -59,7 +59,7 @@ public final class EntryHelper {
         int option = MessageDialog.showQuestionMessage(parent, "Do you really want to delete this entry?",
                 MessageDialog.YES_NO_OPTION);
         if (option == MessageDialog.YES_OPTION) {
-            String title = (String) parent.getEntryTitleList().getSelectedValue();
+            String title = parent.getEntryTitleList().getSelectedValue();
             parent.getModel().getEntries().getEntry().remove(parent.getModel().getEntryByTitle(title));
             parent.getModel().setModified(true);
             parent.refreshFrameTitle();

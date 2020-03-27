@@ -21,10 +21,10 @@ Features:
 
 Usage
 -----
-Java 8 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.19-RELEASE.jar`).
+Java 8 or later is recommended to run JPass. Most platforms have a mechanism to execute `.jar` files (e.g. double click the `jpass-0.1.20-SNAPSHOT.jar`).
 You can also run the application from the command line by typing (the password file is optional):
 
-    java -jar jpass-0.1.19-RELEASE.jar [password_file]
+    java -jar jpass-0.1.20-SNAPSHOT.jar [password_file]
 
 Download
 --------

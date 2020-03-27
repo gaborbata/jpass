@@ -97,7 +97,7 @@ public final class JPassFrame extends JFrame {
 
     private JPassFrame(String fileName) {
         try {
-            setIconImage(getIcon("lock").getImage());
+            setIconImage(getIcon("jpass").getImage());
         } catch (Exception e) {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }

@@ -50,3 +50,14 @@ See the License for details about distribution rights, and the specific rights r
 
 You may obtain a copy of the License at:
 http://www.apache.org/licenses/LICENSE-2.0
+-------------------------------------------------------------------------------
+This software includes SVG Salamander, licensed both under the LGPL and BSD licenses.
+
+You may obtain a copy of the License at:
+github.com/JFormDesigner/svgSalamander/blob/master/www/license/license-lgpl.txt
+github.com/JFormDesigner/svgSalamander/blob/master/www/license/license-bsd.txt
+-------------------------------------------------------------------------------
+This software uses application logo created by Jibbie R. Eguna, licensed under a Creative Commons Attribution 4.0 International License.
+
+You may obtain a copy of the License at:
+https://creativecommons.org/licenses/by/4.0/

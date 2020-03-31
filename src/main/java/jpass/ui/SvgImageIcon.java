@@ -24,7 +24,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,14 +57,15 @@ public class SvgImageIcon extends ImageIcon {
     }
 
     private void update() {
-        if (dark == isDarkLaf() && diagram != null)
+        if (dark == isDarkLaf() && diagram != null) {
             return;
+        }
 
         dark = isDarkLaf();
         URL url = getIconURL(name, dark);
-        if (url == null && dark)
+        if (url == null && dark) {
             url = getIconURL(name, false);
-
+        }
         // load/get image
         try {
             diagram = svgUniverse.getDiagram(url.toURI());
@@ -99,8 +99,9 @@ public class SvgImageIcon extends ImageIcon {
         update();
 
         Rectangle clipBounds = g.getClipBounds();
-        if (clipBounds != null && !clipBounds.intersects(new Rectangle(x, y, getIconWidth(), getIconHeight())))
+        if (clipBounds != null && !clipBounds.intersects(new Rectangle(x, y, getIconWidth(), getIconHeight()))) {
             return;
+        }
 
         Graphics2D g2 = (Graphics2D)g.create();
         try {

@@ -280,7 +280,7 @@ public class EntryDialog extends JDialog implements ActionListener {
     /**
      * Gets the form data (entry) of this dialog.
      *
-     * @return nonempty form data if the 'OK1 button is pressed, otherwise an empty data
+     * @return nonempty form data if the 'OK' button is pressed, otherwise an empty data
      */
     public Entry getFormData() {
         return this.formData;

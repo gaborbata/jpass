@@ -63,7 +63,6 @@ public class SearchPanel extends JPanel implements ActionListener {
     private final JLabel label;
     private final JTextField criteriaField;
     private final JButton closeButton;
-    private final transient Consumer<Boolean> callback;
 
     /**
      * Creates a new search panel with the given callback object.
@@ -74,27 +73,25 @@ public class SearchPanel extends JPanel implements ActionListener {
         super(new BorderLayout());
         setBorder(new EmptyBorder(2, 2, 2, 2));
 
-        this.callback = searchCallback;
-
         this.label = new JLabel("Find: ", MessageDialog.getIcon("find"), SwingConstants.LEADING);
 
         this.criteriaField = TextComponentFactory.newTextField();
 
-        if (this.callback != null) {
+        if (searchCallback != null) {
             this.criteriaField.getDocument().addDocumentListener(new DocumentListener() {
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-                    callback.accept(isEnabled());
+                    searchCallback.accept(isEnabled());
                 }
 
                 @Override
                 public void insertUpdate(DocumentEvent e) {
-                    callback.accept(isEnabled());
+                    searchCallback.accept(isEnabled());
                 }
 
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    callback.accept(isEnabled());
+                    searchCallback.accept(isEnabled());
                 }
             });
         }

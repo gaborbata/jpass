@@ -46,7 +46,7 @@ public class StreamTest {
         CryptInputStream decrypter = new CryptInputStream(new ByteArrayInputStream(encrypted.toByteArray()), key);
         ByteArrayOutputStream decrypted = new ByteArrayOutputStream();
 
-        int read = 0;
+        int read;
         while ((read = decrypter.read()) >= 0) {
             decrypted.write(read);
         }

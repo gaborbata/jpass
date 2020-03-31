@@ -143,7 +143,7 @@ public class DataModel {
      * @return list of entry titles
      */
     public List<String> getTitles() {
-        List<String> list = new ArrayList<String>(this.entries.getEntry().size());
+        List<String> list = new ArrayList<>(this.entries.getEntry().size());
         for (Entry entry : this.entries.getEntry()) {
             list.add(entry.getTitle());
         }

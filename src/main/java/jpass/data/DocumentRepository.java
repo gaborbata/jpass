@@ -114,7 +114,7 @@ public final class DocumentRepository {
         Entries entries;
         try {
             if (this.key == null) {
-                inputStream = new FileInputStream(this.fileName);
+                inputStream = new BufferedInputStream(new FileInputStream(this.fileName));
             } else {
                 inputStream = new GZIPInputStream(new CryptInputStream(new BufferedInputStream(new FileInputStream(this.fileName)), this.key));
             }

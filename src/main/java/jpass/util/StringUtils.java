@@ -80,12 +80,4 @@ public final class StringUtils {
         }
         return result;
     }
-
-    public static String byteArrayToHex(byte[] array) {
-        StringBuilder sb = new StringBuilder(array.length * 2);
-        for (byte b : array) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
-    }
 }

@@ -70,7 +70,7 @@ public class SvgImageIcon extends ImageIcon {
         try {
             diagram = svgUniverse.getDiagram(url.toURI());
         } catch (Exception ex) {
-            LOG.log(Level.WARNING, String.format("Could not get SVG image [%s] due to [%s]", url.toString(), ex.getMessage()));
+            LOG.log(Level.WARNING, String.format("Could not get SVG image [%s] due to [%s]", name, ex.getMessage()));
         }
     }
 

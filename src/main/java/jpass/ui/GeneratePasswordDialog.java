@@ -256,7 +256,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
     /**
      * Gets the generated password.
      *
-     * @return if the password is not generated than the return value is {@code null}, otherwise the
+     * @return if the password is not generated then the return value is {@code null}, otherwise the
      * generated password
      */
     public String getGeneratedPassword() {

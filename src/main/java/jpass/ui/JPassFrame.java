@@ -46,7 +46,6 @@ import java.util.logging.Logger;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

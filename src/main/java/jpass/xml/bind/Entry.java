@@ -46,7 +46,8 @@ public class Entry {
     protected String creationDate;
 
     public Entry(){
-        this.creationDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+        Date d = new Date();
+        this.creationDate = Long.toString(d.getTime());
         this.lastModification = this.creationDate;
     }
 

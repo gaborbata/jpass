@@ -36,6 +36,7 @@ import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
 import jpass.util.Configuration;
 import jpass.xml.bind.Entry;
+import jpass.util.DateUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -285,8 +286,10 @@ public final class JPassFrame extends JFrame {
         for (String title : titles) {
             if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
                 Entry entry = this.model.getEntryByTitle(title);
-                String creation_date = entry.getCreationDate();
-                String modification_date = entry.getLastModification();
+                String date_format = Configuration.getInstance().get("default.date.format","dd-MM-yyyy HH:mm:ss");
+                DateUtils dt = new DateUtils();
+                String creation_date = dt.fromUnixDateToString(entry.getCreationDate(),date_format);
+                String modification_date =  dt.fromUnixDateToString(entry.getLastModification(),date_format);
                 this.entryTitleTableModel.addRow(new Object[] {title,creation_date,modification_date});
             }
         }

@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -295,7 +294,6 @@ public final class JPassFrame extends JFrame {
 
         if (selectTitle != null) {
             int index = this.model.getEntryIndexByTitle(selectTitle);
-            System.out.println(index);
             this.entryTitleTable.setRowSelectionInterval(index,index);
         }
 

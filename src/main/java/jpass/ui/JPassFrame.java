@@ -35,6 +35,7 @@ import jpass.ui.action.MenuActionType;
 import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
 import jpass.util.Configuration;
+import jpass.xml.bind.Entry;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -278,16 +279,15 @@ public final class JPassFrame extends JFrame {
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleTableModel.setRowCount(0);
         List<String> titles = this.model.getTitles();
-        List<String> creation_dates = this.model.getCreationDates();
-        List<String> modified_dates = this.model.getModifiedDates();
         Collections.sort(titles, String.CASE_INSENSITIVE_ORDER);
 
         String searchCriteria = this.searchPanel.getSearchCriteria();
-        int i = 0;
         for (String title : titles) {
             if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
-                this.entryTitleTableModel.addRow(new Object[] {title,creation_dates.get(i),modified_dates.get(i)});
-                i++;
+                Entry entry = this.model.getEntryByTitle(title);
+                String creation_date = entry.getCreationDate();
+                String modification_date = entry.getLastModification();
+                this.entryTitleTableModel.addRow(new Object[] {title,creation_date,modification_date});
             }
         }
 

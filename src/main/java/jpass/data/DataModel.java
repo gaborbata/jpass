@@ -151,6 +151,32 @@ public class DataModel {
     }
 
     /**
+     * Gets the list of entry creationDates.
+     *
+     * @return list of entry creationDates
+     */
+    public List<String> getCreationDates() {
+        List<String> list = new ArrayList<>(this.entries.getEntry().size());
+        for (Entry entry : this.entries.getEntry()) {
+            list.add(entry.getCreationDate());
+        }
+        return list;
+    }
+
+    /**
+     * Gets the list of entry lastModification.
+     *
+     * @return list of entry lastModification
+     */
+    public List<String> getModifiedDates() {
+        List<String> list = new ArrayList<>(this.entries.getEntry().size());
+        for (Entry entry : this.entries.getEntry()) {
+            list.add(entry.getLastModification());
+        }
+        return list;
+    }
+
+    /**
      * Gets entry index by title.
      *
      * @param title entry title

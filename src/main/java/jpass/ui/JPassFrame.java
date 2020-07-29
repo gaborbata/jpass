@@ -30,7 +30,7 @@ package jpass.ui;
 
 import jpass.data.DataModel;
 import jpass.ui.action.CloseListener;
-import jpass.ui.action.ListListener;
+import jpass.ui.action.TableListener;
 import jpass.ui.action.MenuActionType;
 import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
@@ -45,8 +45,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -88,8 +90,9 @@ public final class JPassFrame extends JFrame {
     private final JMenu helpMenu;
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
-    private final JList<String> entryTitleList;
-    private final DefaultListModel<String> entryTitleListModel;
+
+    private final JTable entryTitleTable;
+    private final DefaultTableModel entryTitleTableModel;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
@@ -186,13 +189,21 @@ public final class JPassFrame extends JFrame {
         this.popup.addSeparator();
         this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
-        this.entryTitleListModel = new DefaultListModel<>();
-        this.entryTitleList = new JList<>(this.entryTitleListModel);
-        this.entryTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.entryTitleList.addMouseListener(new ListListener());
 
-        this.scrollPane = new JScrollPane(this.entryTitleList);
-        MenuActionType.bindAllActions(this.entryTitleList);
+        this.entryTitleTableModel = new DefaultTableModel();
+        this.entryTitleTable = new JTable(this.entryTitleTableModel){
+            private static final long serialVersionUID = 1L;
+            public boolean isCellEditable(int row, int column) {                
+                    return false;               
+            };
+        };
+        entryTitleTableModel.addColumn("Entry Title");
+        entryTitleTableModel.addColumn("Creation Date");
+        entryTitleTableModel.addColumn("Date Modified");
+        this.entryTitleTable.addMouseListener(new TableListener());
+
+        this.scrollPane = new JScrollPane(this.entryTitleTable);
+        MenuActionType.bindAllActions(this.entryTitleTable);
 
         this.statusPanel = new StatusPanel();
 
@@ -212,7 +223,7 @@ public final class JPassFrame extends JFrame {
         FileHelper.doOpenFile(fileName, this);
 
         // set focus to the list for easier keyboard navigation
-        this.entryTitleList.requestFocusInWindow();
+        this.entryTitleTable.requestFocusInWindow();
     }
 
     public static JPassFrame getInstance() {
@@ -231,8 +242,8 @@ public final class JPassFrame extends JFrame {
      *
      * @return entry title list
      */
-    public JList<String> getEntryTitleList() {
-        return this.entryTitleList;
+    public JTable getEntryTitleTable() {
+        return this.entryTitleTable;
     }
 
     /**
@@ -249,7 +260,7 @@ public final class JPassFrame extends JFrame {
      */
     public void clearModel() {
         this.model.clear();
-        this.entryTitleListModel.clear();
+        this.entryTitleTableModel.setRowCount(0);
     }
 
     /**
@@ -267,25 +278,31 @@ public final class JPassFrame extends JFrame {
      * @param selectTitle title to select, or {@code null} if nothing to select
      */
     public void refreshEntryTitleList(String selectTitle) {
-        this.entryTitleListModel.clear();
+        this.entryTitleTableModel.setRowCount(0);
         List<String> titles = this.model.getTitles();
+        List<String> creation_dates = this.model.getCreationDates();
+        List<String> modified_dates = this.model.getModifiedDates();
         Collections.sort(titles, String.CASE_INSENSITIVE_ORDER);
 
         String searchCriteria = this.searchPanel.getSearchCriteria();
+        int i = 0;
         for (String title : titles) {
             if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
-                this.entryTitleListModel.addElement(title);
+                this.entryTitleTableModel.addRow(new Object[] {title,creation_dates.get(i),modified_dates.get(i)});
+                i++;
             }
         }
 
         if (selectTitle != null) {
-            this.entryTitleList.setSelectedValue(selectTitle, true);
+            int index = this.model.getEntryIndexByTitle(selectTitle);
+            System.out.println(index);
+            this.entryTitleTable.setRowSelectionInterval(index,index);
         }
 
         if (searchCriteria.isEmpty()) {
             this.statusPanel.setText("Entries count: " + titles.size());
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryTitleListModel.size() + " / " + titles.size());
+            this.statusPanel.setText("Entries found: " + this.entryTitleTableModel.getRowCount() + " / " + titles.size());
         }
     }
 
@@ -340,7 +357,7 @@ public final class JPassFrame extends JFrame {
             actionType.getAction().setEnabled(!processing);
         }
         this.searchPanel.setEnabled(!processing);
-        this.entryTitleList.setEnabled(!processing);
+        this.entryTitleTable.setEnabled(!processing);
         this.statusPanel.setProcessing(processing);
     }
 

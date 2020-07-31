@@ -42,7 +42,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +60,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 import static jpass.ui.MessageDialog.NO_OPTION;
@@ -192,13 +193,15 @@ public final class JPassFrame extends JFrame {
         this.popup.addSeparator();
         this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
-
         this.entryTitleTableModel = new DefaultTableModel();
         this.entryTitleTable = new JTable(this.entryTitleTableModel){
             private static final long serialVersionUID = 1L;
+
+            @Override
             public boolean isCellEditable(int row, int column) {                
                     return false;               
             };
+
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
@@ -209,9 +212,9 @@ public final class JPassFrame extends JFrame {
              }
         };
         this.entryTitleTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        entryTitleTableModel.addColumn("Entry Title");
-        entryTitleTableModel.addColumn("Creation Date");
-        entryTitleTableModel.addColumn("Date Modified");
+        entryTitleTableModel.addColumn("Title");
+        entryTitleTableModel.addColumn("Created");
+        entryTitleTableModel.addColumn("Modified");
         this.entryTitleTable.addMouseListener(new TableListener());
 
         this.scrollPane = new JScrollPane(this.entryTitleTable);
@@ -291,30 +294,27 @@ public final class JPassFrame extends JFrame {
      */
     public void refreshEntryTitleList(String selectTitle) {
         this.entryTitleTableModel.setRowCount(0);
-        List<String> titles = this.model.getTitles();
-        Collections.sort(titles, String.CASE_INSENSITIVE_ORDER);
-
+        List<Entry> entries = new ArrayList<>(this.model.getEntries().getEntry());
+        Collections.sort(entries, Comparator.comparing(Entry::getTitle, String.CASE_INSENSITIVE_ORDER));
         String searchCriteria = this.searchPanel.getSearchCriteria();
-        for (String title : titles) {
-            if (searchCriteria.isEmpty() || title.toLowerCase().contains(searchCriteria.toLowerCase())) {
-                Entry entry = this.model.getEntryByTitle(title);
-                String date_format = Configuration.getInstance().get("default.date.format","dd-MM-yyyy HH:mm:ss");
-                DateUtils dt = new DateUtils();
-                String creation_date = dt.fromUnixDateToString(entry.getCreationDate(),date_format);
-                String modification_date =  dt.fromUnixDateToString(entry.getLastModification(),date_format);
-                this.entryTitleTableModel.addRow(new Object[] {title,creation_date,modification_date});
+        for (Entry entry : entries) {
+            if (searchCriteria.isEmpty() || entry.getTitle().toLowerCase().contains(searchCriteria.toLowerCase())) {
+                String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
+                String creationDate = DateUtils.fromUnixDateToString(entry.getCreationDate(), dateFormat);
+                String modificationDate = DateUtils.fromUnixDateToString(entry.getLastModification(), dateFormat);
+                this.entryTitleTableModel.addRow(new Object[] { entry.getTitle(), creationDate, modificationDate });
             }
         }
 
         if (selectTitle != null) {
             int index = this.model.getEntryIndexByTitle(selectTitle);
-            this.entryTitleTable.setRowSelectionInterval(index,index);
+            this.entryTitleTable.setRowSelectionInterval(index, index);
         }
 
         if (searchCriteria.isEmpty()) {
-            this.statusPanel.setText("Entries count: " + titles.size());
+            this.statusPanel.setText("Entries count: " + entries.size());
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryTitleTableModel.getRowCount() + " / " + titles.size());
+            this.statusPanel.setText("Entries found: " + this.entryTitleTableModel.getRowCount() + " / " + entries.size());
         }
     }
 

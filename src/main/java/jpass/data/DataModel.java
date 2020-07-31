@@ -150,6 +150,7 @@ public class DataModel {
         return list;
     }
 
+
     /**
      * Gets entry index by title.
      *

@@ -32,7 +32,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
 import jpass.ui.JPassFrame;
@@ -44,7 +44,7 @@ import jpass.ui.helper.EntryHelper;
  * @author Gabor_Bata
  *
  */
-public class ListListener extends MouseAdapter {
+public class TableListener extends MouseAdapter {
 
     /**
      * Show entry on double click.
@@ -85,16 +85,20 @@ public class ListListener extends MouseAdapter {
      * Checks pop-up trigger.
      *
      * @param evt mouse event
-     */
+     */    
     private void checkPopup(MouseEvent evt) {
         if (JPassFrame.getInstance().isProcessing()) {
             return;
         }
         if (evt.isPopupTrigger()) {
-            JList<String> list = JPassFrame.getInstance().getEntryTitleList();
-            if (list.isEnabled()) {
+            JTable table = JPassFrame.getInstance().getEntryTitleTable();
+            if (table.isEnabled()) {
                 Point point = new Point(evt.getX(), evt.getY());
-                list.setSelectedIndex(list.locationToIndex(point));
+                int rowAtPoint = table.rowAtPoint(point);
+                if (rowAtPoint > -1) {
+                    table.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                }
+                
                 JPassFrame.getInstance().getPopup().show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }

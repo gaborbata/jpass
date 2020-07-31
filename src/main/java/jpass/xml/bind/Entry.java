@@ -1,5 +1,7 @@
 package jpass.xml.bind;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  * <p>
  * Java class for entry complex type.
@@ -23,7 +25,9 @@ package jpass.xml.bind;
  *         &lt;element name="user" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/sequence&gt;
+ *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt; 
+ *         &lt;element name="modificationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt; 
+ *      &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -38,6 +42,14 @@ public class Entry {
     protected String user;
     protected String password;
     protected String notes;
+    protected String lastModification;
+    protected String creationDate;
+
+    public Entry(){
+        Date d = new Date();
+        this.creationDate = Long.toString(d.getTime());
+        this.lastModification = this.creationDate;
+    }
 
     /**
      * Gets the value of the title property.
@@ -137,6 +149,37 @@ public class Entry {
      */
     public void setNotes(String value) {
         this.notes = value;
+    }
+
+
+    /**
+     * Gets the value of the creationDate property.
+     *
+     * @param value allowed object is {@link String}
+     *
+     */
+    public String getCreationDate(){
+        return creationDate;
+    }
+
+    /**
+     * Sets the value of the creationDate property.
+     *
+     * @param value allowed object is {@link String}
+     *
+     */
+    public void setCreationDate(String date){
+        this.creationDate = date;
+    }
+
+    /**
+     * Gets the value of the lastModification property.
+     *
+     * @param value allowed object is {@link String}
+     *
+     */
+    public String getLastModification(){
+        return lastModification;
     }
 
 }

@@ -30,7 +30,6 @@ package jpass.ui;
 
 import jpass.data.DataModel;
 import jpass.ui.action.CloseListener;
-import jpass.ui.action.TableListener;
 import jpass.ui.action.MenuActionType;
 import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
@@ -40,7 +39,6 @@ import jpass.util.DateUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,11 +47,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -95,8 +90,7 @@ public final class JPassFrame extends JFrame {
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
 
-    private final JTable entryTitleTable;
-    private final DefaultTableModel entryTitleTableModel;
+    private final EntryTitleTable entryTitleTable;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
@@ -193,30 +187,7 @@ public final class JPassFrame extends JFrame {
         this.popup.addSeparator();
         this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
-        this.entryTitleTableModel = new DefaultTableModel();
-        this.entryTitleTable = new JTable(this.entryTitleTableModel){
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean isCellEditable(int row, int column) {                
-                    return false;               
-            };
-
-            @Override
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                int rendererWidth = component.getPreferredSize().width;
-                TableColumn tableColumn = getColumnModel().getColumn(column);
-                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
-                return component;
-             }
-        };
-        this.entryTitleTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        entryTitleTableModel.addColumn("Title");
-        entryTitleTableModel.addColumn("Created");
-        entryTitleTableModel.addColumn("Modified");
-        this.entryTitleTable.addMouseListener(new TableListener());
-
+        this.entryTitleTable = new EntryTitleTable();
         this.scrollPane = new JScrollPane(this.entryTitleTable);
         MenuActionType.bindAllActions(this.entryTitleTable);
 
@@ -275,7 +246,7 @@ public final class JPassFrame extends JFrame {
      */
     public void clearModel() {
         this.model.clear();
-        this.entryTitleTableModel.setRowCount(0);
+        this.entryTitleTable.clear();
     }
 
     /**
@@ -293,7 +264,7 @@ public final class JPassFrame extends JFrame {
      * @param selectTitle title to select, or {@code null} if nothing to select
      */
     public void refreshEntryTitleList(String selectTitle) {
-        this.entryTitleTableModel.setRowCount(0);
+        this.entryTitleTable.clear();
         List<Entry> entries = new ArrayList<>(this.model.getEntries().getEntry());
         Collections.sort(entries, Comparator.comparing(Entry::getTitle, String.CASE_INSENSITIVE_ORDER));
         String searchCriteria = this.searchPanel.getSearchCriteria();
@@ -302,7 +273,7 @@ public final class JPassFrame extends JFrame {
                 String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
                 String creationDate = DateUtils.fromUnixDateToString(entry.getCreationDate(), dateFormat);
                 String modificationDate = DateUtils.fromUnixDateToString(entry.getLastModification(), dateFormat);
-                this.entryTitleTableModel.addRow(new Object[] { entry.getTitle(), creationDate, modificationDate });
+                this.entryTitleTable.addRow(entry.getTitle(), creationDate, modificationDate);
             }
         }
 
@@ -314,7 +285,7 @@ public final class JPassFrame extends JFrame {
         if (searchCriteria.isEmpty()) {
             this.statusPanel.setText("Entries count: " + entries.size());
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryTitleTableModel.getRowCount() + " / " + entries.size());
+            this.statusPanel.setText("Entries found: " + this.entryTitleTable.getRowCount() + " / " + entries.size());
         }
     }
 

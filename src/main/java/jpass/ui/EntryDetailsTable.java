@@ -1,0 +1,139 @@
+/*
+ * JPass
+ *
+ * Copyright (c) 2009-2020 Gabor Bata
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package jpass.ui;
+
+import java.awt.Component;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import jpass.ui.action.TableListener;
+import jpass.util.Configuration;
+import jpass.util.DateUtils;
+import jpass.xml.bind.Entry;
+
+/**
+ * Table to display entry details.
+ */
+public class EntryDetailsTable extends JTable {
+
+    private enum DetailType {
+        TITLE("Title", Entry::getTitle),
+        URL("URL", Entry::getUrl),
+        USER("User", Entry::getUser),
+        MODIFIED("Modified", entry -> {
+            String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
+            return DateUtils.fromUnixDateToString(entry.getLastModification(), dateFormat);
+        }),
+        CREATED("Created", entry -> {
+            String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
+            return DateUtils.fromUnixDateToString(entry.getCreationDate(), dateFormat);
+        });
+
+        private final String description;
+        private final Function<Entry, String> valueMapper;
+
+        private DetailType(String description, Function<Entry, String> valueMapper) {
+            this.description = description;
+            this.valueMapper = valueMapper;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getValue(Entry entry) {
+            return entry != null ? valueMapper.apply(entry) : "";
+        }
+    }
+
+    private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
+            .collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
+    
+    private final List<DetailType> detailsToDisplay;
+    private final DefaultTableModel tableModel;
+
+    public EntryDetailsTable() {
+        super();
+
+        detailsToDisplay = Arrays.stream(Configuration.getInstance().get("entry.details", "TITLE,CREATED,MODIFIED").split(","))
+                .map(name -> DETAILS_BY_NAME.get(name))
+                .filter(Objects::nonNull)
+                .distinct()
+                .collect(Collectors.toList());
+ 
+        if (detailsToDisplay.isEmpty()) {
+            detailsToDisplay.add(DetailType.TITLE);
+            detailsToDisplay.add(DetailType.CREATED);
+            detailsToDisplay.add(DetailType.MODIFIED);
+        }
+
+        tableModel = new DefaultTableModel();
+        detailsToDisplay.forEach(detail -> tableModel.addColumn(detail.getDescription()));
+        setModel(tableModel);
+
+        getTableHeader().setReorderingAllowed(false);
+        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        addMouseListener(new TableListener());
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+
+    @Override
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+        Component component = super.prepareRenderer(renderer, row, column);
+        int rendererWidth = component.getPreferredSize().width;
+        TableColumn tableColumn = getColumnModel().getColumn(column);
+        tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+        return component;
+    }
+
+    public void clear() {
+        tableModel.setRowCount(0);
+    }
+
+    public void addRow(Entry entry) {
+        tableModel.addRow(detailsToDisplay.stream()
+                .map(detail -> detail.getValue(entry))
+                .toArray(Object[]::new));
+    }
+
+    public int rowCount() {
+        return tableModel.getRowCount();
+    }
+}

@@ -35,7 +35,6 @@ import jpass.ui.helper.EntryHelper;
 import jpass.ui.helper.FileHelper;
 import jpass.util.Configuration;
 import jpass.xml.bind.Entry;
-import jpass.util.DateUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -90,7 +89,7 @@ public final class JPassFrame extends JFrame {
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
 
-    private final EntryTitleTable entryTitleTable;
+    private final EntryDetailsTable entryDetailsTable;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
@@ -187,9 +186,9 @@ public final class JPassFrame extends JFrame {
         this.popup.addSeparator();
         this.popup.add(MenuActionType.FIND_ENTRY.getAction());
 
-        this.entryTitleTable = new EntryTitleTable();
-        this.scrollPane = new JScrollPane(this.entryTitleTable);
-        MenuActionType.bindAllActions(this.entryTitleTable);
+        this.entryDetailsTable = new EntryDetailsTable();
+        this.scrollPane = new JScrollPane(this.entryDetailsTable);
+        MenuActionType.bindAllActions(this.entryDetailsTable);
 
         this.statusPanel = new StatusPanel();
 
@@ -209,7 +208,7 @@ public final class JPassFrame extends JFrame {
         FileHelper.doOpenFile(fileName, this);
 
         // set focus to the list for easier keyboard navigation
-        this.entryTitleTable.requestFocusInWindow();
+        this.entryDetailsTable.requestFocusInWindow();
     }
 
     public static JPassFrame getInstance() {
@@ -229,7 +228,7 @@ public final class JPassFrame extends JFrame {
      * @return entry title list
      */
     public JTable getEntryTitleTable() {
-        return this.entryTitleTable;
+        return this.entryDetailsTable;
     }
 
     /**
@@ -246,7 +245,7 @@ public final class JPassFrame extends JFrame {
      */
     public void clearModel() {
         this.model.clear();
-        this.entryTitleTable.clear();
+        this.entryDetailsTable.clear();
     }
 
     /**
@@ -264,28 +263,25 @@ public final class JPassFrame extends JFrame {
      * @param selectTitle title to select, or {@code null} if nothing to select
      */
     public void refreshEntryTitleList(String selectTitle) {
-        this.entryTitleTable.clear();
+        this.entryDetailsTable.clear();
         List<Entry> entries = new ArrayList<>(this.model.getEntries().getEntry());
         Collections.sort(entries, Comparator.comparing(Entry::getTitle, String.CASE_INSENSITIVE_ORDER));
         String searchCriteria = this.searchPanel.getSearchCriteria();
         for (Entry entry : entries) {
             if (searchCriteria.isEmpty() || entry.getTitle().toLowerCase().contains(searchCriteria.toLowerCase())) {
-                String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
-                String creationDate = DateUtils.fromUnixDateToString(entry.getCreationDate(), dateFormat);
-                String modificationDate = DateUtils.fromUnixDateToString(entry.getLastModification(), dateFormat);
-                this.entryTitleTable.addRow(entry.getTitle(), creationDate, modificationDate);
+                this.entryDetailsTable.addRow(entry);
             }
         }
 
         if (selectTitle != null) {
             int index = this.model.getEntryIndexByTitle(selectTitle);
-            this.entryTitleTable.setRowSelectionInterval(index, index);
+            this.entryDetailsTable.setRowSelectionInterval(index, index);
         }
 
         if (searchCriteria.isEmpty()) {
             this.statusPanel.setText("Entries count: " + entries.size());
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryTitleTable.getRowCount() + " / " + entries.size());
+            this.statusPanel.setText("Entries found: " + this.entryDetailsTable.getRowCount() + " / " + entries.size());
         }
     }
 
@@ -340,7 +336,7 @@ public final class JPassFrame extends JFrame {
             actionType.getAction().setEnabled(!processing);
         }
         this.searchPanel.setEnabled(!processing);
-        this.entryTitleTable.setEnabled(!processing);
+        this.entryDetailsTable.setEnabled(!processing);
         this.statusPanel.setProcessing(processing);
     }
 

@@ -103,9 +103,7 @@ public class EntryDetailsTable extends JTable {
         tableModel = new DefaultTableModel();
         detailsToDisplay.forEach(detail -> tableModel.addColumn(detail.getDescription()));
         setModel(tableModel);
-
         getTableHeader().setReorderingAllowed(false);
-        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         addMouseListener(new TableListener());
     }
 
@@ -117,9 +115,11 @@ public class EntryDetailsTable extends JTable {
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component component = super.prepareRenderer(renderer, row, column);
-        int rendererWidth = component.getPreferredSize().width;
-        TableColumn tableColumn = getColumnModel().getColumn(column);
-        tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+        if (column > 0) {
+            int rendererWidth = component.getPreferredSize().width;
+            TableColumn tableColumn = getColumnModel().getColumn(column);
+            tableColumn.setMaxWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+        }
         return component;
     }
 

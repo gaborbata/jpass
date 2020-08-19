@@ -28,8 +28,8 @@
  */
 package jpass.data;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
@@ -143,13 +143,10 @@ public class DataModel {
      * @return list of entry titles
      */
     public List<String> getTitles() {
-        List<String> list = new ArrayList<>(this.entries.getEntry().size());
-        for (Entry entry : this.entries.getEntry()) {
-            list.add(entry.getTitle());
-        }
-        return list;
+        return this.entries.getEntry().stream()
+                .map(Entry::getTitle)
+                .collect(Collectors.toList());
     }
-
 
     /**
      * Gets entry index by title.

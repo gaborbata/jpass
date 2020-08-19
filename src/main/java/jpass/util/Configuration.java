@@ -84,6 +84,14 @@ public final class Configuration {
         return properties.getProperty(key, defaultValue);
     }
 
+    public String[] getArray(String key, String[] defaultValue) {
+        String prop = properties.getProperty(key);
+        if (prop != null) {
+            return prop.split(",");
+        }
+        return defaultValue;
+    }
+
     public static synchronized Configuration getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Configuration();

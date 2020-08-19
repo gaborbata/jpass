@@ -64,7 +64,7 @@ import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 
 /**
- * Utility class for displaying message dialogs.
+ * Utility class for displaying message dialog.
  *
  * @author Gabor_Bata
  *

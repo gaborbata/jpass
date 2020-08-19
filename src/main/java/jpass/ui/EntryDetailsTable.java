@@ -81,23 +81,29 @@ public class EntryDetailsTable extends JTable {
 
     private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
             .collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
-    
+
+    private static final String[] DEFAULT_DETAILS = {
+        DetailType.TITLE.name(),
+        DetailType.CREATED.name(),
+        DetailType.MODIFIED.name()
+    };
+
     private final List<DetailType> detailsToDisplay;
     private final DefaultTableModel tableModel;
 
     public EntryDetailsTable() {
         super();
 
-        detailsToDisplay = Arrays.stream(Configuration.getInstance().get("entry.details", "TITLE,CREATED,MODIFIED").split(","))
+        detailsToDisplay = Arrays.stream(Configuration.getInstance().getArray("entry.details", DEFAULT_DETAILS))
                 .map(name -> DETAILS_BY_NAME.get(name))
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
- 
+
         if (detailsToDisplay.isEmpty()) {
-            detailsToDisplay.add(DetailType.TITLE);
-            detailsToDisplay.add(DetailType.CREATED);
-            detailsToDisplay.add(DetailType.MODIFIED);
+            Arrays.stream(DEFAULT_DETAILS)
+                    .map(name -> DETAILS_BY_NAME.get(name))
+                    .forEach(detailsToDisplay::add);
         }
 
         tableModel = new DefaultTableModel();

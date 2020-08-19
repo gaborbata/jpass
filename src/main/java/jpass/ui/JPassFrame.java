@@ -267,11 +267,9 @@ public final class JPassFrame extends JFrame {
         List<Entry> entries = new ArrayList<>(this.model.getEntries().getEntry());
         Collections.sort(entries, Comparator.comparing(Entry::getTitle, String.CASE_INSENSITIVE_ORDER));
         String searchCriteria = this.searchPanel.getSearchCriteria();
-        for (Entry entry : entries) {
-            if (searchCriteria.isEmpty() || entry.getTitle().toLowerCase().contains(searchCriteria.toLowerCase())) {
-                this.entryDetailsTable.addRow(entry);
-            }
-        }
+        entries.stream()
+                .filter(entry -> searchCriteria.isEmpty() || entry.getTitle().toLowerCase().contains(searchCriteria.toLowerCase()))
+                .forEach(this.entryDetailsTable::addRow);
 
         if (selectTitle != null) {
             int index = this.model.getEntryIndexByTitle(selectTitle);

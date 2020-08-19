@@ -65,7 +65,7 @@ OF SUCH DAMAGE.
 
 ---
 
-This software includes MicroCrypt 0.3, covered by the following license:
+This software includes MicroCrypt, covered by the following license:
 
 Copyright (c) 2007 Timm Knape
 

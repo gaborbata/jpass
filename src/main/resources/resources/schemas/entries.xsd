@@ -24,6 +24,8 @@
       <xs:element name="user" type="xs:string" minOccurs="0" />
       <xs:element name="password" type="xs:string" minOccurs="0" />
       <xs:element name="notes" type="xs:string" minOccurs="0" />
+      <xs:element name="lastModification" type="xs:string" minOccurs="0" />
+      <xs:element name="creationDate" type="xs:string" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

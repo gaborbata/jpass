@@ -2,7 +2,7 @@
  <img src="https://raw.githubusercontent.com/gaborbata/jpass/master/resources/bannerReadMe.png" width=750 align="center">
 </p>
 
-JPass [![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass)
+JPass [![Build Status](https://travis-ci.org/gaborbata/jpass.svg?branch=master)](https://travis-ci.org/gaborbata/jpass) ![Java CI with Gradle](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Gradle/badge.svg)
 =====
 
 Overview

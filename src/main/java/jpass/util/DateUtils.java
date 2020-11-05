@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 public class DateUtils {
     private static final Logger LOG = Logger.getLogger(DateUtils.class.getName());
 
-    public static final String DEFAULT_DATE_FORMAT = "dd-MM-yyyy";
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
     public static String fromUnixDateToString(String timestamp, String format) {
         Date date;

@@ -40,13 +40,13 @@ Configuration
 -------------
 Default configurations can be overridden in `jpass.properties` file:
 
-| Configuration key                  | Value type | Default value          |
-| ---------------------------------- | ---------- | ---------------------- |
-| ui.theme.dark.mode.enabled         | boolean    | false                  |
-| clear.clipboard.on.exit.enabled    | boolean    | false                  |
-| default.password.generation.length | integer    | 14                     |
-| date.format                        | string     | dd-MM-yyyy             |
-| entry.details                      | list       | TITLE,CREATED,MODIFIED |
+| Configuration key                  | Value type | Default value  |
+| ---------------------------------- | ---------- | -------------- |
+| ui.theme.dark.mode.enabled         | boolean    | false          |
+| clear.clipboard.on.exit.enabled    | boolean    | false          |
+| default.password.generation.length | integer    | 14             |
+| date.format                        | string     | yyyy-MM-dd     |
+| entry.details                      | list       | TITLE,MODIFIED |
 
 Contributors
 ------------

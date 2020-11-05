@@ -2,14 +2,14 @@ organization:= "jpass.id"
 
 name := "JPass"
 
-version := "0.1.20-SNAPSHOT"
+version := "0.1.20-RELEASE"
 
 libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.9.3"
 
-libraryDependencies += "com.formdev" % "flatlaf" % "0.40"
+libraryDependencies += "com.formdev" % "flatlaf" % "0.43"
 
-libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.2.1"
+libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.2.3"
 
-libraryDependencies += "junit" % "junit" % "4.11" % "test"
+libraryDependencies += "junit" % "junit" % "4.13.1" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.10" % "test"

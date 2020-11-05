@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar jpass-0.1.20-RELEASE.jar "$@"
+java -jar jpass-0.1.21-SNAPSHOT.jar "$@"

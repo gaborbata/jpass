@@ -1,6 +1,5 @@
 package jpass.xml.bind;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  * <p>
@@ -55,7 +54,6 @@ public class Entry {
      * Gets the value of the title property.
      *
      * @return possible object is {@link String}
-     *
      */
     public String getTitle() {
         return title;
@@ -65,7 +63,6 @@ public class Entry {
      * Sets the value of the title property.
      *
      * @param value allowed object is {@link String}
-     *
      */
     public void setTitle(String value) {
         this.title = value;
@@ -75,7 +72,6 @@ public class Entry {
      * Gets the value of the url property.
      *
      * @return possible object is {@link String}
-     *
      */
     public String getUrl() {
         return url;
@@ -85,7 +81,6 @@ public class Entry {
      * Sets the value of the url property.
      *
      * @param value allowed object is {@link String}
-     *
      */
     public void setUrl(String value) {
         this.url = value;
@@ -95,7 +90,6 @@ public class Entry {
      * Gets the value of the user property.
      *
      * @return possible object is {@link String}
-     *
      */
     public String getUser() {
         return user;
@@ -105,7 +99,6 @@ public class Entry {
      * Sets the value of the user property.
      *
      * @param value allowed object is {@link String}
-     *
      */
     public void setUser(String value) {
         this.user = value;
@@ -115,7 +108,6 @@ public class Entry {
      * Gets the value of the password property.
      *
      * @return possible object is {@link String}
-     *
      */
     public String getPassword() {
         return password;
@@ -125,7 +117,6 @@ public class Entry {
      * Sets the value of the password property.
      *
      * @param value allowed object is {@link String}
-     *
      */
     public void setPassword(String value) {
         this.password = value;
@@ -135,7 +126,6 @@ public class Entry {
      * Gets the value of the notes property.
      *
      * @return possible object is {@link String}
-     *
      */
     public String getNotes() {
         return notes;
@@ -145,38 +135,33 @@ public class Entry {
      * Sets the value of the notes property.
      *
      * @param value allowed object is {@link String}
-     *
      */
     public void setNotes(String value) {
         this.notes = value;
     }
 
-
     /**
-     * Gets the value of the creationDate property.
+     * Gets the value of the creation date property.
      *
-     * @param value allowed object is {@link String}
-     *
+     * @return the creation date
      */
     public String getCreationDate(){
         return creationDate;
     }
 
     /**
-     * Sets the value of the creationDate property.
+     * Sets the value of the creation date property.
      *
-     * @param value allowed object is {@link String}
-     *
+     * @param date the creation date
      */
     public void setCreationDate(String date){
         this.creationDate = date;
     }
 
     /**
-     * Gets the value of the lastModification property.
+     * Gets the value of the last modification property.
      *
-     * @param value allowed object is {@link String}
-     *
+     * @return the last modification date
      */
     public String getLastModification(){
         return lastModification;

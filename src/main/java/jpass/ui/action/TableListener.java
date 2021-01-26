@@ -49,6 +49,7 @@ public class TableListener extends MouseAdapter {
     /**
      * Show entry on double click.
      *
+     * @param evt the mouse event
      * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
      */
     @Override
@@ -64,6 +65,7 @@ public class TableListener extends MouseAdapter {
     /**
      * Handle pop-up.
      *
+     * @param evt the mouse event
      * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
      */
     @Override
@@ -74,6 +76,7 @@ public class TableListener extends MouseAdapter {
     /**
      * Handle pop-up.
      *
+     * @param evt the mouse event
      * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
      */
     @Override
@@ -85,7 +88,7 @@ public class TableListener extends MouseAdapter {
      * Checks pop-up trigger.
      *
      * @param evt mouse event
-     */    
+     */
     private void checkPopup(MouseEvent evt) {
         if (JPassFrame.getInstance().isProcessing()) {
             return;
@@ -98,7 +101,7 @@ public class TableListener extends MouseAdapter {
                 if (rowAtPoint > -1) {
                     table.setRowSelectionInterval(rowAtPoint, rowAtPoint);
                 }
-                
+
                 JPassFrame.getInstance().getPopup().show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }

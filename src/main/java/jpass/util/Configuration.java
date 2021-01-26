@@ -48,7 +48,7 @@ public final class Configuration {
 
     private Configuration() {
         try {
-            File filePath = new File("jpass.properties");
+            File filePath = new File(getConfigurationFolderPath(), "jpass.properties");
             if (filePath.exists() && filePath.isFile()) {
                 InputStream is = new FileInputStream(filePath);
                 properties.load(is);
@@ -57,6 +57,20 @@ public final class Configuration {
         } catch (Exception e) {
             LOG.log(Level.WARNING, "An error occurred during loading configuration.", e);
         }
+    }
+
+    private File getConfigurationFolderPath() {
+        File configurationFolderPath = null;
+        try {
+            configurationFolderPath = new File(Configuration.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()).getParentFile();
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Could not determine configuration folder path.", e);
+        }
+        return configurationFolderPath;
     }
 
     private <T> T getValue(String key, T defaultValue, Class<T> type) {

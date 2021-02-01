@@ -1,6 +1,9 @@
 package jpass.xml.bind;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 /**
  * <p>
  * Java class for entry complex type.
@@ -45,9 +48,11 @@ public class Entry {
     protected String creationDate;
 
     public Entry(){
-        Date d = new Date();
-        this.creationDate = Long.toString(d.getTime());
-        this.lastModification = this.creationDate;
+        String now = LocalDateTime.now()
+            .truncatedTo(ChronoUnit.SECONDS)
+            .format(DateTimeFormatter.ISO_DATE_TIME);
+        this.creationDate = now;
+        this.lastModification = now;
     }
 
     /**

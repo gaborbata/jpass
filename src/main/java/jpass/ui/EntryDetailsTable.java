@@ -55,11 +55,11 @@ public class EntryDetailsTable extends JTable {
         USER("User", Entry::getUser),
         MODIFIED("Modified", entry -> {
             String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
-            return DateUtils.fromUnixDateToString(entry.getLastModification(), dateFormat);
+            return DateUtils.fromIsoDateTime(entry.getLastModification(), dateFormat);
         }),
         CREATED("Created", entry -> {
             String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
-            return DateUtils.fromUnixDateToString(entry.getCreationDate(), dateFormat);
+            return DateUtils.fromIsoDateTime(entry.getCreationDate(), dateFormat);
         });
 
         private final String description;

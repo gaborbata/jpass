@@ -29,6 +29,7 @@
 package jpass.ui;
 
 import java.awt.Component;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,19 +49,15 @@ import jpass.xml.bind.Entry;
  * Table to display entry details.
  */
 public class EntryDetailsTable extends JTable {
+    private static final DateTimeFormatter FORMATTER =
+        DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
     private enum DetailType {
         TITLE("Title", Entry::getTitle),
         URL("URL", Entry::getUrl),
         USER("User", Entry::getUser),
-        MODIFIED("Modified", entry -> {
-            String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
-            return DateUtils.fromIsoDateTime(entry.getLastModification(), dateFormat);
-        }),
-        CREATED("Created", entry -> {
-            String dateFormat = Configuration.getInstance().get("date.format", DateUtils.DEFAULT_DATE_FORMAT);
-            return DateUtils.fromIsoDateTime(entry.getCreationDate(), dateFormat);
-        });
+        MODIFIED("Modified", entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
+        CREATED("Created", entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
         private final String description;
         private final Function<Entry, String> valueMapper;

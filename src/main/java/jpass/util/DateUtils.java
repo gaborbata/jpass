@@ -40,10 +40,8 @@ import java.util.logging.Logger;
 
 public class DateUtils {
     private static final Logger LOG = Logger.getLogger(DateUtils.class.getName());
-    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
-    public static String fromIsoDateTime(String dateString, String format) {
-        LocalDateTime dateTime;
+    public static DateTimeFormatter createFormatter(String format) {
         DateTimeFormatter formatter;
         try {
             formatter = DateTimeFormatter.ofPattern(format);
@@ -51,6 +49,11 @@ public class DateUtils {
             LOG.log(Level.WARNING, String.format("Could not parse date format [%s] due to [%s]", format, e.getMessage()));
             formatter = DateTimeFormatter.ISO_DATE;
         }
+        return formatter;
+    }
+
+    public static String formatIsoDateTime(String dateString, DateTimeFormatter formatter) {
+        LocalDateTime dateTime;
         try {
             dateTime = LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         } catch (DateTimeParseException | NullPointerException e) {

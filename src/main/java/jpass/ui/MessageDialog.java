@@ -72,7 +72,6 @@ import jpass.util.StringUtils;
 public final class MessageDialog extends JDialog implements ActionListener {
 
     private static final Logger LOG = Logger.getLogger(MessageDialog.class.getName());
-    private static final long serialVersionUID = -1860703845867414123L;
 
     public static final int DEFAULT_OPTION = -1;
     public static final int YES_NO_OPTION = 0;

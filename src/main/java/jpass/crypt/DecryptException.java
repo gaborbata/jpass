@@ -39,8 +39,6 @@ package jpass.crypt;
  */
 public final class DecryptException extends Exception {
 
-    private static final long serialVersionUID = -935882404526228391L;
-
     /**
      * Creates the exception.
      */

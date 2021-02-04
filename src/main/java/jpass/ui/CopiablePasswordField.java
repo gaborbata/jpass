@@ -39,7 +39,6 @@ import javax.swing.JPasswordField;
  */
 public class CopiablePasswordField extends JPasswordField {
 
-    private static final long serialVersionUID = 1205118236056025220L;
     private final boolean copyEnabled;
 
     public CopiablePasswordField(boolean copyEnabled) {

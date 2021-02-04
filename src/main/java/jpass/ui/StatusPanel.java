@@ -43,8 +43,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class StatusPanel extends JPanel {
 
-    private static final long serialVersionUID = 5455248210301851210L;
-
     private final JLabel label;
     private final JProgressBar progressBar;
 

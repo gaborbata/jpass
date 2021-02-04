@@ -71,7 +71,6 @@ import static jpass.ui.MessageDialog.showQuestionMessage;
 public final class JPassFrame extends JFrame {
 
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
-    private static final long serialVersionUID = -4114209356464342368L;
 
     private static JPassFrame INSTANCE;
 

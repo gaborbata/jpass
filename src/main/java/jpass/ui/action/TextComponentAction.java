@@ -34,8 +34,6 @@ import javax.swing.text.TextAction;
 
 public abstract class TextComponentAction extends TextAction {
 
-    private static final long serialVersionUID = -2061559337477351379L;
-
     public TextComponentAction(String text, KeyStroke accelerator, int mnemonic) {
         super(text);
         if (accelerator != null) {

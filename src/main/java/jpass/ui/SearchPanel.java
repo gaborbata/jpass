@@ -55,8 +55,6 @@ import static java.awt.event.KeyEvent.VK_ESCAPE;
  */
 public class SearchPanel extends JPanel implements ActionListener {
 
-    private static final long serialVersionUID = 5455248210301851210L;
-
     private static final String CLOSE_BUTTON_ACTION_COMMAND = "close_search_panel_button";
     private static final String SEARCH_PANEL_CLOSE_ACTION = "jpass.search_panel.close";
 
@@ -103,8 +101,6 @@ public class SearchPanel extends JPanel implements ActionListener {
         this.closeButton.addActionListener(this);
 
         Action closeAction = new AbstractAction() {
-            private static final long serialVersionUID = 2L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);

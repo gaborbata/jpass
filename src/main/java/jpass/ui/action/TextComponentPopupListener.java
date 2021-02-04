@@ -30,10 +30,22 @@ package jpass.ui.action;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
+
+import static jpass.ui.action.TextComponentActionType.CUT;
+import static jpass.ui.action.TextComponentActionType.COPY;
+import static jpass.ui.action.TextComponentActionType.PASTE;
+import static jpass.ui.action.TextComponentActionType.DELETE;
+import static jpass.ui.action.TextComponentActionType.CLEAR_ALL;
+import static jpass.ui.action.TextComponentActionType.SELECT_ALL;
 
 /**
  * A listener which adds context menu capability to text components.
@@ -44,41 +56,31 @@ import javax.swing.text.JTextComponent;
 public class TextComponentPopupListener extends MouseAdapter {
 
     private final JPopupMenu popup;
-    private final JMenuItem cutItem;
-    private final JMenuItem copyItem;
-    private final JMenuItem pasteItem;
-    private final JMenuItem deleteItem;
-    private final JMenuItem clearAllItem;
-    private final JMenuItem selectAllItem;
+    private final Map<TextComponentActionType, JMenuItem> items;
 
     public TextComponentPopupListener() {
-        this.cutItem = new JMenuItem(TextComponentActionType.CUT.getAction());
-        this.copyItem = new JMenuItem(TextComponentActionType.COPY.getAction());
-        this.pasteItem = new JMenuItem(TextComponentActionType.PASTE.getAction());
-        this.deleteItem = new JMenuItem(TextComponentActionType.DELETE.getAction());
-        this.clearAllItem = new JMenuItem(TextComponentActionType.CLEAR_ALL.getAction());
-        this.selectAllItem = new JMenuItem(TextComponentActionType.SELECT_ALL.getAction());
+        items = Stream.of(CUT, COPY, PASTE, DELETE, CLEAR_ALL, SELECT_ALL)
+            .collect(Collectors.toMap(
+                Function.identity(),
+                type -> new JMenuItem(type.getAction()),
+                (o1, o2) -> o1,
+                LinkedHashMap::new));
 
         this.popup = new JPopupMenu();
-        this.popup.add(this.cutItem);
-        this.popup.add(this.copyItem);
-        this.popup.add(this.pasteItem);
-        this.popup.add(this.deleteItem);
+        this.popup.add(items.get(TextComponentActionType.CUT));
+        this.popup.add(items.get(TextComponentActionType.COPY));
+        this.popup.add(items.get(TextComponentActionType.PASTE));
+        this.popup.add(items.get(TextComponentActionType.DELETE));
         this.popup.addSeparator();
-        this.popup.add(this.clearAllItem);
-        this.popup.add(this.selectAllItem);
+        this.popup.add(items.get(TextComponentActionType.CLEAR_ALL));
+        this.popup.add(items.get(TextComponentActionType.SELECT_ALL));
     }
 
     private void showPopupMenu(MouseEvent e) {
         if (e.isPopupTrigger() && e.getSource() instanceof JTextComponent) {
             JTextComponent textComponent = (JTextComponent) e.getSource();
             if (textComponent.isEnabled() && (textComponent.hasFocus() || textComponent.requestFocusInWindow())) {
-                this.cutItem.setEnabled(TextComponentActionType.CUT.getAction().isEnabled(textComponent));
-                this.copyItem.setEnabled(TextComponentActionType.COPY.getAction().isEnabled(textComponent));
-                this.pasteItem.setEnabled(TextComponentActionType.PASTE.getAction().isEnabled(textComponent));
-                this.deleteItem.setEnabled(TextComponentActionType.DELETE.getAction().isEnabled(textComponent));
-                this.clearAllItem.setEnabled(TextComponentActionType.CLEAR_ALL.getAction().isEnabled(textComponent));
-                this.selectAllItem.setEnabled(TextComponentActionType.SELECT_ALL.getAction().isEnabled(textComponent));
+                items.forEach((type, item) -> item.setEnabled(type.getAction().isEnabled(textComponent)));
                 this.popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }

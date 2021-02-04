@@ -52,7 +52,7 @@ import static jpass.util.StringUtils.stripString;
  * @author Gabor_Bata
  *
  */
-public final class DocumentRepository {
+public final class EntriesRepository {
 
     /**
      * File name to read/write.
@@ -75,7 +75,7 @@ public final class DocumentRepository {
      * @param fileName file name
      * @param key key for encryption
      */
-    private DocumentRepository(final String fileName, final byte[] key) {
+    private EntriesRepository(final String fileName, final byte[] key) {
         this.fileName = fileName;
         this.key = key;
     }
@@ -86,8 +86,8 @@ public final class DocumentRepository {
      * @param fileName file name
      * @return a new DocumentHelper object
      */
-    public static DocumentRepository newInstance(final String fileName) {
-        return new DocumentRepository(fileName, null);
+    public static EntriesRepository newInstance(final String fileName) {
+        return new EntriesRepository(fileName, null);
     }
 
     /**
@@ -97,8 +97,8 @@ public final class DocumentRepository {
      * @param key key for encryption
      * @return a new DocumentHelper object
      */
-    public static DocumentRepository newInstance(final String fileName, final byte[] key) {
-        return new DocumentRepository(fileName, key);
+    public static EntriesRepository newInstance(final String fileName, final byte[] key) {
+        return new EntriesRepository(fileName, key);
     }
 
     /**

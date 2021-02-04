@@ -36,7 +36,7 @@ import java.util.function.Consumer;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import jpass.data.DocumentRepository;
+import jpass.data.EntriesRepository;
 import jpass.ui.JPassFrame;
 import jpass.ui.MessageDialog;
 import jpass.ui.action.Worker;
@@ -104,7 +104,7 @@ public final class FileHelper {
             @Override
             protected Void doInBackground() throws Exception {
                 try {
-                    DocumentRepository.newInstance(fileName).writeDocument(parent.getModel().getEntries());
+                    EntriesRepository.newInstance(fileName).writeDocument(parent.getModel().getEntries());
                 } catch (Throwable e) {
                     throw new Exception("An error occured during the export operation:\n" + e.getMessage());
                 }
@@ -156,7 +156,7 @@ public final class FileHelper {
             @Override
             protected Void doInBackground() throws Exception {
                 try {
-                    parent.getModel().setEntries(DocumentRepository.newInstance(fileName).readDocument());
+                    parent.getModel().setEntries(EntriesRepository.newInstance(fileName).readDocument());
                     parent.getModel().setModified(true);
                     parent.getModel().setFileName(null);
                     parent.getModel().setPassword(null);
@@ -221,7 +221,7 @@ public final class FileHelper {
             @Override
             protected Void doInBackground() throws Exception {
                 try {
-                    DocumentRepository.newInstance(fileName, password).writeDocument(parent.getModel().getEntries());
+                    EntriesRepository.newInstance(fileName, password).writeDocument(parent.getModel().getEntries());
                     parent.getModel().setFileName(fileName);
                     parent.getModel().setPassword(password);
                     parent.getModel().setModified(false);
@@ -296,7 +296,7 @@ public final class FileHelper {
             @Override
             protected Void doInBackground() throws Exception {
                 try {
-                    parent.getModel().setEntries(DocumentRepository.newInstance(fileName, password).readDocument());
+                    parent.getModel().setEntries(EntriesRepository.newInstance(fileName, password).readDocument());
                     parent.getModel().setFileName(fileName);
                     parent.getModel().setPassword(password);
                     parent.getSearchPanel().setVisible(false);
@@ -342,7 +342,7 @@ public final class FileHelper {
                 @Override
                 protected Void doInBackground() throws Exception {
                     try {
-                        DocumentRepository.newInstance(fileName, password).writeDocument(parent.getModel().getEntries());
+                        EntriesRepository.newInstance(fileName, password).writeDocument(parent.getModel().getEntries());
                         parent.getModel().setFileName(fileName);
                         parent.getModel().setPassword(password);
                     } catch (Exception ex) {

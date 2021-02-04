@@ -63,7 +63,6 @@ import static jpass.ui.helper.EntryHelper.copyEntryField;
  */
 public class EntryDialog extends JDialog implements ActionListener {
 
-    private static final long serialVersionUID = -8551022862532925078L;
     private static final char NULL_ECHO = '\0';
 
     private final JPanel fieldPanel;

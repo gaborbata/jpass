@@ -40,8 +40,6 @@ import javax.swing.KeyStroke;
  */
 public abstract class AbstractMenuAction extends AbstractAction {
 
-    private static final long serialVersionUID = 5470805628583386182L;
-
     /**
      * Creates a new menu action.
      *

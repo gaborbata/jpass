@@ -61,8 +61,6 @@ import jpass.util.SpringUtilities;
  */
 public final class GeneratePasswordDialog extends JDialog implements ActionListener {
 
-    private static final long serialVersionUID = -1807066563698740446L;
-
     /**
      * Characters for custom symbols generation.
      */

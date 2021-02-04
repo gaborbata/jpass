@@ -53,8 +53,6 @@ import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
  */
 public enum TextComponentActionType {
     CUT(new TextComponentAction("Cut", getKeyStroke(KeyEvent.VK_X, CTRL_DOWN_MASK), KeyEvent.VK_T) {
-        private static final long serialVersionUID = 6463843410774724700L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -79,8 +77,6 @@ public enum TextComponentActionType {
         }
     }),
     COPY(new TextComponentAction("Copy", getKeyStroke(KeyEvent.VK_C, CTRL_DOWN_MASK), KeyEvent.VK_C) {
-        private static final long serialVersionUID = 8502265220762730908L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -103,8 +99,6 @@ public enum TextComponentActionType {
         }
     }),
     PASTE(new TextComponentAction("Paste", getKeyStroke(KeyEvent.VK_V, CTRL_DOWN_MASK), KeyEvent.VK_P) {
-        private static final long serialVersionUID = -4089879595174370487L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -120,8 +114,6 @@ public enum TextComponentActionType {
         }
     }),
     DELETE(new TextComponentAction("Delete", getKeyStroke(KeyEvent.VK_DELETE, 0), KeyEvent.VK_D) {
-        private static final long serialVersionUID = 1227622869347781706L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -158,8 +150,6 @@ public enum TextComponentActionType {
         }
     }),
     CLEAR_ALL(new TextComponentAction("Clear All", null, KeyEvent.VK_L) {
-        private static final long serialVersionUID = 5810788894068735542L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);
@@ -184,8 +174,6 @@ public enum TextComponentActionType {
         }
     }),
     SELECT_ALL(new TextComponentAction("Select All", getKeyStroke(KeyEvent.VK_A, CTRL_DOWN_MASK), KeyEvent.VK_A) {
-        private static final long serialVersionUID = 7236761124177884500L;
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextComponent component = getTextComponent(e);

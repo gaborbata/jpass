@@ -121,7 +121,9 @@ public class SvgImageIcon extends ImageIcon {
         }
 
         g.translate(x, y);
-        g.clipRect(0, 0, getIconWidth(), getIconHeight());
+
+        // add +1 clip width/height to properly display anti-aliased edges
+        g.clipRect(0, 0, getIconWidth() + 1, getIconHeight() + 1);
 
         UIScale.scaleGraphics(g);
 

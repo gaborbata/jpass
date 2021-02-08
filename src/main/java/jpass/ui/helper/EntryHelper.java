@@ -30,9 +30,14 @@ package jpass.ui.helper;
 
 import jpass.ui.EntryDialog;
 import jpass.ui.JPassFrame;
-import jpass.ui.MessageDialog;
 import jpass.util.ClipboardUtils;
 import jpass.xml.bind.Entry;
+
+import static jpass.ui.MessageDialog.showErrorMessage;
+import static jpass.ui.MessageDialog.showWarningMessage;
+import static jpass.ui.MessageDialog.showQuestionMessage;
+import static jpass.ui.MessageDialog.YES_NO_OPTION;
+import static jpass.ui.MessageDialog.YES_OPTION;
 
 /**
  * Helper class for entry operations.
@@ -53,12 +58,11 @@ public final class EntryHelper {
      */
     public static void deleteEntry(JPassFrame parent) {
         if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-            MessageDialog.showWarningMessage(parent, "Please select an entry.");
+            showWarningMessage(parent, "Please select an entry.");
             return;
         }
-        int option = MessageDialog.showQuestionMessage(parent, "Do you really want to delete this entry?",
-                MessageDialog.YES_NO_OPTION);
-        if (option == MessageDialog.YES_OPTION) {
+        int option = showQuestionMessage(parent, "Do you really want to delete this entry?", YES_NO_OPTION);
+        if (option == YES_OPTION) {
             String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
             parent.getModel().getEntries().getEntry().remove(parent.getModel().getEntryByTitle(title));
             parent.getModel().setModified(true);
@@ -74,18 +78,18 @@ public final class EntryHelper {
      */
     public static void duplicateEntry(JPassFrame parent) {
         if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-            MessageDialog.showWarningMessage(parent, "Please select an entry.");
+            showWarningMessage(parent, "Please select an entry.");
             return;
         }
         String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
-        Entry oldEntry = parent.getModel().getEntryByTitle(title);
-        EntryDialog ed = new EntryDialog(parent, "Duplicate Entry", oldEntry, true);
-        if (ed.getFormData() != null) {
-            parent.getModel().getEntries().getEntry().add(ed.getFormData());
+        Entry originalEntry = parent.getModel().getEntryByTitle(title);
+        EntryDialog dialog = new EntryDialog(parent, "Duplicate Entry", originalEntry, true);
+        dialog.getModifiedEntry().ifPresent(entry -> {
+            parent.getModel().getEntries().getEntry().add(entry);
             parent.getModel().setModified(true);
             parent.refreshFrameTitle();
-            parent.refreshEntryTitleList(ed.getFormData().getTitle());
-        }
+            parent.refreshEntryTitleList(entry.getTitle());
+        });
     }
 
     /**
@@ -95,21 +99,20 @@ public final class EntryHelper {
      */
     public static void editEntry(JPassFrame parent) {
         if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-            MessageDialog.showWarningMessage(parent, "Please select an entry.");
+            showWarningMessage(parent, "Please select an entry.");
             return;
         }
         String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
-        Entry oldEntry = parent.getModel().getEntryByTitle(title);
-        EntryDialog ed = new EntryDialog(parent, "Edit Entry", oldEntry, false);
-        if (ed.getFormData() != null) {
-            parent.getModel().getEntries().getEntry().remove(oldEntry);
-            Entry newEntry = ed.getFormData();
-            newEntry.setCreationDate(oldEntry.getCreationDate());
-            parent.getModel().getEntries().getEntry().add(newEntry);
+        Entry originalEntry = parent.getModel().getEntryByTitle(title);
+        EntryDialog dialog = new EntryDialog(parent, "Edit Entry", originalEntry, false);
+        dialog.getModifiedEntry().ifPresent(entry -> {
+            entry.setCreationDate(originalEntry.getCreationDate());
+            parent.getModel().getEntries().getEntry().remove(originalEntry);
+            parent.getModel().getEntries().getEntry().add(entry);
             parent.getModel().setModified(true);
             parent.refreshFrameTitle();
-            parent.refreshEntryTitleList(ed.getFormData().getTitle());
-        }
+            parent.refreshEntryTitleList(entry.getTitle());
+        });
     }
 
     /**
@@ -118,13 +121,13 @@ public final class EntryHelper {
      * @param parent parent component
      */
     public static void addEntry(JPassFrame parent) {
-        EntryDialog ed = new EntryDialog(parent, "Add New Entry", null, true);
-        if (ed.getFormData() != null) {
-            parent.getModel().getEntries().getEntry().add(ed.getFormData());
+        EntryDialog dialog = new EntryDialog(parent, "Add New Entry", null, true);
+        dialog.getModifiedEntry().ifPresent(entry -> {
+            parent.getModel().getEntries().getEntry().add(entry);
             parent.getModel().setModified(true);
             parent.refreshFrameTitle();
-            parent.refreshEntryTitleList(ed.getFormData().getTitle());
-        }
+            parent.refreshEntryTitleList(entry.getTitle());
+        });
     }
 
     /**
@@ -135,7 +138,7 @@ public final class EntryHelper {
      */
     public static Entry getSelectedEntry(JPassFrame parent) {
         if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-            MessageDialog.showWarningMessage(parent, "Please select an entry.");
+            showWarningMessage(parent, "Please select an entry.");
             return null;
         }
         String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
@@ -152,7 +155,7 @@ public final class EntryHelper {
         try {
             ClipboardUtils.setClipboardContent(content);
         } catch (Exception e) {
-            MessageDialog.showErrorMessage(parent, e.getMessage());
+            showErrorMessage(parent, e.getMessage());
         }
     }
 }

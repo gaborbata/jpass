@@ -34,6 +34,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -251,13 +252,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         }
     }
 
-    /**
-     * Gets the generated password.
-     *
-     * @return if the password is not generated then the return value is {@code null}, otherwise the
-     * generated password
-     */
-    public String getGeneratedPassword() {
-        return this.generatedPassword;
+    public Optional<String> getGeneratedPassword() {
+        return Optional.ofNullable(this.generatedPassword);
     }
 }

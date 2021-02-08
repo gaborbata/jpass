@@ -35,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -85,7 +86,7 @@ public class EntryDialog extends JDialog implements ActionListener {
 
     private final char ORIGINAL_ECHO;
 
-    private Entry formData;
+    private Entry modifiedEntry;
 
     private final boolean newEntry;
 
@@ -96,15 +97,15 @@ public class EntryDialog extends JDialog implements ActionListener {
      *
      * @param parent parent component
      * @param title dialog title
-     * @param entry the entry
+     * @param entry the entry to fill form data, can be null
      * @param newEntry new entry marker
      */
-    public EntryDialog(final JPassFrame parent, final String title, final Entry entry, final boolean newEntry) {
+    public EntryDialog(JPassFrame parent, String title, Entry entry, boolean newEntry) {
         super(parent, title, true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.newEntry = newEntry;
 
-        this.formData = null;
+        this.modifiedEntry = null;
 
         this.fieldPanel = new JPanel();
 
@@ -150,9 +151,9 @@ public class EntryDialog extends JDialog implements ActionListener {
 
         this.fieldPanel.setLayout(new SpringLayout());
         SpringUtilities.makeCompactGrid(this.fieldPanel,
-                6, 2, //rows, columns
-                5, 5, //initX, initY
-                5, 5);    //xPad, yPad
+                6, 2,  // rows, columns
+                5, 5,  // initX, initY
+                5, 5); // xPad, yPad
 
         this.notesPanel = new JPanel(new BorderLayout(5, 5));
         this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -182,16 +183,13 @@ public class EntryDialog extends JDialog implements ActionListener {
         getContentPane().add(this.notesPanel, BorderLayout.CENTER);
         getContentPane().add(this.buttonPanel, BorderLayout.SOUTH);
 
-        fillDialogData(entry);
+        fillDialogFromEntry(entry);
         setSize(450, 400);
         setMinimumSize(new Dimension(370, 300));
         setLocationRelativeTo(parent);
         setVisible(true);
     }
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -206,20 +204,21 @@ public class EntryDialog extends JDialog implements ActionListener {
                 MessageDialog.showWarningMessage(this, "Title is already exists,\nplease enter a different title.");
                 return;
             } else if (!Arrays.equals(this.passwordField.getPassword(), this.repeatField.getPassword())) {
-                MessageDialog.showWarningMessage(this, "Password and repeated password are not identical.");
+                MessageDialog.showWarningMessage(this, "Password and repeated passwords are not identical.");
                 return;
             }
-            setFormData(fetchDialogData());
+            this.modifiedEntry = getEntryFromDialog();
             dispose();
         } else if ("cancel_button".equals(command)) {
             dispose();
         } else if ("generate_button".equals(command)) {
             GeneratePasswordDialog gpd = new GeneratePasswordDialog(this);
-            String generatedPassword = gpd.getGeneratedPassword();
-            if (generatedPassword != null && !generatedPassword.isEmpty()) {
-                this.passwordField.setText(generatedPassword);
-                this.repeatField.setText(generatedPassword);
-            }
+            gpd.getGeneratedPassword()
+                .filter(password -> password != null && !password.isEmpty())
+                .ifPresent(password -> {
+                    this.passwordField.setText(password);
+                    this.repeatField.setText(password);
+                });
         } else if ("copy_button".equals(command)) {
             copyEntryField(JPassFrame.getInstance(), String.valueOf(this.passwordField.getPassword()));
         }
@@ -230,7 +229,7 @@ public class EntryDialog extends JDialog implements ActionListener {
      *
      * @param entry an entry
      */
-    private void fillDialogData(Entry entry) {
+    private void fillDialogFromEntry(Entry entry) {
         if (entry == null) {
             return;
         }
@@ -249,7 +248,7 @@ public class EntryDialog extends JDialog implements ActionListener {
      *
      * @return an entry
      */
-    private Entry fetchDialogData() {
+    private Entry getEntryFromDialog() {
         Entry entry = new Entry();
 
         String title = StringUtils.stripNonValidXMLCharacters(this.titleField.getText());
@@ -268,21 +267,12 @@ public class EntryDialog extends JDialog implements ActionListener {
     }
 
     /**
-     * Sets the form data.
-     *
-     * @param formData form data
-     */
-    private void setFormData(Entry formData) {
-        this.formData = formData;
-    }
-
-    /**
      * Gets the form data (entry) of this dialog.
      *
      * @return nonempty form data if the 'OK' button is pressed, otherwise an empty data
      */
-    public Entry getFormData() {
-        return this.formData;
+    public Optional<Entry> getModifiedEntry() {
+        return Optional.ofNullable(this.modifiedEntry);
     }
 
     /**

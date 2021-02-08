@@ -31,16 +31,24 @@ package jpass.ui.helper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import jpass.data.EntriesRepository;
 import jpass.ui.JPassFrame;
-import jpass.ui.MessageDialog;
 import jpass.ui.action.Worker;
-import jpass.util.StringUtils;
+
+import static jpass.ui.MessageDialog.showPasswordDialog;
+import static jpass.ui.MessageDialog.showWarningMessage;
+import static jpass.ui.MessageDialog.showQuestionMessage;
+import static jpass.ui.MessageDialog.YES_NO_OPTION;
+import static jpass.ui.MessageDialog.YES_OPTION;
+import static jpass.ui.MessageDialog.YES_NO_CANCEL_OPTION;
+import static jpass.ui.MessageDialog.NO_OPTION;
+import static jpass.util.StringUtils.stripString;
+
+import static java.lang.String.format;
 
 /**
  * Helper utils for file operations.
@@ -49,6 +57,23 @@ import jpass.util.StringUtils;
  *
  */
 public final class FileHelper {
+    public static final String SAVE_MODIFIED_QUESTION_MESSAGE =
+            "The current file has been modified.\n" +
+            "Do you want to save the changes before closing?";
+    private static final String UNENCRYPTED_DATA_WARNING_MESSAGE =
+            "Please note that all data will be stored unencrypted.\n" +
+            "Make sure you keep the exported file in a secure location.";
+    private static final String OPEN_ERROR_CHECK_PASSWORD_WARNING_MESSAGE =
+            "An error occured during the open operation.\nPlease check your password.";
+    private static final String CREATE_FILE_QUESTION_MESSAGE =
+            "File not found:\n%s\n\nDo you want to create the file?";
+    private static final String OPERATION_ERROR_MESSAGE =
+            "An error occured during the %s operation:\n%s";
+    private static final String FILE_OVERWRITE_QUESTION_MESSAGE =
+            "File is already exists:\n%s\n\nDo you want to overwrite?";
+
+    private static final String JPASS_DATA_FILES = "JPass Data Files (*.jpass)";
+    private static final String XML_FILES = "XML Files (*.xml)";
 
     private FileHelper() {
         // not intended to be instantiated
@@ -61,21 +86,15 @@ public final class FileHelper {
      */
     public static void createNew(final JPassFrame parent) {
         if (parent.getModel().isModified()) {
-            int option = MessageDialog.showQuestionMessage(
-                    parent,
-                    "The current file has been modified.\n"
-                    + "Do you want to save the changes before closing?",
-                    MessageDialog.YES_NO_CANCEL_OPTION);
-            if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, result -> {
-                    if (result) {
-                        parent.clearModel();
-                        parent.getSearchPanel().setVisible(false);
-                        parent.refreshAll();
-                    }
+            int option = showQuestionMessage(parent, SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
+            if (option == YES_OPTION) {
+                saveFile(parent, false, () -> {
+                    parent.clearModel();
+                    parent.getSearchPanel().setVisible(false);
+                    parent.refreshAll();
                 });
                 return;
-            } else if (option != MessageDialog.NO_OPTION) {
+            } else if (option != NO_OPTION) {
                 return;
             }
         }
@@ -90,9 +109,8 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void exportFile(final JPassFrame parent) {
-        MessageDialog.showWarningMessage(parent,
-                "Please note that all data will be stored unencrypted.\nMake sure you keep the exported file in a secure location.");
-        File file = showFileChooser(parent, "Export", "xml", "XML Files (*.xml)");
+        showWarningMessage(parent, UNENCRYPTED_DATA_WARNING_MESSAGE);
+        File file = showFileChooser(parent, "Export", "xml", XML_FILES);
         if (file == null) {
             return;
         }
@@ -106,7 +124,7 @@ public final class FileHelper {
                 try {
                     EntriesRepository.newInstance(fileName).writeDocument(parent.getModel().getEntries());
                 } catch (Throwable e) {
-                    throw new Exception("An error occured during the export operation:\n" + e.getMessage());
+                    throw new Exception(format(OPERATION_ERROR_MESSAGE, "export", e.getMessage()));
                 }
                 return null;
             }
@@ -120,29 +138,21 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void importFile(final JPassFrame parent) {
-        File file = showFileChooser(parent, "Import", "xml", "XML Files (*.xml)");
+        File file = showFileChooser(parent, "Import", "xml", XML_FILES);
         if (file == null) {
             return;
         }
         final String fileName = file.getPath();
         if (parent.getModel().isModified()) {
-            int option = MessageDialog.showQuestionMessage(
-                    parent,
-                    "The current file has been modified.\n"
-                    + "Do you want to save the changes before closing?",
-                    MessageDialog.YES_NO_CANCEL_OPTION);
-            if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, result -> {
-                    if (result) {
-                        doImportFile(fileName, parent);
-                    }
-                });
+            int option = showQuestionMessage(parent, SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
+            if (option == YES_OPTION) {
+                saveFile(parent, false, () -> importFileInBackground(fileName, parent));
                 return;
-            } else if (option != MessageDialog.NO_OPTION) {
+            } else if (option != NO_OPTION) {
                 return;
             }
         }
-        doImportFile(fileName, parent);
+        importFileInBackground(fileName, parent);
     }
 
     /**
@@ -151,7 +161,7 @@ public final class FileHelper {
      * @param fileName file name
      * @param parent parent component
      */
-    static void doImportFile(final String fileName, final JPassFrame parent) {
+    static void importFileInBackground(final String fileName, final JPassFrame parent) {
         Worker worker = new Worker(parent) {
             @Override
             protected Void doInBackground() throws Exception {
@@ -162,7 +172,7 @@ public final class FileHelper {
                     parent.getModel().setPassword(null);
                     parent.getSearchPanel().setVisible(false);
                 } catch (Throwable e) {
-                    throw new Exception("An error occured during the import operation:\n" + e.getMessage());
+                    throw new Exception(format(OPERATION_ERROR_MESSAGE, "import", e.getMessage()));
                 }
                 return null;
             }
@@ -177,7 +187,7 @@ public final class FileHelper {
      * @param saveAs normal 'Save' dialog or 'Save as'
      */
     public static void saveFile(final JPassFrame parent, final boolean saveAs) {
-        saveFile(parent, saveAs, result -> {
+        saveFile(parent, saveAs, () -> {
             //default empty call
         });
     }
@@ -187,20 +197,17 @@ public final class FileHelper {
      *
      * @param parent parent component
      * @param saveAs normal 'Save' dialog or 'Save as'
-     * @param callback callback function with the result; the result is {@code true} if the file
-     * successfully saved; otherwise {@code false}
+     * @param successCallback callback which is called when the file has been successfully saved
      */
-    public static void saveFile(final JPassFrame parent, final boolean saveAs, final Consumer<Boolean> callback) {
+    public static void saveFile(final JPassFrame parent, final boolean saveAs, final Runnable successCallback) {
         final String fileName;
         if (saveAs || parent.getModel().getFileName() == null) {
-            File file = showFileChooser(parent, "Save", "jpass", "JPass Data Files (*.jpass)");
+            File file = showFileChooser(parent, "Save", "jpass", JPASS_DATA_FILES);
             if (file == null) {
-                callback.accept(false);
                 return;
             }
             fileName = checkExtension(file.getPath(), "jpass");
             if (!checkFileOverwrite(fileName, parent)) {
-                callback.accept(false);
                 return;
             }
         } else {
@@ -209,9 +216,8 @@ public final class FileHelper {
 
         final byte[] password;
         if (parent.getModel().getPassword() == null) {
-            password = MessageDialog.showPasswordDialog(parent, true);
+            password = showPasswordDialog(parent, true);
             if (password == null) {
-                callback.accept(false);
                 return;
             }
         } else {
@@ -226,7 +232,7 @@ public final class FileHelper {
                     parent.getModel().setPassword(password);
                     parent.getModel().setModified(false);
                 } catch (Throwable e) {
-                    throw new Exception("An error occured during the save operation:\n" + e.getMessage());
+                    throw new Exception(format(OPERATION_ERROR_MESSAGE, "save", e.getMessage()));
                 }
                 return null;
             }
@@ -241,7 +247,9 @@ public final class FileHelper {
                     result = false;
                     showErrorMessage(e);
                 }
-                callback.accept(result);
+                if (result) {
+                    successCallback.run();
+                }
             }
         };
         worker.execute();
@@ -253,28 +261,20 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void openFile(final JPassFrame parent) {
-        final File file = showFileChooser(parent, "Open", "jpass", "JPass Data Files (*.jpass)");
+        final File file = showFileChooser(parent, "Open", "jpass", JPASS_DATA_FILES);
         if (file == null) {
             return;
         }
         if (parent.getModel().isModified()) {
-            int option = MessageDialog.showQuestionMessage(
-                    parent,
-                    "The current file has been modified.\n"
-                    + "Do you want to save the changes before closing?",
-                    MessageDialog.YES_NO_CANCEL_OPTION);
-            if (option == MessageDialog.YES_OPTION) {
-                saveFile(parent, false, result -> {
-                    if (result) {
-                        doOpenFile(file.getPath(), parent);
-                    }
-                });
+            int option = showQuestionMessage(parent, SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
+            if (option == YES_OPTION) {
+                saveFile(parent, false, () -> openFileInBackground(file.getPath(), parent));
                 return;
-            } else if (option != MessageDialog.NO_OPTION) {
+            } else if (option != NO_OPTION) {
                 return;
             }
         }
-        doOpenFile(file.getPath(), parent);
+        openFileInBackground(file.getPath(), parent);
     }
 
     /**
@@ -283,12 +283,12 @@ public final class FileHelper {
      * @param fileName file name
      * @param parent parent component
      */
-    public static void doOpenFile(final String fileName, final JPassFrame parent) {
+    public static void openFileInBackground(final String fileName, final JPassFrame parent) {
         parent.clearModel();
         if (fileName == null) {
             return;
         }
-        final byte[] password = MessageDialog.showPasswordDialog(parent, false);
+        final byte[] password = showPasswordDialog(parent, false);
         if (password == null) {
             return;
         }
@@ -303,9 +303,9 @@ public final class FileHelper {
                 } catch (FileNotFoundException e) {
                     throw e;
                 } catch (IOException e) {
-                    throw new Exception("An error occured during the open operation.\nPlease check your password.");
+                    throw new Exception(OPEN_ERROR_CHECK_PASSWORD_WARNING_MESSAGE);
                 } catch (Throwable e) {
-                    throw new Exception("An error occured during the open operation:\n" + e.getMessage());
+                    throw new Exception(format(OPERATION_ERROR_MESSAGE, "open", e.getMessage()));
                 }
                 return null;
             }
@@ -335,9 +335,8 @@ public final class FileHelper {
      * @param password password to create a new file
      */
     static void handleFileNotFound(final JPassFrame parent, final String fileName, final byte[] password) {
-        int option = MessageDialog.showQuestionMessage(parent, "File not found:\n" + StringUtils.stripString(fileName)
-                + "\n\nDo you want to create the file?", MessageDialog.YES_NO_OPTION);
-        if (option == MessageDialog.YES_OPTION) {
+        int option = showQuestionMessage(parent, format(CREATE_FILE_QUESTION_MESSAGE, stripString(fileName)), YES_NO_OPTION);
+        if (option == YES_OPTION) {
             Worker fileNotFoundWorker = new Worker(parent) {
                 @Override
                 protected Void doInBackground() throws Exception {
@@ -346,11 +345,10 @@ public final class FileHelper {
                         parent.getModel().setFileName(fileName);
                         parent.getModel().setPassword(password);
                     } catch (Exception ex) {
-                        throw new Exception("An error occurred during the open operation:\n" + ex.getMessage());
+                        throw new Exception(format(OPERATION_ERROR_MESSAGE, "open", ex.getMessage()));
                     }
                     return null;
                 }
-
             };
             fileNotFoundWorker.execute();
         }
@@ -365,8 +363,7 @@ public final class FileHelper {
      * @param description file extension description
      * @return a file object
      */
-    private static File showFileChooser(final JPassFrame parent, final String taskName,
-            final String extension, final String description) {
+    private static File showFileChooser(JPassFrame parent, String taskName, String extension, String description) {
         File ret = null;
         JFileChooser fc = new JFileChooser("./");
         fc.setFileFilter(new FileFilter() {
@@ -398,9 +395,8 @@ public final class FileHelper {
         boolean overwriteAccepted = true;
         File file = new File(fileName);
         if (file.exists()) {
-            int option = MessageDialog.showQuestionMessage(parent, "File is already exists:\n" + StringUtils.stripString(fileName)
-                    + "\n\nDo you want to overwrite?", MessageDialog.YES_NO_OPTION);
-            if (option != MessageDialog.YES_OPTION) {
+            int option = showQuestionMessage(parent, format(FILE_OVERWRITE_QUESTION_MESSAGE, stripString(fileName)), YES_NO_OPTION);
+            if (option != YES_OPTION) {
                 overwriteAccepted = false;
             }
         }

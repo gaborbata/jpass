@@ -204,7 +204,7 @@ public final class JPassFrame extends JFrame {
         addWindowListener(new CloseListener());
         setLocationRelativeTo(null);
         setVisible(true);
-        FileHelper.doOpenFile(fileName, this);
+        FileHelper.openFileInBackground(fileName, this);
 
         // set focus to the list for easier keyboard navigation
         this.entryDetailsTable.requestFocusInWindow();
@@ -297,19 +297,13 @@ public final class JPassFrame extends JFrame {
         if (Configuration.getInstance().is("clear.clipboard.on.exit.enabled", false)) {
             EntryHelper.copyEntryField(this, null);
         }
-
         if (this.processing) {
             return;
         }
         if (this.model.isModified()) {
-            int option = showQuestionMessage(this,
-                    "The current file has been modified.\nDo you want to save the changes before closing?", YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(this, FileHelper.SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
-                FileHelper.saveFile(this, false, result -> {
-                    if (result) {
-                        System.exit(0);
-                    }
-                });
+                FileHelper.saveFile(this, false, () -> System.exit(0));
                 return;
             } else if (option != NO_OPTION) {
                 return;

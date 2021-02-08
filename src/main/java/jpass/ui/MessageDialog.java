@@ -282,7 +282,9 @@ public final class MessageDialog extends JDialog implements ActionListener {
             passwordHash = CryptUtils.getPKCS5Sha256Hash(password.getPassword());
         } catch (Exception e) {
             showErrorMessage(parent,
-                    "Cannot generate password hash:\n" + StringUtils.stripString(e.getMessage()) + "\n\nOpening and saving files are not possible!");
+                "Cannot generate password hash:\n" +
+                StringUtils.stripString(e.getMessage()) +
+                "\n\nOpening and saving files are not possible!");
         }
         return passwordHash;
     }

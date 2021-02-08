@@ -119,6 +119,8 @@ public final class EntriesRepository {
                 inputStream = new GZIPInputStream(new CryptInputStream(new BufferedInputStream(new FileInputStream(this.fileName)), this.key));
             }
             entries = CONVERTER.read(inputStream);
+        } catch (IOException e) {
+            throw e;
         } catch (Exception e) {
             throw new DocumentProcessException(stripString(e.getMessage()));
         } finally {

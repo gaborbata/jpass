@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2020 Gabor Bata
+ * Copyright (c) 2009-2021 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,13 +67,13 @@ public class TextComponentPopupListener extends MouseAdapter {
                 LinkedHashMap::new));
 
         this.popup = new JPopupMenu();
-        this.popup.add(items.get(TextComponentActionType.CUT));
-        this.popup.add(items.get(TextComponentActionType.COPY));
-        this.popup.add(items.get(TextComponentActionType.PASTE));
-        this.popup.add(items.get(TextComponentActionType.DELETE));
+        this.popup.add(items.get(CUT));
+        this.popup.add(items.get(COPY));
+        this.popup.add(items.get(PASTE));
+        this.popup.add(items.get(DELETE));
         this.popup.addSeparator();
-        this.popup.add(items.get(TextComponentActionType.CLEAR_ALL));
-        this.popup.add(items.get(TextComponentActionType.SELECT_ALL));
+        this.popup.add(items.get(CLEAR_ALL));
+        this.popup.add(items.get(SELECT_ALL));
     }
 
     private void showPopupMenu(MouseEvent e) {

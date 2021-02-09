@@ -1,7 +1,7 @@
 /*
  * JPass
  *
- * Copyright (c) 2009-2020 Gabor Bata
+ * Copyright (c) 2009-2021 Gabor Bata
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -135,8 +135,7 @@ public final class EntriesRepository {
      * Writes a document into an XML file.
      *
      * @param document the document
-     * @throws DocumentProcessException when document format is incorrect
-     * @throws IOException when I/O error occurred
+     * @throws DocumentProcessException when document could not be saved
      */
     public void writeDocument(final Entries document) throws DocumentProcessException, IOException {
         OutputStream outputStream = null;

@@ -144,7 +144,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.passwordButtonPanel.add(this.generateButton);
         this.copyButton = new JButton("Copy", MessageDialog.getIcon("keyring"));
         this.copyButton.setActionCommand("copy_button");
-        this.copyButton.setMnemonic(KeyEvent.VK_C);
+        this.copyButton.setMnemonic(KeyEvent.VK_P);
         this.copyButton.addActionListener(this);
         this.passwordButtonPanel.add(this.copyButton);
         this.fieldPanel.add(this.passwordButtonPanel);

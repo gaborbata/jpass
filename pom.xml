@@ -4,7 +4,7 @@
     <groupId>jpass</groupId>
     <artifactId>jpass</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.22-SNAPSHOT</version>
+    <version>0.1.22-RELEASE</version>
     <name>JPass</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,12 +18,12 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>0.43</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>svgSalamander</artifactId>
-            <version>1.1.2.3</version>
+            <version>1.1.2.4</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

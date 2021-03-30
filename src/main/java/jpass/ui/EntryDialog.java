@@ -103,80 +103,79 @@ public class EntryDialog extends JDialog implements ActionListener {
     public EntryDialog(JPassFrame parent, String title, Entry entry, boolean newEntry) {
         super(parent, title, true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.newEntry = newEntry;
 
+        this.newEntry = newEntry;
         this.modifiedEntry = null;
 
-        this.fieldPanel = new JPanel();
-
-        this.fieldPanel.add(new JLabel("Title:"));
         this.titleField = TextComponentFactory.newTextField();
-        this.fieldPanel.add(this.titleField);
-
-        this.fieldPanel.add(new JLabel("URL:"));
         this.urlField = TextComponentFactory.newTextField();
-        this.fieldPanel.add(this.urlField);
-
-        this.fieldPanel.add(new JLabel("User name:"));
         this.userField = TextComponentFactory.newTextField();
-        this.fieldPanel.add(this.userField);
-
-        this.fieldPanel.add(new JLabel("Password:"));
         this.passwordField = TextComponentFactory.newPasswordField(true);
         this.ORIGINAL_ECHO = this.passwordField.getEchoChar();
-        this.fieldPanel.add(this.passwordField);
-
-        this.fieldPanel.add(new JLabel("Repeat:"));
         this.repeatField = TextComponentFactory.newPasswordField(true);
-        this.fieldPanel.add(this.repeatField);
 
-        this.fieldPanel.add(new JLabel(""));
-        this.passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         this.showButton = new JToggleButton("Show", MessageDialog.getIcon("show"));
         this.showButton.setActionCommand("show_button");
         this.showButton.setMnemonic(KeyEvent.VK_S);
         this.showButton.addActionListener(this);
-        this.passwordButtonPanel.add(this.showButton);
         this.generateButton = new JButton("Generate", MessageDialog.getIcon("generate"));
         this.generateButton.setActionCommand("generate_button");
         this.generateButton.setMnemonic(KeyEvent.VK_G);
         this.generateButton.addActionListener(this);
-        this.passwordButtonPanel.add(this.generateButton);
         this.copyButton = new JButton("Copy", MessageDialog.getIcon("keyring"));
         this.copyButton.setActionCommand("copy_button");
         this.copyButton.setMnemonic(KeyEvent.VK_P);
         this.copyButton.addActionListener(this);
-        this.passwordButtonPanel.add(this.copyButton);
-        this.fieldPanel.add(this.passwordButtonPanel);
 
-        this.fieldPanel.setLayout(new SpringLayout());
+        this.passwordButtonPanel = new JPanel(new SpringLayout());
+        this.passwordButtonPanel.add(this.showButton);
+        this.passwordButtonPanel.add(this.generateButton);
+        this.passwordButtonPanel.add(this.copyButton);
+        SpringUtilities.makeCompactGrid(this.passwordButtonPanel,
+                1, 3,  // rows, columns
+                0, 0,  // initX, initY
+                5, 0); // xPad, yPad
+
+        this.fieldPanel = new JPanel(new SpringLayout());
+        this.fieldPanel.add(new JLabel("Title:"));
+        this.fieldPanel.add(this.titleField);
+        this.fieldPanel.add(new JLabel("URL:"));
+        this.fieldPanel.add(this.urlField);
+        this.fieldPanel.add(new JLabel("User name:"));
+        this.fieldPanel.add(this.userField);
+        this.fieldPanel.add(new JLabel("Password:"));
+        this.fieldPanel.add(this.passwordField);
+        this.fieldPanel.add(new JLabel("Repeat:"));
+        this.fieldPanel.add(this.repeatField);
+        this.fieldPanel.add(new JLabel(""));
+        this.fieldPanel.add(this.passwordButtonPanel);
         SpringUtilities.makeCompactGrid(this.fieldPanel,
                 6, 2,  // rows, columns
                 5, 5,  // initX, initY
                 5, 5); // xPad, yPad
 
-        this.notesPanel = new JPanel(new BorderLayout(5, 5));
-        this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
-        this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
-
         this.notesField = TextComponentFactory.newTextArea();
         this.notesField.setFont(TextComponentFactory.newTextField().getFont());
         this.notesField.setLineWrap(true);
         this.notesField.setWrapStyleWord(true);
-        this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);
 
-        this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        this.notesPanel = new JPanel(new BorderLayout(5, 5));
+        this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
+        this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
+        this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);
 
         this.okButton = new JButton("OK", MessageDialog.getIcon("accept"));
         this.okButton.setActionCommand("ok_button");
         this.okButton.setMnemonic(KeyEvent.VK_O);
         this.okButton.addActionListener(this);
-        this.buttonPanel.add(this.okButton);
 
         this.cancelButton = new JButton("Cancel", MessageDialog.getIcon("cancel"));
         this.cancelButton.setActionCommand("cancel_button");
         this.cancelButton.setMnemonic(KeyEvent.VK_C);
         this.cancelButton.addActionListener(this);
+
+        this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        this.buttonPanel.add(this.okButton);
         this.buttonPanel.add(this.cancelButton);
 
         getContentPane().add(this.fieldPanel, BorderLayout.NORTH);

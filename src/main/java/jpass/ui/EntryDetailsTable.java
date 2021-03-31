@@ -121,7 +121,9 @@ public class EntryDetailsTable extends JTable {
         if (column > 0) {
             int rendererWidth = component.getPreferredSize().width;
             TableColumn tableColumn = getColumnModel().getColumn(column);
-            tableColumn.setMaxWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+            int columnWidth = Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth());
+            tableColumn.setPreferredWidth(columnWidth);
+            tableColumn.setMaxWidth(columnWidth);
         }
         return component;
     }

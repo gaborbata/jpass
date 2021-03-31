@@ -75,7 +75,7 @@ public final class JPassFrame extends JFrame {
     private static JPassFrame INSTANCE;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
-    public static final String PROGRAM_VERSION = "0.1.23-RELEASE";
+    public static final String PROGRAM_VERSION = "0.1.24-SNAPSHOT";
 
     private final JPopupMenu popup;
     private final JPanel topContainerPanel;

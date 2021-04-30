@@ -271,8 +271,14 @@ public final class JPassFrame extends JFrame {
                 .forEach(this.entryDetailsTable::addRow);
 
         if (selectTitle != null) {
-            int index = this.model.getEntryIndexByTitle(selectTitle);
-            this.entryDetailsTable.setRowSelectionInterval(index, index);
+            int rowCount = this.entryDetailsTable.getModel().getRowCount();
+            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+                String title = String.valueOf(this.entryDetailsTable.getModel().getValueAt(rowIndex, 0));
+                if (selectTitle.equals(title)) {
+                    this.entryDetailsTable.setRowSelectionInterval(rowIndex, rowIndex);
+                    break;
+                }
+            }
         }
 
         if (searchCriteria.isEmpty()) {

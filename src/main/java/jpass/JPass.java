@@ -60,10 +60,8 @@ public class JPass {
             UIManager.put("Button.arc", 4);
             FlatLaf lookAndFeel;
             if (Configuration.getInstance().is("ui.theme.dark.mode.enabled", false)) {
-                FlatDarkLaf.setup();
                 lookAndFeel = new FlatDarkLaf();
             } else {
-                FlatLightLaf.setup();
                 lookAndFeel = new FlatLightLaf();
             }
             JFrame.setDefaultLookAndFeelDecorated(true);

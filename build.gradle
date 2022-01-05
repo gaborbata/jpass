@@ -50,7 +50,7 @@ task bumpVersion {
         if (!project.hasProperty('toVersion')) {
             throw new GradleException("Please provide 'toVersion' property e.g. gradle bumpVersion -PtoVersion=<version>")
         }
-        def extensions = ['java', 'gradle', 'sbt', 'xml', 'md', 'bat', 'sh', 'txt'].collect { "**/*.$it" }.join(",")
+        def extensions = ['java', 'gradle', 'sbt', 'xml', 'md', 'bat', 'sh', 'txt', 'command'].collect { "**/*.$it" }.join(",")
         def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)
         files.each { versionedFile ->
             def file = new File(versionedFile)

@@ -81,7 +81,6 @@ public class EntryDetailsTable extends JTable {
 
     private static final String[] DEFAULT_DETAILS = {
         DetailType.TITLE.name(),
-        DetailType.CREATED.name(),
         DetailType.MODIFIED.name()
     };
 

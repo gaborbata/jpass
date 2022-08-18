@@ -1,4 +1,4 @@
-# JPass - Password Manager 0.1.25-RELEASE
+# JPass - Password Manager 0.1.26-RELEASE
 
 Overview
 --------
@@ -17,11 +17,11 @@ Features:
 Usage
 -----
 Java 8 or later is recommended to run JPass. Most platforms have a mechanism
-to execute `.jar` files (e.g. double click the `jpass-0.1.25-RELEASE.jar`).
+to execute `.jar` files (e.g. double click the `jpass-0.1.26-RELEASE.jar`).
 You can also run the application from the command line by typing (the password
 file is optional):
 
-    java -jar jpass-0.1.25-RELEASE.jar [password_file]
+    java -jar jpass-0.1.26-RELEASE.jar [password_file]
 
 Configuration
 -------------
@@ -37,7 +37,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 License
 -------
-Copyright (c) 2009-2021 Gabor Bata
+Copyright (c) 2009-2022 Gabor Bata
 
 All rights reserved.
 

@@ -5,27 +5,29 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+version = '0.1.26-RELEASE'
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
-    compile group: 'com.formdev', name: 'flatlaf', version: '1.5'
-    compile group: 'com.formdev', name: 'svgSalamander', version: '1.1.2.4'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
+    implementation group: 'com.formdev', name: 'flatlaf', version: '1.5'
+    implementation group: 'com.formdev', name: 'svgSalamander', version: '1.1.2.4'
 
-    testCompile 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 jar {
-    baseName = 'jpass'
-    version = '0.1.25-RELEASE'
+    archiveBaseName = 'jpass'
+    archiveVersion = "$project.version"
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes('Main-Class': 'jpass.JPass')
     }
     from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
@@ -36,7 +38,7 @@ task copyConfig(type: Copy) {
 
 distributions {
     main {
-        baseName = "$jar.baseName-$jar.version-dist"
+        distributionBaseName = 'jpass'
         contents {
             from jar
             from { 'src/main/config' }
@@ -54,9 +56,10 @@ task bumpVersion {
         def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)
         files.each { versionedFile ->
             def file = new File(versionedFile)
-            file.write(file.getText('UTF-8').replaceAll("$jar.version", "$toVersion"), 'UTF-8')
+            file.write(file.getText('UTF-8').replaceAll("$project.version", "$toVersion"), 'UTF-8')
         }
     }
 }
 
-build.dependsOn copyConfig
+distTar.enabled = false
+assembleDist.dependsOn copyConfig

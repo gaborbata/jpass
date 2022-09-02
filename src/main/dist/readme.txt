@@ -16,9 +16,8 @@ Features:
 
 Usage
 -----
-Java 8 or later is recommended to run JPass. Most platforms have a mechanism
-to execute `.jar` files (e.g. double click the `jpass-0.1.26-RELEASE.jar`).
-You can also run the application from the command line by typing (the password
+Java 8 or later is recommended to run JPass.
+You can run the application from the command line by typing (the password
 file is optional):
 
     java -jar jpass-0.1.26-RELEASE.jar [password_file]
@@ -34,6 +33,7 @@ Default configurations can be overridden in `jpass.properties` file:
 | default.password.generation.length | integer    | 14             |
 | date.format                        | string     | yyyy-MM-dd     |
 | entry.details                      | list       | TITLE,MODIFIED |
+| file.chooser.directory             | string     | ./             |
 
 License
 -------

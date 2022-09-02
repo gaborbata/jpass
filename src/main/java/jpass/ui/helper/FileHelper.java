@@ -38,6 +38,7 @@ import javax.swing.filechooser.FileFilter;
 import jpass.data.EntriesRepository;
 import jpass.ui.JPassFrame;
 import jpass.ui.action.Worker;
+import jpass.util.Configuration;
 
 import static jpass.ui.MessageDialog.showPasswordDialog;
 import static jpass.ui.MessageDialog.showWarningMessage;
@@ -365,7 +366,8 @@ public final class FileHelper {
      */
     private static File showFileChooser(JPassFrame parent, String taskName, String extension, String description) {
         File ret = null;
-        JFileChooser fc = new JFileChooser("./");
+        String fileChooserDir = Configuration.getInstance().get("file.chooser.directory", "./");
+        JFileChooser fc = new JFileChooser(fileChooserDir.isEmpty() ? null : fileChooserDir);
         fc.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {

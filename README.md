@@ -24,17 +24,11 @@ Usage
 Java 8 or later is recommended to run JPass.
 You can run the application from the command line by typing (the password file is optional):
 
-    java -jar jpass-0.1.26-RELEASE.jar [password_file]
+    java -jar jpass-0.1.27-RELEASE.jar [password_file]
 
 Download
 --------
 You can find the latest distribution packages under the [releases](https://github.com/gaborbata/jpass/releases) link.
-
-On Windows, you can install JPass using [scoop](https://scoop.sh/).
-
-```
-scoop install jpass.json
-```
 
 How to compile
 --------------

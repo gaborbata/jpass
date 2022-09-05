@@ -30,6 +30,10 @@ Download
 --------
 You can find the latest distribution packages under the [releases](https://github.com/gaborbata/jpass/releases) link.
 
+For Windows, you can also install JPass using [scoop](https://scoop.sh/):
+
+    scoop install jpass.json
+
 How to compile
 --------------
 * Maven: `mvn clean package`
@@ -40,14 +44,14 @@ Configuration
 -------------
 Default configurations can be overridden in `jpass.properties` file:
 
-| Configuration key                  | Value type | Default value  |
-| ---------------------------------- | ---------- | -------------- |
-| ui.theme.dark.mode.enabled         | boolean    | false          |
-| clear.clipboard.on.exit.enabled    | boolean    | false          |
-| default.password.generation.length | integer    | 14             |
-| date.format                        | string     | yyyy-MM-dd     |
-| entry.details                      | list       | TITLE,MODIFIED |
-| file.chooser.directory             | string     | ./             |
+| Configuration key                  | Value type | Default value    |
+| ---------------------------------- | ---------- | ---------------- |
+| ui.theme.dark.mode.enabled         | boolean    | `false`          |
+| clear.clipboard.on.exit.enabled    | boolean    | `false`          |
+| default.password.generation.length | integer    | `14`             |
+| date.format                        | string     | `yyyy-MM-dd`     |
+| entry.details                      | list       | `TITLE,MODIFIED` |
+| file.chooser.directory             | string     | `./`             |
 
 Contributors
 ------------

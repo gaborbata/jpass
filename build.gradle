@@ -1,5 +1,8 @@
-apply plugin: 'java'
-apply plugin: 'distribution'
+plugins {
+    id 'java'
+    id 'distribution'
+    id 'org.gradle.crypto.checksum' version '1.4.0'
+}
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
@@ -47,6 +50,13 @@ distributions {
     }
 }
 
+task createChecksum(type: org.gradle.crypto.checksum.Checksum, dependsOn: distZip) {
+    files = fileTree(dir: "${buildDir}/distributions")
+    outputDir = new File("${buildDir}/distributions")
+    algorithm = org.gradle.crypto.checksum.Checksum.Algorithm.SHA256
+    appendFileNameToChecksum.set(true)
+}
+
 task bumpVersion {
     doLast {
         if (!project.hasProperty('toVersion')) {
@@ -62,4 +72,5 @@ task bumpVersion {
 }
 
 distTar.enabled = false
+distZip.finalizedBy(createChecksum)
 assembleDist.dependsOn copyConfig

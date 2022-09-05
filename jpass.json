@@ -1,5 +1,5 @@
 {
-    "version": "0.1.27",
+    "version": "0.1.28",
     "description": "Password manager application with strong encryption (AES-256)",
     "homepage": "https://github.com/gaborbata/jpass",
     "license": {
@@ -17,8 +17,8 @@
             "java/openjdk11"
         ]
     },
-    "url": "https://github.com/gaborbata/jpass/releases/download/v0.1.27/jpass-0.1.27-RELEASE.zip",
-    "hash": "7a89a378bac99b91afbe05a8e1afaaebc880f522ef974a94b3e67b681117ac43",
+    "url": "https://github.com/gaborbata/jpass/releases/download/v0.1.28/jpass-0.1.28-RELEASE.zip",
+    "hash": "6a2a4d283f7876653dd7749b74cb9504079d85f7c2b157dffaa02aa672bbb320",
     "bin": "jpass.bat",
     "shortcuts": [
         [

@@ -31,7 +31,7 @@ else
 fi
 
 # execute jpass
-exec "$JAVACMD" -jar "$JPASS_PATH/jpass-0.1.27-RELEASE.jar" "$@"
+exec "$JAVACMD" -jar "$JPASS_PATH/jpass-0.1.28-RELEASE.jar" "$@"
 if [ "$?" != "0" ]; then
   echo "Could not execute JPass (exit: $?)"
   exit

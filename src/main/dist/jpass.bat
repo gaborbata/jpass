@@ -19,7 +19,7 @@ if not "%REMOVED%" == "\" goto strip
 set JPASS_HOME=%BASEDIR%
 
 :launch
-start "JPass" /B "%JAVA_EXE%" -jar "%JPASS_HOME%\jpass-0.1.27-RELEASE.jar" %*
+start "JPass" /B "%JAVA_EXE%" -jar "%JPASS_HOME%\jpass-0.1.28-RELEASE.jar" %*
 if %ERRORLEVEL% neq 0 goto fail
 goto end
 

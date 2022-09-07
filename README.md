@@ -30,9 +30,10 @@ Download
 --------
 You can find the latest distribution packages under the [releases](https://github.com/gaborbata/jpass/releases) link.
 
-For Windows, you can also install JPass using [scoop](https://scoop.sh/):
+For Windows, you can also install JPass using [scoop](https://scoop.sh/) from the `extras` bucket:
 
-    scoop install jpass.json
+    scoop bucket add extras
+    scoop install jpass
 
 How to compile
 --------------

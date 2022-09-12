@@ -51,7 +51,7 @@ public class CbcTest {
      * Sets the encryption and decryption instances up.
      */
     @Before
-    public void setUp() {
+    public void setup() {
         byte[] iv = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};

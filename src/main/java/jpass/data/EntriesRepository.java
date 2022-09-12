@@ -94,7 +94,7 @@ public final class EntriesRepository {
      * Creates a document repository with encryption.
      *
      * @param fileName file name
-     * @param key key for encryption
+     * @param key key for encryption (must be a 256-bit long key)
      * @return a new DocumentHelper object
      */
     public static EntriesRepository newInstance(final String fileName, final byte[] key) {

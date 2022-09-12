@@ -10,15 +10,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests {@link jpass.crypt.io.CryptInputStream} and {@link jpass.crypt.io.CryptOutputStream}. A
- * random message will be encrypted and decrypted.
+ * Tests {@link jpass.crypt.io.CryptInputStream} and {@link jpass.crypt.io.CryptOutputStream}.
+ * A random message will be encrypted and decrypted.
  *
  * @author Timm Knape
  * @version $Revision: 1.3 $
  */
 // Copyright 2007 by Timm Knape <timm@knp.de>
 // All rights reserved.
-public class StreamTest {
+public class CryptIOStreamTest {
 
     /**
      * Length of the message in <code>byte</code>s.

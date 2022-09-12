@@ -2,7 +2,7 @@
  <img src="https://raw.githubusercontent.com/gaborbata/jpass/master/resources/bannerReadMe.png" width=750 align="center">
 </p>
 
-JPass [![Java CI with Maven](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/gaborbata/jpass/actions/workflows/maven.yml)
+JPass [![Java CI with Maven](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/gaborbata/jpass/actions/workflows/maven.yml) [![Java CI with Gradle](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Gradle/badge.svg)](https://github.com/gaborbata/jpass/actions/workflows/gradle.yml)
 =====
 
 Overview

@@ -8,7 +8,7 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '0.1.28-RELEASE'
+version = '0.1.29-RELEASE'
 
 repositories {
     mavenCentral()
@@ -60,7 +60,7 @@ task createChecksum(type: org.gradle.crypto.checksum.Checksum, dependsOn: distZi
 task bumpVersion {
     doLast {
         if (!project.hasProperty('toVersion')) {
-            throw new GradleException("Please provide 'toVersion' property e.g. gradle bumpVersion -PtoVersion=<version>")
+            throw new GradleException("Please provide 'toVersion' property e.g. gradle bumpVersion -PtoVersion=$project.version")
         }
         def extensions = ['java', 'gradle', 'sbt', 'xml', 'md', 'bat', 'sh', 'txt', 'command'].collect { "**/*.$it" }.join(",")
         def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)

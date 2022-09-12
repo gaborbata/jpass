@@ -64,8 +64,8 @@ public final class FileHelper {
     private static final String UNENCRYPTED_DATA_WARNING_MESSAGE =
             "Please note that all data will be stored unencrypted.\n" +
             "Make sure you keep the exported file in a secure location.";
-    private static final String OPEN_ERROR_CHECK_PASSWORD_WARNING_MESSAGE =
-            "An error occured during the open operation.\nPlease check your password.";
+    private static final String OPEN_ERROR_CHECK_PASSWORD_ERROR_MESSAGE =
+            "An error occured during the open operation.\nThe password might be incorrect.\n(Error: %s)";
     private static final String CREATE_FILE_QUESTION_MESSAGE =
             "File not found:\n%s\n\nDo you want to create the file?";
     private static final String OPERATION_ERROR_MESSAGE =
@@ -304,7 +304,7 @@ public final class FileHelper {
                 } catch (FileNotFoundException e) {
                     throw e;
                 } catch (IOException e) {
-                    throw new Exception(OPEN_ERROR_CHECK_PASSWORD_WARNING_MESSAGE);
+                    throw new Exception(format(OPEN_ERROR_CHECK_PASSWORD_ERROR_MESSAGE, stripString(e.getMessage())));
                 } catch (Throwable e) {
                     throw new Exception(format(OPERATION_ERROR_MESSAGE, "open", e.getMessage()));
                 }

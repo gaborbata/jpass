@@ -22,6 +22,11 @@ file is optional):
 
     java -jar jpass-0.1.28-RELEASE.jar [password_file]
 
+For convenience, batch/shell scripts are also available for launching JPass
+for various platforms (i.e. `jpass.bat` for Windows, `jpass.sh` for Linux,
+`jpass.command` for macOS). Please make sure `PATH`, or `JAVA_HOME`
+environment variables point to a valid Java installation.
+
 Configuration
 -------------
 Default configurations can be overridden in `jpass.properties` file:

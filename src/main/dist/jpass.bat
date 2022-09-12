@@ -17,14 +17,17 @@ set BASEDIR=%BASEDIR:~0,-1%
 if not "%REMOVED%" == "\" goto strip
 
 set JPASS_HOME=%BASEDIR%
+goto launch
+
+:fail
+echo Install Java (JDK or JRE) if you do not already have. JPass will not work without it.
+echo Please make sure PATH, or JAVA_HOME environment variables point to a valid Java installation.
+echo Could not execute JPass (exit: %ERRORLEVEL%)
+pause
+goto end
 
 :launch
 start "JPass" /B "%JAVA_EXE%" -jar "%JPASS_HOME%\jpass-0.1.28-RELEASE.jar" %*
-if %ERRORLEVEL% neq 0 goto fail
-goto end
-
-:fail
-echo Could not execute JPass (exit: %ERRORLEVEL%)
 goto end
 
 :end

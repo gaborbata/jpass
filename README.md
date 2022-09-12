@@ -26,6 +26,9 @@ You can run the application from the command line by typing (the password file i
 
     java -jar jpass-0.1.28-RELEASE.jar [password_file]
 
+For convenience, batch/shell scripts are also available for launching JPass for various platforms (i.e. `jpass.bat` for Windows, `jpass.sh` for Linux, `jpass.command` for macOS).
+Please make sure `PATH`, or `JAVA_HOME` environment variables point to a valid Java installation.
+
 Download
 --------
 You can find the latest distribution packages under the [releases](https://github.com/gaborbata/jpass/releases) link.

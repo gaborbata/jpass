@@ -9,6 +9,8 @@ fi
 
 $JAVACMD -version >/dev/null 2>&1
 if [ "$?" != "0" ]; then
+  echo "Install Java (JDK or JRE) if you do not already have. JPass will not work without it."
+  echo "Please make sure PATH, or JAVA_HOME environment variables point to a valid Java installation."
   echo "Could not execute JPass (exit: $?)"
   exit
 fi
@@ -32,7 +34,3 @@ fi
 
 # execute jpass
 exec "$JAVACMD" "$LAF_OPTS" -jar "$JPASS_HOME/jpass-0.1.28-RELEASE.jar" "$@"
-if [ "$?" != "0" ]; then
-  echo "Could not execute JPass (exit: $?)"
-  exit
-fi

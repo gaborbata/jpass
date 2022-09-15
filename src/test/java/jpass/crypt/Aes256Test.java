@@ -58,7 +58,7 @@ public class Aes256Test {
      * <code>byte</code>s. RANDOM_TRIES iterations will be performed.
      */
     @Test
-    public void shouldEntryptAndDecryptRandomData() {
+    public void shouldEncryptAndDecryptRandomData() {
         Random rnd = new Random();
         byte[] key = new byte[32];
         byte[] data = new byte[16];

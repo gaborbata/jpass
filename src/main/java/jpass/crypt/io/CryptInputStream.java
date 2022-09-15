@@ -110,13 +110,13 @@ public class CryptInputStream extends InputStream {
     public CryptInputStream(InputStream parent, byte[] key) throws IOException {
         this._parent = parent;
         byte[] iv = new byte[16];
-        int readed = 0;
-        while (readed < 16) {
-            int cur = parent.read(iv, readed, 16 - readed);
+        int ivRead = 0;
+        while (ivRead < 16) {
+            int cur = parent.read(iv, ivRead, 16 - ivRead);
             if (cur < 0) {
                 throw new IOException("No initial values in stream.");
             }
-            readed += cur;
+            ivRead += cur;
         }
         this._decrypted = new ByteArrayOutputStream();
         this._cipher = new Cbc(iv, key, this._decrypted);
@@ -150,8 +150,8 @@ public class CryptInputStream extends InputStream {
             this._bufferUsed = 0;
             this._buffer = null;
 
-            int readed = this._parent.read(this._fetchBuffer, 0, FETCH_BUFFER_SIZE);
-            if (readed < 0) {
+            int bufferRead = this._parent.read(this._fetchBuffer, 0, FETCH_BUFFER_SIZE);
+            if (bufferRead < 0) {
                 this._lastBufferRead = true;
                 try {
                     this._cipher.finishDecryption();
@@ -160,7 +160,7 @@ public class CryptInputStream extends InputStream {
                     throw new IOException("can't decrypt");
                 }
             } else {
-                this._cipher.decrypt(this._fetchBuffer, readed);
+                this._cipher.decrypt(this._fetchBuffer, bufferRead);
                 readFromStream();
             }
         }

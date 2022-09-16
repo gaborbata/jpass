@@ -30,14 +30,21 @@ package jpass.crypt.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import jpass.util.CryptUtils;
 
 public class JPassOutputStream extends OutputStream implements JPassStream {
     private final OutputStream parent;
+    private final byte[] key;
 
-    public JPassOutputStream(OutputStream parent) throws IOException {
+    public JPassOutputStream(OutputStream parent, char[] key) throws IOException {
         this.parent = parent;
+        // TODO: generate key
+        this.key = null;
         parent.write(FILE_FORMAT_IDENTIFIER);
         parent.write(FILE_VERSION);
+        
+        byte[] salt = CryptUtils.generateRandomSalt(FILE_VERSION_2_SALT_LENGTH);
+        parent.write(salt);
     }
 
     @Override
@@ -48,5 +55,9 @@ public class JPassOutputStream extends OutputStream implements JPassStream {
     @Override
     public void close() throws IOException {
         parent.close();
+    }
+
+    public byte[] getKey() {
+        return key;
     }
 }

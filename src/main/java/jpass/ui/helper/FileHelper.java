@@ -215,7 +215,7 @@ public final class FileHelper {
             fileName = parent.getModel().getFileName();
         }
 
-        final byte[] password;
+        final char[] password;
         if (parent.getModel().getPassword() == null) {
             password = showPasswordDialog(parent, true);
             if (password == null) {
@@ -289,7 +289,7 @@ public final class FileHelper {
         if (fileName == null) {
             return;
         }
-        final byte[] password = showPasswordDialog(parent, false);
+        final char[] password = showPasswordDialog(parent, false);
         if (password == null) {
             return;
         }
@@ -335,7 +335,7 @@ public final class FileHelper {
      * @param fileName file name
      * @param password password to create a new file
      */
-    static void handleFileNotFound(final JPassFrame parent, final String fileName, final byte[] password) {
+    static void handleFileNotFound(final JPassFrame parent, final String fileName, final char[] password) {
         int option = showQuestionMessage(parent, format(CREATE_FILE_QUESTION_MESSAGE, stripString(fileName)), YES_NO_OPTION);
         if (option == YES_OPTION) {
             Worker fileNotFoundWorker = new Worker(parent) {

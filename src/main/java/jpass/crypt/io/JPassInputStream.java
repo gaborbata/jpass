@@ -35,23 +35,18 @@ import java.util.Arrays;
 public class JPassInputStream extends InputStream implements JPassStream {
 
     private final InputStream parent;
+    private final byte[] key;
 
-    public JPassInputStream(InputStream parent) throws IOException {
+    public JPassInputStream(InputStream parent, char[] key) throws IOException {
         this.parent = parent;
+        // TODO: generate key
+        this.key = null;
 
         if (this.parent.markSupported()) {
             this.parent.mark(FILE_FORMAT_IDENTIFIER.length + 1);
         }
 
-        byte[] identifier = new byte[FILE_FORMAT_IDENTIFIER.length];
-        int identifierRead = 0;
-        while (identifierRead < FILE_FORMAT_IDENTIFIER.length) {
-            int cur = parent.read(identifier, identifierRead, FILE_FORMAT_IDENTIFIER.length - identifierRead);
-            if (cur < 0) {
-                throw new IOException("No identifier value in stream.");
-            }
-            identifierRead += cur;
-        }
+        byte[] identifier = readBytes(parent, FILE_FORMAT_IDENTIFIER.length);
         int version = parent.read();
 
         if (!Arrays.equals(FILE_FORMAT_IDENTIFIER, identifier) && this.parent.markSupported()) {
@@ -60,6 +55,10 @@ public class JPassInputStream extends InputStream implements JPassStream {
             this.parent.reset();
         } else if (version < 1 || version > FILE_VERSION) {
             throw new IOException("Unsupported file version: " + version);
+        }
+        
+        if (version == 2) {
+            byte[] salt = readBytes(parent, FILE_VERSION_2_SALT_LENGTH);
         }
     }
 
@@ -71,5 +70,22 @@ public class JPassInputStream extends InputStream implements JPassStream {
     @Override
     public void close() throws IOException {
         parent.close();
+    }
+
+    public byte[] getKey() {
+        return key;
+    }
+    
+    private byte[] readBytes(InputStream stream, int length) throws IOException {
+        byte[] result = new byte[length];
+        int bytesRead = 0;
+        while (bytesRead < length) {
+            int cur = stream.read(result, bytesRead, length - bytesRead);
+            if (cur < 0) {
+                throw new IOException("Unsupported file format");
+            }
+            bytesRead += cur;
+        }
+        return result;
     }
 }

@@ -87,6 +87,16 @@ public class CryptInputStream extends InputStream {
     private boolean _lastBufferRead = false;
 
     /**
+     * Creates a cipher with the provided JPass input stream.
+     *
+     * @param parent Stream that provides the encrypted data
+     * @throws IOException in case of invalid format
+     */
+    public CryptInputStream(JPassInputStream parent) throws IOException {
+        this(parent, parent.getKey());
+    }
+
+    /**
      * Creates a cipher with the key and iv provided.
      *
      * @param parent Stream that provides the encrypted data

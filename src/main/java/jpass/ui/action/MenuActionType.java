@@ -100,7 +100,7 @@ public enum MenuActionType {
         @Override
         public void actionPerformed(ActionEvent ev) {
             JPassFrame parent = JPassFrame.getInstance();
-            byte[] password = MessageDialog.showPasswordDialog(parent, true);
+            char[] password = MessageDialog.showPasswordDialog(parent, true);
             if (password == null) {
                 MessageDialog.showInformationMessage(parent, "Password has not been modified.");
             } else {

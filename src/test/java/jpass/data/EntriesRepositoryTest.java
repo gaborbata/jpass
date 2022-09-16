@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import jpass.util.CryptUtils;
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
 import org.junit.Assert;
@@ -53,9 +52,8 @@ public class EntriesRepositoryTest {
     private static final String NOTES = "Don't tell Marge";
 
     private String filePath;
-    private byte[] correctKey;
-    private byte[] incorrectKey;
-    private byte[] invalidKey;
+    private char[] correctKey;
+    private char[] incorrectKey;
 
     @Before
     public void setup() throws Exception {
@@ -63,9 +61,8 @@ public class EntriesRepositoryTest {
         tempFile.deleteOnExit();
         filePath = tempFile.getPath();
 
-        correctKey = CryptUtils.getPKCS5Sha256Hash("sesame".toCharArray());
-        incorrectKey = CryptUtils.getPKCS5Sha256Hash("doh".toCharArray());
-        invalidKey = new byte[] { 0x10 };
+        correctKey = "sesame".toCharArray();
+        incorrectKey = "doh".toCharArray();
     }
 
     @Test
@@ -88,24 +85,6 @@ public class EntriesRepositoryTest {
 
         // when
         EntriesRepository.newInstance(filePath, incorrectKey).readDocument();
-    }
-
-    @Test(expected = DocumentProcessException.class)
-    public void shouldThrowExceptionWhenWritingDocumentWithInvalidKey() throws DocumentProcessException, IOException {
-        // given
-        EntriesRepository entriesRepository = EntriesRepository.newInstance(filePath, invalidKey);
-
-        // when
-        entriesRepository.writeDocument(createEntries());
-    }
-
-    @Test(expected = DocumentProcessException.class)
-    public void shouldThrowExceptionWhenReadingDocumentWithInvalidKey() throws DocumentProcessException, IOException {
-        // given
-        EntriesRepository.newInstance(filePath, correctKey).writeDocument(createEntries());
-
-        // when
-        EntriesRepository.newInstance(filePath, invalidKey).readDocument();
     }
 
     @Test(expected = IOException.class)

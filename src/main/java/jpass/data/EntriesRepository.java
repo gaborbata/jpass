@@ -64,7 +64,7 @@ public final class EntriesRepository {
     /**
      * Key for encryption.
      */
-    private final byte[] key;
+    private final char[] key;
 
     /**
      * Converter between document objects and streams representing XMLs
@@ -77,7 +77,7 @@ public final class EntriesRepository {
      * @param fileName file name
      * @param key key for encryption
      */
-    private EntriesRepository(final String fileName, final byte[] key) {
+    private EntriesRepository(final String fileName, final char[] key) {
         this.fileName = fileName;
         this.key = key;
     }
@@ -96,10 +96,10 @@ public final class EntriesRepository {
      * Creates a document repository with encryption.
      *
      * @param fileName file name
-     * @param key key for encryption (must be a 256-bit long key)
+     * @param key key for encryption
      * @return a new DocumentHelper object
      */
-    public static EntriesRepository newInstance(final String fileName, final byte[] key) {
+    public static EntriesRepository newInstance(final String fileName, final char[] key) {
         return new EntriesRepository(fileName, key);
     }
 
@@ -118,7 +118,7 @@ public final class EntriesRepository {
             if (this.key == null) {
                 inputStream = new BufferedInputStream(new FileInputStream(this.fileName));
             } else {
-                inputStream = new GZIPInputStream(new CryptInputStream(new JPassInputStream(new BufferedInputStream(new FileInputStream(this.fileName))), this.key));
+                inputStream = new GZIPInputStream(new CryptInputStream(new JPassInputStream(new BufferedInputStream(new FileInputStream(this.fileName)), this.key)));
             }
             entries = CONVERTER.read(inputStream);
         } catch (IOException e) {
@@ -145,7 +145,7 @@ public final class EntriesRepository {
             if (this.key == null) {
                 outputStream = new BufferedOutputStream(new FileOutputStream(this.fileName));
             } else {
-                outputStream = new GZIPOutputStream(new CryptOutputStream(new JPassOutputStream(new BufferedOutputStream(new FileOutputStream(this.fileName))), this.key));
+                outputStream = new GZIPOutputStream(new CryptOutputStream(new JPassOutputStream(new BufferedOutputStream(new FileOutputStream(this.fileName)), this.key)));
             }
             CONVERTER.write(document, outputStream);
         } catch (Exception e) {

@@ -58,6 +58,16 @@ public class CryptOutputStream extends OutputStream {
     private final byte[] _buffer = new byte[1];
 
     /**
+     * Initializes the cipher with the given JPass stream.
+     *
+     * @param parent underlying {@link java.io.OutputStream}
+     * @throws IOException if the initial values can't be written to the underlying stream
+     */
+    public CryptOutputStream(JPassOutputStream parent) throws IOException {
+        this(parent, parent.getKey());
+    }
+
+    /**
      * Initializes the cipher with the given key and initial values.
      *
      * @param parent underlying {@link java.io.OutputStream}

@@ -32,5 +32,6 @@ import java.nio.charset.StandardCharsets;
 
 public interface JPassStream {
     byte[] FILE_FORMAT_IDENTIFIER = "JPass".getBytes(StandardCharsets.UTF_8);
+    int FILE_VERSION_2_SALT_LENGTH = 128;
     int FILE_VERSION = 2;
 }

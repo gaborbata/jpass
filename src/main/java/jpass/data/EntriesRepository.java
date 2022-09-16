@@ -41,6 +41,8 @@ import java.util.zip.GZIPOutputStream;
 
 import jpass.crypt.io.CryptInputStream;
 import jpass.crypt.io.CryptOutputStream;
+import jpass.crypt.io.JPassInputStream;
+import jpass.crypt.io.JPassOutputStream;
 import jpass.xml.bind.Entries;
 import jpass.xml.converter.XmlConverter;
 
@@ -116,7 +118,7 @@ public final class EntriesRepository {
             if (this.key == null) {
                 inputStream = new BufferedInputStream(new FileInputStream(this.fileName));
             } else {
-                inputStream = new GZIPInputStream(new CryptInputStream(new BufferedInputStream(new FileInputStream(this.fileName)), this.key));
+                inputStream = new GZIPInputStream(new CryptInputStream(new JPassInputStream(new BufferedInputStream(new FileInputStream(this.fileName))), this.key));
             }
             entries = CONVERTER.read(inputStream);
         } catch (IOException e) {
@@ -143,7 +145,7 @@ public final class EntriesRepository {
             if (this.key == null) {
                 outputStream = new BufferedOutputStream(new FileOutputStream(this.fileName));
             } else {
-                outputStream = new GZIPOutputStream(new CryptOutputStream(new BufferedOutputStream(new FileOutputStream(this.fileName)), this.key));
+                outputStream = new GZIPOutputStream(new CryptOutputStream(new JPassOutputStream(new BufferedOutputStream(new FileOutputStream(this.fileName))), this.key));
             }
             CONVERTER.write(document, outputStream);
         } catch (Exception e) {

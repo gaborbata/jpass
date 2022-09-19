@@ -51,20 +51,13 @@ public final class CryptUtils {
     }
 
     /**
-     * Generates key with PBKDF2 (Password-Based Key Derivation Function 2) with
+     * Generates key with {@link #getPBKDF2Key(char[], byte[], int)} with
      * default iterations.
      *
      * <p>
      * In 2021, OWASP recommended to use 310,000 iterations for
      * PBKDF2-HMAC-SHA256
      * https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-     * </p>
-     * <p>
-     * Having a salt added to the password reduces the ability to use
-     * precomputed hashes (rainbow tables) for attacks, and means that multiple
-     * passwords have to be tested individually, not all at once. The standard
-     * recommends a salt length of at least 64 bits. The US National Institute
-     * of Standards and Technology recommends a salt length of 128 bits.
      * </p>
      *
      * @param text password text
@@ -111,8 +104,7 @@ public final class CryptUtils {
     }
 
     /**
-     * Calculate SHA-256 hash, with 1000 iterations by default (recommended by
-     * RSA PKCS5).
+     * Calculate SHA-256 hash, with 1000 iterations by default.
      *
      * @param text password text
      * @return hash of the password
@@ -143,8 +135,7 @@ public final class CryptUtils {
      * hand, an attacker trying to crack passwords spends nearly 100% of their
      * time hashing so hashing {@code n} times gives the appearance of slowing
      * the attacker down by a factor of {@code n} while not noticeably affecting
-     * the typical user. A minimum of 1000 operations is recommended in RSA
-     * PKCS5 standard.
+     * the typical user.
      * </p>
      *
      * @param text password text

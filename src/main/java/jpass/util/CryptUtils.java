@@ -70,9 +70,8 @@ public final class CryptUtils {
      * @param text password text
      * @param salt the salt
      * @return the generated key
-     * @throws GeneralSecurityException if PBKDF2 is not available
      */
-    public static byte[] getPBKDF2Key(final char[] text, final byte[] salt) throws GeneralSecurityException {
+    public static byte[] getPBKDF2Key(final char[] text, final byte[] salt) {
         return getPBKDF2Key(text, salt, 310_000);
     }
 
@@ -99,13 +98,16 @@ public final class CryptUtils {
      * @param salt the salt
      * @param iteration number of iterations
      * @return the generated key
-     * @throws GeneralSecurityException if PBKDF2 is not available
      */
-    public static byte[] getPBKDF2Key(final char[] text, final byte[] salt, final int iteration) throws GeneralSecurityException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        KeySpec spec = new PBEKeySpec(text, salt, iteration, 256);
-        SecretKey secretKey = factory.generateSecret(spec);
-        return secretKey.getEncoded();
+    public static byte[] getPBKDF2Key(final char[] text, final byte[] salt, final int iteration) {
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(text, salt, iteration, 256);
+            SecretKey secretKey = factory.generateSecret(spec);
+            return secretKey.getEncoded();
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException("Could not generate PBKDF2-HMAC-SHA256 key: " + e.getMessage());
+        }
     }
 
     /**
@@ -114,9 +116,8 @@ public final class CryptUtils {
      *
      * @param text password text
      * @return hash of the password
-     * @throws Exception if error occurred
      */
-    public static byte[] getSha256HashWithiterations(final char[] text) throws Exception {
+    public static byte[] getSha256HashWithiterations(final char[] text) {
         return getSha256Hash(text, 1000);
     }
 
@@ -125,9 +126,8 @@ public final class CryptUtils {
      *
      * @param text password text
      * @return hash of the password
-     * @throws Exception if error occurred
      */
-    public static byte[] getSha256Hash(final char[] text) throws Exception {
+    public static byte[] getSha256Hash(final char[] text) {
         return getSha256Hash(text, 0);
     }
 
@@ -150,24 +150,29 @@ public final class CryptUtils {
      * @param text password text
      * @param iteration number of iterations
      * @return hash of the password
-     * @throws Exception if error occurred
      */
-    private static byte[] getSha256Hash(final char[] text, final int iteration) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.reset();
-        // md.update(salt);
-        byte[] bytes = new String(text).getBytes(StandardCharsets.UTF_8);
-        byte[] digest = md.digest(bytes);
-        for (int i = 0; i < iteration; i++) {
+    private static byte[] getSha256Hash(final char[] text, final int iteration) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.reset();
-            digest = md.digest(digest);
+            // md.update(salt);
+            byte[] bytes = new String(text).getBytes(StandardCharsets.UTF_8);
+            byte[] digest = md.digest(bytes);
+            for (int i = 0; i < iteration; i++) {
+                md.reset();
+                digest = md.digest(digest);
+            }
+            return digest;
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException("Could not generate SHA-256 key: " + e.getMessage());
         }
-        return digest;
     }
 
     public static byte[] generateRandomSalt(int saltLength) {
         byte[] salt = new byte[saltLength];
-        CryptUtils.newRandomNumberGenerator().nextBytes(salt);
+        if (saltLength > 0) {
+            CryptUtils.newRandomNumberGenerator().nextBytes(salt);
+        }
         return salt;
     }
 

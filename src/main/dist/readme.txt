@@ -8,7 +8,8 @@ notes in an encrypted file protected by one master password.
 
 Features:
 
-* Strong encryption - AES-256-CBC algorithm (SHA-256 is used as password hash)
+* Strong encryption - AES-256-CBC algorithm (PBKDF2-HMAC-SHA256 is used as
+  password-based key derivation function)
 * Portable - single jar file which can be carried on a USB stick
 * Built-in random password generator
 * Organize all your user name, password, URL and notes information in one file

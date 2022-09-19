@@ -30,6 +30,7 @@
  */
 package jpass.crypt.io;
 
+import jpass.io.JPassOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;

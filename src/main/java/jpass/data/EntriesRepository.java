@@ -41,8 +41,8 @@ import java.util.zip.GZIPOutputStream;
 
 import jpass.crypt.io.CryptInputStream;
 import jpass.crypt.io.CryptOutputStream;
-import jpass.crypt.io.JPassInputStream;
-import jpass.crypt.io.JPassOutputStream;
+import jpass.io.JPassInputStream;
+import jpass.io.JPassOutputStream;
 import jpass.xml.bind.Entries;
 import jpass.xml.converter.XmlConverter;
 

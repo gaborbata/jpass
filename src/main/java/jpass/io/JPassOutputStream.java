@@ -26,45 +26,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package jpass.crypt.io;
+package jpass.io;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
+import java.io.OutputStream;
+import jpass.util.CryptUtils;
 
-public class JPassInputStream extends InputStream implements JPassStream {
+/**
+ * Output stream to write JPass file format and provide key for the underlying
+ * crypt output stream.
+ *
+ * @author Gabor Bata
+ */
+public class JPassOutputStream extends OutputStream implements JPassStream {
 
-    private final InputStream parent;
-    private final byte[] key;
+    private final OutputStream parent;
+    private final byte[] generatedKey;
 
-    public JPassInputStream(InputStream parent, char[] key) throws IOException {
+    public JPassOutputStream(OutputStream parent, char[] key) throws IOException {
         this.parent = parent;
-        // TODO: generate key
-        this.key = null;
 
-        if (this.parent.markSupported()) {
-            this.parent.mark(FILE_FORMAT_IDENTIFIER.length + 1);
-        }
+        // get the latest supported file version
+        FileVersionType fileVersionType = SUPPORTED_FILE_VERSIONS.get(SUPPORTED_FILE_VERSIONS.lastKey());
 
-        byte[] identifier = readBytes(parent, FILE_FORMAT_IDENTIFIER.length);
-        int version = parent.read();
+        parent.write(FILE_FORMAT_IDENTIFIER);
+        parent.write(fileVersionType.getVersion());
 
-        if (!Arrays.equals(FILE_FORMAT_IDENTIFIER, identifier) && this.parent.markSupported()) {
-            // initial version of JPass had no file identifier, we assume version 1
-            version = 1;
-            this.parent.reset();
-        } else if (version < 1 || version > FILE_VERSION) {
-            throw new IOException("Unsupported file version: " + version);
+        byte[] salt = CryptUtils.generateRandomSalt(fileVersionType.getSaltLength());
+        if (salt.length > 0) {
+            parent.write(salt);
         }
-        
-        if (version == 2) {
-            byte[] salt = readBytes(parent, FILE_VERSION_2_SALT_LENGTH);
-        }
+        this.generatedKey = fileVersionType.getKeyGenerator().apply(key, salt);
     }
 
     @Override
-    public int read() throws IOException {
-        return parent.read();
+    public void write(int b) throws IOException {
+        parent.write(b);
     }
 
     @Override
@@ -72,20 +69,8 @@ public class JPassInputStream extends InputStream implements JPassStream {
         parent.close();
     }
 
+    @Override
     public byte[] getKey() {
-        return key;
-    }
-    
-    private byte[] readBytes(InputStream stream, int length) throws IOException {
-        byte[] result = new byte[length];
-        int bytesRead = 0;
-        while (bytesRead < length) {
-            int cur = stream.read(result, bytesRead, length - bytesRead);
-            if (cur < 0) {
-                throw new IOException("Unsupported file format");
-            }
-            bytesRead += cur;
-        }
-        return result;
+        return generatedKey;
     }
 }

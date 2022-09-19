@@ -33,4 +33,4 @@ else
 fi
 
 # execute jpass
-exec "$JAVACMD" -jar "$JPASS_PATH/jpass-0.1.29-RELEASE.jar" "$@"
+exec "$JAVACMD" -jar "$JPASS_PATH/jpass-1.0.0-SNAPSHOT.jar" "$@"

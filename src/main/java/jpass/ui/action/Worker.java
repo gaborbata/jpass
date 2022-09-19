@@ -34,8 +34,8 @@ import jpass.ui.JPassFrame;
 import jpass.ui.MessageDialog;
 
 /**
- * Worker class for time consuming tasks. While the task is running, the main application is
- * disabled, and a progress indicator is shown.
+ * Worker class for time consuming tasks. While the task is running, the main
+ * application is disabled, and a progress indicator is shown.
  *
  * @author Gabor_Bata
  *
@@ -58,7 +58,8 @@ public abstract class Worker extends SwingWorker<Void, Void> {
     }
 
     /**
-     * Sets back the processing state of the frame, and refreshes the frame content.
+     * Sets back the processing state of the frame, and refreshes the frame
+     * content.
      *
      * @see javax.swing.SwingWorker#done()
      */

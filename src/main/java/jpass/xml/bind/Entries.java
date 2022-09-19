@@ -9,7 +9,8 @@ import java.util.List;
  * Java class for anonymous complex type.
  *
  * <p>
- * The following schema fragment specifies the expected content contained within this class.
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  *
  * <pre>
  * &lt;complexType&gt;
@@ -33,9 +34,10 @@ public class Entries {
      * Gets the value of the entry property.
      *
      * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any
-     * modification you make to the returned list will be present inside the object. This is
-     * why there is not a {@code set} method for the entry property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the object. This is why there is not a {@code set}
+     * method for the entry property.
      *
      * <p>
      * For example, to add a new item, do as follows:

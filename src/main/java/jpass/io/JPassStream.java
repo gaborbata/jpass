@@ -46,8 +46,8 @@ import jpass.util.CryptUtils;
 public interface JPassStream {
 
     enum FileVersionType {
-        VERSION_0(0, 0, (text, salt) -> CryptUtils.getSha256HashWithiterations(text)),
-        VERSION_1(1, 16, (text, salt) -> CryptUtils.getPBKDF2Key(text, salt));
+        VERSION_0(0, 0, (text, salt) -> CryptUtils.getSha256HashWithDefaultIterations(text)),
+        VERSION_1(1, 16, (text, salt) -> CryptUtils.getPBKDF2KeyWithDefaultIterations(text, salt));
 
         private final int version;
         private final int saltLength;

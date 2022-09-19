@@ -64,7 +64,7 @@ public final class CryptUtils {
      * @param salt the salt
      * @return the generated key
      */
-    public static byte[] getPBKDF2Key(final char[] text, final byte[] salt) {
+    public static byte[] getPBKDF2KeyWithDefaultIterations(final char[] text, final byte[] salt) {
         return getPBKDF2Key(text, salt, 310_000);
     }
 
@@ -109,7 +109,7 @@ public final class CryptUtils {
      * @param text password text
      * @return hash of the password
      */
-    public static byte[] getSha256HashWithiterations(final char[] text) {
+    public static byte[] getSha256HashWithDefaultIterations(final char[] text) {
         return getSha256Hash(text, 1000);
     }
 

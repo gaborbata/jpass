@@ -34,8 +34,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Implements the &quot;Cipher Block Chaining Mode&quot;. As cipher the class {@link Aes256} will be
- * used.
+ * Implements the &quot;Cipher Block Chaining Mode&quot;. As cipher the class
+ * {@link Aes256} will be used.
  *
  * @author Timm Knape
  * @version $Revision: 1.4 $
@@ -163,8 +163,8 @@ public class Cbc {
     }
 
     /**
-     * Encrypts a part of the array. Only the first {@code length} {@code byte}s of the array will
-     * be encrypted.
+     * Encrypts a part of the array. Only the first {@code length} {@code byte}s
+     * of the array will be encrypted.
      *
      * @param data {@code byte}s that should be encrypted
      * @param length number of {@code byte}s that should be encrypted
@@ -186,8 +186,8 @@ public class Cbc {
     }
 
     /**
-     * Decrypts a part of the array. Only the first {@code length} {@code byte}s of the array will
-     * be decrypted.
+     * Decrypts a part of the array. Only the first {@code length} {@code byte}s
+     * of the array will be decrypted.
      *
      * @param data {@code byte}s that should be decrypted
      * @param length number of {@code byte}s that should be decrypted
@@ -230,7 +230,8 @@ public class Cbc {
     /**
      * Finishes the decryption process.
      *
-     * @throws DecryptException if the last block is no legal conclusion of the stream
+     * @throws DecryptException if the last block is no legal conclusion of the
+     * stream
      * @throws IOException if the writing fails
      */
     public void finishDecryption() throws DecryptException, IOException {

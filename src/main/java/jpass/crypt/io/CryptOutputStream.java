@@ -39,9 +39,10 @@ import jpass.crypt.Cbc;
 import jpass.util.CryptUtils;
 
 /**
- * Encrypts the passed data and stores it into the underlying {@link java.io.OutputStream}. If no
- * initial vector is provided in the constructor, the cipher will be initialized with random data
- * and this data will be sent directly to the underlying stream.
+ * Encrypts the passed data and stores it into the underlying
+ * {@link java.io.OutputStream}. If no initial vector is provided in the
+ * constructor, the cipher will be initialized with random data and this data
+ * will be sent directly to the underlying stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.5 $
@@ -62,7 +63,8 @@ public class CryptOutputStream extends OutputStream {
      * Initializes the cipher with the given JPass stream.
      *
      * @param parent underlying {@link java.io.OutputStream}
-     * @throws IOException if the initial values can't be written to the underlying stream
+     * @throws IOException if file header values can't be written to the
+     * underlying stream
      */
     public CryptOutputStream(JPassOutputStream parent) throws IOException {
         this(parent, parent.getKey());
@@ -80,12 +82,13 @@ public class CryptOutputStream extends OutputStream {
     }
 
     /**
-     * Initializes the cipher with the given key. The initial values for the CBC scheme will be
-     * random and sent to the underlying stream.
+     * Initializes the cipher with the given key. The initial values for the CBC
+     * scheme will be random and sent to the underlying stream.
      *
      * @param parent underlying {@link java.io.OutputStream}
      * @param key key for the cipher algorithm
-     * @throws IOException if the initial values can't be written to the underlying stream
+     * @throws IOException if the initial values can't be written to the
+     * underlying stream
      */
     public CryptOutputStream(OutputStream parent, byte[] key)
             throws IOException {
@@ -101,7 +104,8 @@ public class CryptOutputStream extends OutputStream {
      * Encrypts a single {@code byte}.
      *
      * @param b {@code byte} to be encrypted
-     * @throws IOException if encrypted data can't be written to the underlying stream
+     * @throws IOException if encrypted data can't be written to the underlying
+     * stream
      */
     @Override
     public void write(int b) throws IOException {
@@ -113,7 +117,8 @@ public class CryptOutputStream extends OutputStream {
      * Encrypts a {@code byte} array.
      *
      * @param b {@code byte} array to be encrypted
-     * @throws IOException if encrypted data can't be written to the underlying stream
+     * @throws IOException if encrypted data can't be written to the underlying
+     * stream
      */
     @Override
     public void write(byte[] b) throws IOException {
@@ -123,8 +128,8 @@ public class CryptOutputStream extends OutputStream {
     /**
      * Finalizes the encryption and closes the underlying stream.
      *
-     * @throws IOException if the encryption fails or the encrypted data can't be written to the
-     * underlying stream
+     * @throws IOException if the encryption fails or the encrypted data can't
+     * be written to the underlying stream
      */
     @Override
     public void close() throws IOException {

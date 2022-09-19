@@ -87,7 +87,7 @@ public class JPassInputStream extends InputStream implements JPassStream {
         while (length > 0 && bytesRead < length) {
             int cur = stream.read(result, bytesRead, length - bytesRead);
             if (cur < 0) {
-                throw new IOException("Unsupported file format");
+                throw new IndexOutOfBoundsException("Invalid file format");
             }
             bytesRead += cur;
         }

@@ -31,8 +31,8 @@ package jpass.ui;
 import javax.swing.JPasswordField;
 
 /**
- * An extension of {@link JPasswordField} which holds an extra attribute which flags if the password
- * field content is allowed to copy to system clipboard.
+ * An extension of {@link JPasswordField} which holds an extra attribute which
+ * flags if the password field content is allowed to copy to system clipboard.
  *
  * @author Gabor_Bata
  *

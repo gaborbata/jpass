@@ -108,7 +108,8 @@ public final class EntriesRepository {
      *
      * @return the document
      * @throws FileNotFoundException if file is not exists
-     * @throws IOException when I/O error occurred (including incorrect password, or file format issues)
+     * @throws IOException when I/O error occurred (including incorrect
+     * password, or file format issues)
      * @throws DocumentProcessException when document could not be read
      */
     public Entries readDocument() throws IOException, DocumentProcessException {

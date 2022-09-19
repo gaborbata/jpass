@@ -58,20 +58,21 @@ import static java.lang.String.format;
  *
  */
 public final class FileHelper {
-    public static final String SAVE_MODIFIED_QUESTION_MESSAGE =
-            "The current file has been modified.\n" +
-            "Do you want to save the changes before closing?";
-    private static final String UNENCRYPTED_DATA_WARNING_MESSAGE =
-            "Please note that all data will be stored unencrypted.\n" +
-            "Make sure you keep the exported file in a secure location.";
-    private static final String OPEN_ERROR_CHECK_PASSWORD_ERROR_MESSAGE =
-            "An error occured during the open operation.\nThe password might be incorrect.\n(Error: %s)";
-    private static final String CREATE_FILE_QUESTION_MESSAGE =
-            "File not found:\n%s\n\nDo you want to create the file?";
-    private static final String OPERATION_ERROR_MESSAGE =
-            "An error occured during the %s operation:\n%s";
-    private static final String FILE_OVERWRITE_QUESTION_MESSAGE =
-            "File is already exists:\n%s\n\nDo you want to overwrite?";
+
+    public static final String SAVE_MODIFIED_QUESTION_MESSAGE
+            = "The current file has been modified.\n"
+            + "Do you want to save the changes before closing?";
+    private static final String UNENCRYPTED_DATA_WARNING_MESSAGE
+            = "Please note that all data will be stored unencrypted.\n"
+            + "Make sure you keep the exported file in a secure location.";
+    private static final String OPEN_ERROR_CHECK_PASSWORD_ERROR_MESSAGE
+            = "An error occured during the open operation.\nThe password might be incorrect.\n(Error: %s)";
+    private static final String CREATE_FILE_QUESTION_MESSAGE
+            = "File not found:\n%s\n\nDo you want to create the file?";
+    private static final String OPERATION_ERROR_MESSAGE
+            = "An error occured during the %s operation:\n%s";
+    private static final String FILE_OVERWRITE_QUESTION_MESSAGE
+            = "File is already exists:\n%s\n\nDo you want to overwrite?";
 
     private static final String JPASS_DATA_FILES = "JPass Data Files (*.jpass)";
     private static final String XML_FILES = "XML Files (*.xml)";
@@ -198,7 +199,8 @@ public final class FileHelper {
      *
      * @param parent parent component
      * @param saveAs normal 'Save' dialog or 'Save as'
-     * @param successCallback callback which is called when the file has been successfully saved
+     * @param successCallback callback which is called when the file has been
+     * successfully saved
      */
     public static void saveFile(final JPassFrame parent, final boolean saveAs, final Runnable successCallback) {
         final String fileName;

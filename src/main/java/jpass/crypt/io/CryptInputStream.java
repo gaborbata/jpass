@@ -39,9 +39,10 @@ import jpass.crypt.Cbc;
 import jpass.crypt.DecryptException;
 
 /**
- * Reads from an encrypted {@link java.io.InputStream} and provides the decrypted data. The
- * encryption key is provided with the constructor. The initialization vector can also be provided.
- * Otherwise this vector is read from the stream.
+ * Reads from an encrypted {@link java.io.InputStream} and provides the
+ * decrypted data. The encryption key is provided with the constructor. The
+ * initialization vector can also be provided. Otherwise this vector is read
+ * from the stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.5 $
@@ -66,13 +67,14 @@ public class CryptInputStream extends InputStream {
     private final ByteArrayOutputStream _decrypted;
 
     /**
-     * Buffer of unencrypted data. If the buffer is completely returned, another chunk of data will
-     * be decrypted.
+     * Buffer of unencrypted data. If the buffer is completely returned, another
+     * chunk of data will be decrypted.
      */
     private byte[] _buffer = null;
 
     /**
-     * Number of {@code byte}s that are already returned from {@link CryptInputStream#_buffer}.
+     * Number of {@code byte}s that are already returned from
+     * {@link CryptInputStream#_buffer}.
      */
     private int _bufferUsed = 0;
 
@@ -82,8 +84,8 @@ public class CryptInputStream extends InputStream {
     private final byte[] _fetchBuffer = new byte[FETCH_BUFFER_SIZE];
 
     /**
-     * Signals, if the last encrypted data was read. If we run out of buffers, the stream is at its
-     * end.
+     * Signals, if the last encrypted data was read. If we run out of buffers,
+     * the stream is at its end.
      */
     private boolean _lastBufferRead = false;
 
@@ -91,7 +93,7 @@ public class CryptInputStream extends InputStream {
      * Creates a cipher with the provided JPass input stream.
      *
      * @param parent Stream that provides the encrypted data
-     * @throws IOException in case of invalid format
+     * @throws IOException in case of invalid file format
      */
     public CryptInputStream(JPassInputStream parent) throws IOException {
         this(parent, parent.getKey());
@@ -111,8 +113,9 @@ public class CryptInputStream extends InputStream {
     }
 
     /**
-     * Creates a cipher with the key. The iv will be read from the {@code parent} stream. If there
-     * are not enough {@code byte}s in the stream, an {@link java.io.IOException} will be raised.
+     * Creates a cipher with the key. The iv will be read from the
+     * {@code parent} stream. If there are not enough {@code byte}s in the
+     * stream, an {@link java.io.IOException} will be raised.
      *
      * @param parent Stream that provides the encrypted data
      * @param key key for the cipher algorithm
@@ -144,12 +147,14 @@ public class CryptInputStream extends InputStream {
     }
 
     /**
-     * Returns the next decrypted {@code byte}. If there is no more data, {@code -1} will be
-     * returned. If the decryption fails or the underlying stream throws an
-     * {@link java.io.IOException}, an {@link java.io.IOException} will be thrown.
+     * Returns the next decrypted {@code byte}. If there is no more data,
+     * {@code -1} will be returned. If the decryption fails or the underlying
+     * stream throws an {@link java.io.IOException}, an
+     * {@link java.io.IOException} will be thrown.
      *
      * @return next decrypted {@code byte} or {@code -1}
-     * @throws IOException if the decryption fails or the underlying stream throws an exception
+     * @throws IOException if the decryption fails or the underlying stream
+     * throws an exception
      */
     @Override
     public int read() throws IOException {

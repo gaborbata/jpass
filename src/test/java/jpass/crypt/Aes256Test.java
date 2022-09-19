@@ -7,8 +7,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test values for the &quot;Advanced Encryption Standard&quot; (AES). These values are part of
- * &quot;Federal Information Processing Standards Publication 197&quot;.
+ * Test values for the &quot;Advanced Encryption Standard&quot; (AES). These
+ * values are part of &quot;Federal Information Processing Standards Publication
+ * 197&quot;.
  *
  * @author Timm Knape
  * @version $Revision: 1.3 $
@@ -23,8 +24,8 @@ public class Aes256Test {
     private static final int RANDOM_TRIES = 5;
 
     /**
-     * Encrypts and Decrypts a test message. The results will be compared against the reference
-     * values.
+     * Encrypts and Decrypts a test message. The results will be compared
+     * against the reference values.
      */
     @Test
     public void shouldEntryptAndDecryptATestMessage() {
@@ -54,8 +55,9 @@ public class Aes256Test {
     }
 
     /**
-     * Test the encryption and decryption with random data. The key and the data will be random
-     * <code>byte</code>s. RANDOM_TRIES iterations will be performed.
+     * Test the encryption and decryption with random data. The key and the data
+     * will be random <code>byte</code>s. RANDOM_TRIES iterations will be
+     * performed.
      */
     @Test
     public void shouldEncryptAndDecryptRandomData() {

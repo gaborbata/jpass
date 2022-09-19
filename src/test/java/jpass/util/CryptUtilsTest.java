@@ -32,6 +32,11 @@ import java.nio.charset.StandardCharsets;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Unit test for {@link CryptUtils}.
+ *
+ * @author Gabor Bata
+ */
 public class CryptUtilsTest {
 
     @Test
@@ -70,7 +75,7 @@ public class CryptUtilsTest {
         };
 
         // when
-        byte[] hash = CryptUtils.getSha256HashWithiterations("sesame".toCharArray());
+        byte[] hash = CryptUtils.getSha256HashWithDefaultIterations("sesame".toCharArray());
 
         // then
         Assert.assertArrayEquals(expectedHash, hash);
@@ -92,7 +97,7 @@ public class CryptUtilsTest {
         byte[] salt = "salt".getBytes(StandardCharsets.UTF_8);
 
         // when
-        byte[] key = CryptUtils.getPBKDF2Key("sesame".toCharArray(), salt);
+        byte[] key = CryptUtils.getPBKDF2KeyWithDefaultIterations("sesame".toCharArray(), salt);
 
         // then
         Assert.assertArrayEquals(expectedKey, key);

@@ -42,7 +42,7 @@ import org.junit.Test;
 /**
  * Unit test for {@link EntriesRepository}.
  *
- * @author GaborBata
+ * @author Gabor Bata
  */
 public class EntriesRepositoryTest {
 
@@ -171,7 +171,7 @@ public class EntriesRepositoryTest {
     public void shouldBeAbleToReadEntriesFromFileVersion1() throws DocumentProcessException, IOException {
         // given
         Entries expectedEntries = createEntries();
-        Path filePath = Path.of("", "src/test/resources").resolve("jpass-test-v1.jpass");
+        Path filePath = Path.of("src/test/resources").resolve("jpass-test-v1.jpass");
 
         // when
         Entries readEntries = EntriesRepository.newInstance(filePath.toString(), correctKey).readDocument();
@@ -184,7 +184,7 @@ public class EntriesRepositoryTest {
     public void shouldBeAbleToImportEntriesFromFile() throws DocumentProcessException, IOException {
         // given
         Entries expectedEntries = createEntries();
-        Path filePath = Path.of("", "src/test/resources").resolve("jpass-test.xml");
+        Path filePath = Path.of("src/test/resources").resolve("jpass-test.xml");
 
         // when
         Entries readEntries = EntriesRepository.newInstance(filePath.toString()).readDocument();

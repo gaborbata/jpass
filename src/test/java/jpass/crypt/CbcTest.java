@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit test for the CBC encryption. The test data will be encrypted and decrypted. The results will
- * be compared.
+ * Unit test for the CBC encryption. The test data will be encrypted and
+ * decrypted. The results will be compared.
  *
  * @author Timm Knape
  * @version $Revision: 1.5 $
@@ -21,8 +21,9 @@ import org.junit.Test;
 public class CbcTest {
 
     /**
-     * Size of the first random message in <code>byte</code>s. Successive random messages will
-     * double their size until {@link CbcTest#RANDOM_MESSAGE_LIMIT_SIZE} is reached.
+     * Size of the first random message in <code>byte</code>s. Successive random
+     * messages will double their size until
+     * {@link CbcTest#RANDOM_MESSAGE_LIMIT_SIZE} is reached.
      */
     private static final int FIRST_RANDOM_MESSAGE_SIZE = 1;
 
@@ -118,7 +119,8 @@ public class CbcTest {
     }
 
     /**
-     * Test reference data. The reference data was obtained by OpenSSL (version 0.9.71)
+     * Test reference data. The reference data was obtained by OpenSSL (version
+     * 0.9.71)
      */
     @Test
     public void shouldWorkWithReferenceData() throws DecryptException, IOException {

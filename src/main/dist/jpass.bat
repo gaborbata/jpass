@@ -27,7 +27,7 @@ pause
 goto end
 
 :launch
-start "JPass" /B "%JAVA_EXE%" -jar "%JPASS_HOME%\jpass-1.0.0-SNAPSHOT.jar" %*
+start "JPass" /B "%JAVA_EXE%" -jar "%JPASS_HOME%\jpass-1.0.0-RELEASE.jar" %*
 goto end
 
 :end

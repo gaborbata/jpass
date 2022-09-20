@@ -31,8 +31,8 @@
 package jpass.crypt;
 
 /**
- * Exception, if the decryption fails. {@link Cbc} throws this exception, if the last block is not a
- * legal conclusion of a decryption stream.
+ * Exception, if the decryption fails. {@link Cbc} throws this exception, if the
+ * last block is not a legal conclusion of a decryption stream.
  *
  * @author Timm Knape
  * @version $Revision: 1.3 $

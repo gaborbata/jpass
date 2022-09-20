@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import jpass.util.CryptUtils;
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
 import org.junit.Assert;
@@ -42,7 +41,7 @@ import org.junit.Test;
 /**
  * Unit test for {@link EntriesRepository}.
  *
- * @author GaborBata
+ * @author Gabor Bata
  */
 public class EntriesRepositoryTest {
 
@@ -53,9 +52,8 @@ public class EntriesRepositoryTest {
     private static final String NOTES = "Don't tell Marge";
 
     private String filePath;
-    private byte[] correctKey;
-    private byte[] incorrectKey;
-    private byte[] invalidKey;
+    private char[] correctKey;
+    private char[] incorrectKey;
 
     @Before
     public void setup() throws Exception {
@@ -63,22 +61,21 @@ public class EntriesRepositoryTest {
         tempFile.deleteOnExit();
         filePath = tempFile.getPath();
 
-        correctKey = CryptUtils.getPKCS5Sha256Hash("sesame".toCharArray());
-        incorrectKey = CryptUtils.getPKCS5Sha256Hash("doh".toCharArray());
-        invalidKey = new byte[] { 0x10 };
+        correctKey = "sesame".toCharArray();
+        incorrectKey = "doh".toCharArray();
     }
 
     @Test
     public void shouldWriteAndReadEncryptedFileWithCorrectPassword() throws DocumentProcessException, IOException {
         // given
-        Entries entries = createEntries();
-        EntriesRepository.newInstance(filePath, correctKey).writeDocument(entries);
+        Entries expectedEntries = createEntries();
+        EntriesRepository.newInstance(filePath, correctKey).writeDocument(expectedEntries);
 
         // when
         Entries readEntries = EntriesRepository.newInstance(filePath, correctKey).readDocument();
 
         // then
-        assertEquals(entries, readEntries);
+        assertEquals(expectedEntries, readEntries);
     }
 
     @Test(expected = IOException.class)
@@ -88,24 +85,6 @@ public class EntriesRepositoryTest {
 
         // when
         EntriesRepository.newInstance(filePath, incorrectKey).readDocument();
-    }
-
-    @Test(expected = DocumentProcessException.class)
-    public void shouldThrowExceptionWhenWritingDocumentWithInvalidKey() throws DocumentProcessException, IOException {
-        // given
-        EntriesRepository entriesRepository = EntriesRepository.newInstance(filePath, invalidKey);
-
-        // when
-        entriesRepository.writeDocument(createEntries());
-    }
-
-    @Test(expected = DocumentProcessException.class)
-    public void shouldThrowExceptionWhenReadingDocumentWithInvalidKey() throws DocumentProcessException, IOException {
-        // given
-        EntriesRepository.newInstance(filePath, correctKey).writeDocument(createEntries());
-
-        // when
-        EntriesRepository.newInstance(filePath, invalidKey).readDocument();
     }
 
     @Test(expected = IOException.class)
@@ -133,14 +112,14 @@ public class EntriesRepositoryTest {
     @Test
     public void shouldBeAbleToWriteAndReadUnencryptedFile() throws DocumentProcessException, IOException {
         // given
-        Entries entries = createEntries();
-        EntriesRepository.newInstance(filePath).writeDocument(entries);
+        Entries expectedEntries = createEntries();
+        EntriesRepository.newInstance(filePath).writeDocument(expectedEntries);
 
         // when
         Entries readEntries = EntriesRepository.newInstance(filePath).readDocument();
 
         // then
-        assertEquals(entries, readEntries);
+        assertEquals(expectedEntries, readEntries);
     }
 
     @Test(expected = IOException.class)
@@ -172,6 +151,42 @@ public class EntriesRepositoryTest {
 
         // when
         entriesRepository.readDocument();
+    }
+
+    @Test
+    public void shouldBeAbleToReadEntriesFromFileVersion0() throws DocumentProcessException, IOException {
+        // given
+        Entries expectedEntries = createEntries();
+
+        // when
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test-v0.jpass", correctKey).readDocument();
+
+        // then
+        assertEquals(expectedEntries, readEntries);
+    }
+
+    @Test
+    public void shouldBeAbleToReadEntriesFromFileVersion1() throws DocumentProcessException, IOException {
+        // given
+        Entries expectedEntries = createEntries();
+
+        // when
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test-v1.jpass", correctKey).readDocument();
+
+        // then
+        assertEquals(expectedEntries, readEntries);
+    }
+
+    @Test
+    public void shouldBeAbleToImportEntriesFromFile() throws DocumentProcessException, IOException {
+        // given
+        Entries expectedEntries = createEntries();
+
+        // when
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test.xml").readDocument();
+
+        // then
+        assertEquals(expectedEntries, readEntries);
     }
 
     private Entries createEntries() {

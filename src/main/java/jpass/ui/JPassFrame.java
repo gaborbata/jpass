@@ -77,7 +77,7 @@ public final class JPassFrame extends JFrame {
     private static JPassFrame INSTANCE;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
-    public static final String PROGRAM_VERSION = "0.1.29-RELEASE";
+    public static final String PROGRAM_VERSION = "1.0.0-SNAPSHOT";
 
     private final JPopupMenu popup;
     private final JPanel topContainerPanel;
@@ -98,8 +98,8 @@ public final class JPassFrame extends JFrame {
     private JPassFrame(String fileName) {
         try {
             setIconImages(Stream.of(16, 20, 32, 40, 64, 80, 128, 160)
-                .map(size -> getIcon("jpass", size, size).getImage())
-                .collect(Collectors.toList()));            
+                    .map(size -> getIcon("jpass", size, size).getImage())
+                    .collect(Collectors.toList()));
         } catch (Exception e) {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }

@@ -26,27 +26,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package jpass.ui;
+package jpass.io;
 
-import javax.swing.JPasswordField;
+import java.io.IOException;
+import java.io.OutputStream;
+import jpass.util.CryptUtils;
 
 /**
- * An extension of {@link JPasswordField} which holds an extra attribute which
- * flags if the password field content is allowed to copy to system clipboard.
+ * Output stream to write JPass file format and provide key for the underlying
+ * crypt output stream.
  *
- * @author Gabor_Bata
- *
+ * @author Gabor Bata
  */
-public class CopiablePasswordField extends JPasswordField {
+public class JPassOutputStream extends OutputStream implements JPassStream {
 
-    private final boolean copyEnabled;
+    private final OutputStream parent;
+    private final byte[] generatedKey;
 
-    public CopiablePasswordField(boolean copyEnabled) {
-        super();
-        this.copyEnabled = copyEnabled;
+    public JPassOutputStream(OutputStream parent, char[] key) throws IOException {
+        this.parent = parent;
+
+        // get the latest supported file version
+        FileVersionType fileVersionType = SUPPORTED_FILE_VERSIONS.get(SUPPORTED_FILE_VERSIONS.lastKey());
+
+        parent.write(FILE_FORMAT_IDENTIFIER);
+        parent.write(fileVersionType.getVersion());
+
+        byte[] salt = CryptUtils.generateRandomSalt(fileVersionType.getSaltLength());
+        if (salt.length > 0) {
+            parent.write(salt);
+        }
+        this.generatedKey = fileVersionType.getKeyGenerator().apply(key, salt);
     }
 
-    public boolean isCopyEnabled() {
-        return this.copyEnabled;
+    @Override
+    public void write(int b) throws IOException {
+        parent.write(b);
+    }
+
+    @Override
+    public void close() throws IOException {
+        parent.close();
+    }
+
+    @Override
+    public byte[] getKey() {
+        return generatedKey;
     }
 }

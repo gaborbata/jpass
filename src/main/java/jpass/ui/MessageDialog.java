@@ -59,9 +59,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import jpass.util.CryptUtils;
 import jpass.util.SpringUtilities;
-import jpass.util.StringUtils;
 
 /**
  * Utility class for displaying message dialog.
@@ -247,7 +245,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param confirm password confirmation
      * @return the password
      */
-    public static byte[] showPasswordDialog(final Component parent, final boolean confirm) {
+    public static char[] showPasswordDialog(final Component parent, final boolean confirm) {
         JPanel panel = new JPanel();
         panel.add(new JLabel("Password:"));
         final JPasswordField password = TextComponentFactory.newPasswordField();
@@ -260,8 +258,8 @@ public final class MessageDialog extends JDialog implements ActionListener {
         }
         panel.setLayout(new SpringLayout());
         SpringUtilities.makeCompactGrid(panel, confirm ? 2 : 1, 2, 5, 5, 5, 5);
-        boolean incorrect = true;
 
+        boolean incorrect = true;
         while (incorrect) {
             int option = showMessageDialog(parent, panel, "Enter Password", getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
@@ -277,16 +275,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
             }
         }
 
-        byte[] passwordHash = null;
-        try {
-            passwordHash = CryptUtils.getPKCS5Sha256Hash(password.getPassword());
-        } catch (Exception e) {
-            showErrorMessage(parent,
-                "Cannot generate password hash:\n" +
-                StringUtils.stripString(e.getMessage()) +
-                "\n\nOpening and saving files are not possible!");
-        }
-        return passwordHash;
+        return password.getPassword();
     }
 
     /**

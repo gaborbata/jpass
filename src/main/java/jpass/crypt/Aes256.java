@@ -31,15 +31,16 @@
 package jpass.crypt;
 
 /**
- * Implementation of the &quot;Advanced Encryption Standard&quot; (AES) with a key size of 256 bit.
- * The specification in &quot;Federal Information Processing Standards Publication 197&quot; defines
- * the following key sizes:
+ * Implementation of the &quot;Advanced Encryption Standard&quot; (AES) with a
+ * key size of 256 bit. The specification in &quot;Federal Information
+ * Processing Standards Publication 197&quot; defines the following key sizes:
  * <ul>
  * <li>128 bit,</li>
  * <li>192 bit,</li>
  * <li>256 bit.</li>
  * </ul>
- * To make this implementation more compact, only the strongest version will be implemented.
+ * To make this implementation more compact, only the strongest version will be
+ * implemented.
  * <p>
  * The block size is 128 bit.
  * </p>
@@ -55,10 +56,11 @@ public final class Aes256 {
     private static final int WORD_SIZE = 4;
 
     /**
-     * Number of {@code byte}s for a data block. The size is identical to the size of the internal
-     * state, that is needed in encryption or decryption.
+     * Number of {@code byte}s for a data block. The size is identical to the
+     * size of the internal state, that is needed in encryption or decryption.
      * <p>
-     * The state can be viewed as a square matrix, modeled as a list of column vectors.
+     * The state can be viewed as a square matrix, modeled as a list of column
+     * vectors.
      * </p>
      */
     private static final int BLOCK_SIZE = 16;
@@ -74,8 +76,8 @@ public final class Aes256 {
     private static final int ROUNDS = 14;
 
     /**
-     * Size of the expanded key. For each round a {@code BLOCK_SIZE} block will be needed. Before
-     * the first round another block will be needed.
+     * Size of the expanded key. For each round a {@code BLOCK_SIZE} block will
+     * be needed. Before the first round another block will be needed.
      */
     private static final int EXPANDED_KEY_SIZE = (ROUNDS + 1) * BLOCK_SIZE;
 
@@ -90,7 +92,8 @@ public final class Aes256 {
     private final byte[] _tmp;
 
     /**
-     * Permutation of {@code byte}s. The s-box permutation was specified in the reference document.
+     * Permutation of {@code byte}s. The s-box permutation was specified in the
+     * reference document.
      */
     private final byte[] _sBox = {(byte) 0x63, (byte) 0x7c, (byte) 0x77,
         (byte) 0x7b, (byte) 0xf2, (byte) 0x6b, (byte) 0x6f, (byte) 0xc5,
@@ -204,8 +207,8 @@ public final class Aes256 {
     /**
      * Substitutes all {@code byte}s in a word. The word array will be changed.
      *
-     * @param value array in which the first {@code WORD_SIZE} {@code byte}s will be substituted.
-     * This array will be modified.
+     * @param value array in which the first {@code WORD_SIZE} {@code byte}s
+     * will be substituted. This array will be modified.
      * @return returns the modified {@code value}
      */
     private byte[] substituteWord(byte[] value) {
@@ -216,12 +219,13 @@ public final class Aes256 {
     }
 
     /**
-     * Rotate the {@code byte}'s in a word. The {@code byte}'s will be cycled left by one
-     * {@code byte}. The modification will be in place, so the original argument is changed after
-     * the method invocation.
+     * Rotate the {@code byte}'s in a word. The {@code byte}'s will be cycled
+     * left by one {@code byte}. The modification will be in place, so the
+     * original argument is changed after the method invocation.
      *
-     * @param value Array in which the first {@code WORD_SIZE} {@code byte}'s will be changed due to
-     * the rotation. The contents of this array is changed by this invocation.
+     * @param value Array in which the first {@code WORD_SIZE} {@code byte}'s
+     * will be changed due to the rotation. The contents of this array is
+     * changed by this invocation.
      */
     private byte[] rotate(byte[] value) {
         byte tmp = value[0];
@@ -233,8 +237,9 @@ public final class Aes256 {
     }
 
     /**
-     * Expands the key. The incoming key is {@code KEY_SIZE} {@code byte}s long. It will be expanded
-     * to a length of {@code EXPANDED_KEY_SIZE} {@code byte}s. The expanded key will be stored in
+     * Expands the key. The incoming key is {@code KEY_SIZE} {@code byte}s long.
+     * It will be expanded to a length of {@code EXPANDED_KEY_SIZE}
+     * {@code byte}s. The expanded key will be stored in
      * {@link Aes256#_expandedKey}.
      * <p>
      * The encryption and decryption will use the expanded key.
@@ -265,9 +270,11 @@ public final class Aes256 {
     }
 
     /**
-     * Combines the state with the expanded key. The {@code byte}s will be combined by {@code XOR}.
+     * Combines the state with the expanded key. The {@code byte}s will be
+     * combined by {@code XOR}.
      *
-     * @param index start of the part of the expanded key, that will be used for the combination
+     * @param index start of the part of the expanded key, that will be used for
+     * the combination
      */
     private void addRoundKey(int index) {
         for (int i = 0; i < BLOCK_SIZE; ++i) {
@@ -276,11 +283,12 @@ public final class Aes256 {
     }
 
     /**
-     * The polynomial represented by {@code b} will be multiplied by its free variable. This
-     * multiplication takes place in a finite field. The resulting polynomial can still be represented
-     * in one {@code byte}.
+     * The polynomial represented by {@code b} will be multiplied by its free
+     * variable. This multiplication takes place in a finite field. The
+     * resulting polynomial can still be represented in one {@code byte}.
      * <p>
-     * The bits {@code 0} to {@code 7} are the coefficients of the powers {@code x} to {@code x**8}.
+     * The bits {@code 0} to {@code 7} are the coefficients of the powers
+     * {@code x} to {@code x**8}.
      * </p>
      *
      * @param b origin polynomial
@@ -296,10 +304,11 @@ public final class Aes256 {
     }
 
     /**
-     * Two polynomial will be multiplied with each other. The representation of the polynomial is
-     * described in {@link Aes256#times2}.
+     * Two polynomial will be multiplied with each other. The representation of
+     * the polynomial is described in {@link Aes256#times2}.
      * <p>
-     * The multiplication will be performed by successive invocations of {@link Aes256#times2}.
+     * The multiplication will be performed by successive invocations of
+     * {@link Aes256#times2}.
      * </p>
      *
      * @param a first polynomial
@@ -385,9 +394,10 @@ public final class Aes256 {
     }
 
     /**
-     * Encrypts one block. The input block lies in {@code inBlock} starting at the position
-     * {@code inIndex}. The {@code inBlock} won't be modified by this method. The encrypted block
-     * will be stored in {@code outBlock} starting at position {@code outIndex}.
+     * Encrypts one block. The input block lies in {@code inBlock} starting at
+     * the position {@code inIndex}. The {@code inBlock} won't be modified by
+     * this method. The encrypted block will be stored in {@code outBlock}
+     * starting at position {@code outIndex}.
      *
      * @param inBlock array containing the input block
      * @param inIndex starting of the input block in {@code inBlock}
@@ -414,7 +424,8 @@ public final class Aes256 {
     }
 
     /**
-     * Rotates the last three rows of the state. This method inverses {@link Aes256#shiftRows}.
+     * Rotates the last three rows of the state. This method inverses
+     * {@link Aes256#shiftRows}.
      */
     private void invShiftRows() {
         byte tmp = this._tmp[13];
@@ -448,7 +459,8 @@ public final class Aes256 {
     }
 
     /**
-     * Mixes a column of the state. This method inverses {@link Aes256#mixColumn}.
+     * Mixes a column of the state. This method inverses
+     * {@link Aes256#mixColumn}.
      *
      * @param index position of the first entry of the row
      */
@@ -468,7 +480,8 @@ public final class Aes256 {
     }
 
     /**
-     * Mixes all columns of the state. This method inverses {@link Aes256#mixColumns}.
+     * Mixes all columns of the state. This method inverses
+     * {@link Aes256#mixColumns}.
      */
     private void invMixColumns() {
         invMixColumn(0);
@@ -478,9 +491,9 @@ public final class Aes256 {
     }
 
     /**
-     * Decrypts a block. The encrypted block starts at {@code inIndex} in {@code inBlock}.
-     * {@code inBlock} won't be modified by this method. The decrypted block will be stored at
-     * {@code outIndex} in {@code outBlock}.
+     * Decrypts a block. The encrypted block starts at {@code inIndex} in
+     * {@code inBlock}. {@code inBlock} won't be modified by this method. The
+     * decrypted block will be stored at {@code outIndex} in {@code outBlock}.
      *
      * @param inBlock array containing the encrypted block
      * @param inIndex starting point of the encrypted block

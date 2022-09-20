@@ -132,8 +132,8 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.passwordButtonPanel.add(this.generateButton);
         this.passwordButtonPanel.add(this.copyButton);
         SpringUtilities.makeCompactGrid(this.passwordButtonPanel,
-                1, 3,  // rows, columns
-                0, 0,  // initX, initY
+                1, 3, // rows, columns
+                0, 0, // initX, initY
                 5, 0); // xPad, yPad
 
         this.fieldPanel = new JPanel(new SpringLayout());
@@ -150,8 +150,8 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.fieldPanel.add(new JLabel(""));
         this.fieldPanel.add(this.passwordButtonPanel);
         SpringUtilities.makeCompactGrid(this.fieldPanel,
-                6, 2,  // rows, columns
-                5, 5,  // initX, initY
+                6, 2, // rows, columns
+                5, 5, // initX, initY
                 5, 5); // xPad, yPad
 
         this.notesField = TextComponentFactory.newTextArea();
@@ -213,11 +213,11 @@ public class EntryDialog extends JDialog implements ActionListener {
         } else if ("generate_button".equals(command)) {
             GeneratePasswordDialog gpd = new GeneratePasswordDialog(this);
             gpd.getGeneratedPassword()
-                .filter(password -> password != null && !password.isEmpty())
-                .ifPresent(password -> {
-                    this.passwordField.setText(password);
-                    this.repeatField.setText(password);
-                });
+                    .filter(password -> password != null && !password.isEmpty())
+                    .ifPresent(password -> {
+                        this.passwordField.setText(password);
+                        this.repeatField.setText(password);
+                    });
         } else if ("copy_button".equals(command)) {
             copyEntryField(JPassFrame.getInstance(), String.valueOf(this.passwordField.getPassword()));
         }
@@ -268,7 +268,8 @@ public class EntryDialog extends JDialog implements ActionListener {
     /**
      * Gets the form data (entry) of this dialog.
      *
-     * @return nonempty form data if the 'OK' button is pressed, otherwise an empty data
+     * @return nonempty form data if the 'OK' button is pressed, otherwise an
+     * empty data
      */
     public Optional<Entry> getModifiedEntry() {
         return Optional.ofNullable(this.modifiedEntry);
@@ -277,8 +278,8 @@ public class EntryDialog extends JDialog implements ActionListener {
     /**
      * Checks the entry title.
      *
-     * @return if the entry title already exists in the data model then returns {@code false},
-     * otherwise {@code true}
+     * @return if the entry title already exists in the data model then returns
+     * {@code false}, otherwise {@code true}
      */
     private boolean checkEntryTitle() {
         boolean titleIsOk = true;

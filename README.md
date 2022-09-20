@@ -11,7 +11,7 @@ JPass is a simple, small, portable password manager application with strong encr
 
 Features:
 
-* Strong encryption - AES-256-CBC algorithm (SHA-256 is used as password hash)
+* Strong encryption - AES-256-CBC algorithm (PBKDF2-HMAC-SHA-256 is used as password-based key derivation function)
 * Portable - single jar file which can be carried on a USB stick
 * Built-in random password generator
 * Organize all your user name, password, URL and notes information in one file
@@ -24,7 +24,7 @@ Usage
 Java 8 or later is recommended to run JPass.
 You can run the application from the command line by typing (the password file is optional):
 
-    java -jar jpass-0.1.29-RELEASE.jar [password_file]
+    java -jar jpass-1.0.0-SNAPSHOT.jar [password_file]
 
 For convenience, batch/shell scripts are also available for launching JPass for various platforms (i.e. `jpass.bat` for Windows, `jpass.sh` for Linux, `jpass.command` for macOS).
 Please make sure `PATH`, or `JAVA_HOME` environment variables point to a valid Java installation.

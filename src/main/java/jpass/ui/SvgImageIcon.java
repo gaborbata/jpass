@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package jpass.ui;
 
 import java.awt.Color;
@@ -44,6 +43,7 @@ import com.kitfox.svg.SVGUniverse;
  * @author Gabor_Bata
  */
 public class SvgImageIcon extends ImageIcon {
+
     private static final Logger LOG = Logger.getLogger(SvgImageIcon.class.getName());
 
     // use own SVG universe so that it can not be cleared from anywhere
@@ -97,7 +97,7 @@ public class SvgImageIcon extends ImageIcon {
             return UIScale.scale(width);
         }
         update();
-        return (int)UIScale.scale(diagram != null ? diagram.getWidth() : 16);
+        return (int) UIScale.scale(diagram != null ? diagram.getWidth() : 16);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class SvgImageIcon extends ImageIcon {
             return UIScale.scale(height);
         }
         update();
-        return (int)UIScale.scale(diagram != null ? diagram.getHeight() : 16);
+        return (int) UIScale.scale(diagram != null ? diagram.getHeight() : 16);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class SvgImageIcon extends ImageIcon {
             return;
         }
 
-        Graphics2D g2 = (Graphics2D)g.create();
+        Graphics2D g2 = (Graphics2D) g.create();
         try {
             FlatUIUtils.setRenderingHints(g2);
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -142,11 +142,11 @@ public class SvgImageIcon extends ImageIcon {
 
         UIScale.scaleGraphics(g);
 
-	if( width > 0 || height > 0 ) {
+        if (width > 0 || height > 0) {
             double sx = width > 0 ? width / diagram.getWidth() : 1;
             double sy = height > 0 ? height / diagram.getHeight() : 1;
-            if( sx != 1 || sy != 1 ) {
-                g.scale( sx, sy );
+            if (sx != 1 || sy != 1) {
+                g.scale(sx, sy);
             }
         }
         diagram.setIgnoringClipHeuristic(true);
@@ -189,6 +189,6 @@ public class SvgImageIcon extends ImageIcon {
 
     private static void lafChanged() {
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
-        darkLaf = (lookAndFeel instanceof FlatLaf && ((FlatLaf)lookAndFeel).isDark());
+        darkLaf = (lookAndFeel instanceof FlatLaf && ((FlatLaf) lookAndFeel).isDark());
     }
 }

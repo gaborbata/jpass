@@ -8,7 +8,7 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '0.1.29-RELEASE'
+version = '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()

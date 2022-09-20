@@ -49,8 +49,9 @@ import jpass.xml.bind.Entry;
  * Table to display entry details.
  */
 public class EntryDetailsTable extends JTable {
-    private static final DateTimeFormatter FORMATTER =
-        DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
+
+    private static final DateTimeFormatter FORMATTER
+            = DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
     private enum DetailType {
         TITLE("Title", Entry::getTitle),

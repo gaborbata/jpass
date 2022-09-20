@@ -9,7 +9,8 @@ import java.time.temporal.ChronoUnit;
  * Java class for entry complex type.
  *
  * <p>
- * The following schema fragment specifies the expected content contained within this class.
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  *
  * <pre>
  * &lt;complexType name="entry"&gt;
@@ -27,8 +28,8 @@ import java.time.temporal.ChronoUnit;
  *         &lt;element name="user" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt; 
- *         &lt;element name="modificationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt; 
+ *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="modificationDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *      &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,10 +48,10 @@ public class Entry {
     protected String lastModification;
     protected String creationDate;
 
-    public Entry(){
+    public Entry() {
         String now = LocalDateTime.now()
-            .truncatedTo(ChronoUnit.SECONDS)
-            .format(DateTimeFormatter.ISO_DATE_TIME);
+                .truncatedTo(ChronoUnit.SECONDS)
+                .format(DateTimeFormatter.ISO_DATE_TIME);
         this.creationDate = now;
         this.lastModification = now;
     }
@@ -150,7 +151,7 @@ public class Entry {
      *
      * @return the creation date
      */
-    public String getCreationDate(){
+    public String getCreationDate() {
         return creationDate;
     }
 
@@ -159,7 +160,7 @@ public class Entry {
      *
      * @param date the creation date
      */
-    public void setCreationDate(String date){
+    public void setCreationDate(String date) {
         this.creationDate = date;
     }
 
@@ -168,7 +169,7 @@ public class Entry {
      *
      * @return the last modification date
      */
-    public String getLastModification(){
+    public String getLastModification() {
         return lastModification;
     }
 

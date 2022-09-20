@@ -104,8 +104,8 @@ public final class ClipboardUtils {
     }
 
     /**
-     * Class representing an empty clipboard content. With the help of this class, the content of
-     * clipboard can be cleared.
+     * Class representing an empty clipboard content. With the help of this
+     * class, the content of clipboard can be cleared.
      *
      * @author Gabor_Bata
      *

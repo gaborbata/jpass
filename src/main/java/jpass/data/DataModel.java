@@ -46,7 +46,7 @@ public class DataModel {
 
     private Entries entries = new Entries();
     private String fileName = null;
-    private byte[] password = null;
+    private char[] password = null;
     private boolean modified = false;
 
     private DataModel() {
@@ -119,11 +119,11 @@ public class DataModel {
         this.modified = modified;
     }
 
-    public byte[] getPassword() {
+    public char[] getPassword() {
         return this.password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

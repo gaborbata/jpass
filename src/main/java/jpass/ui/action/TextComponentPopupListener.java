@@ -60,11 +60,11 @@ public class TextComponentPopupListener extends MouseAdapter {
 
     public TextComponentPopupListener() {
         items = Stream.of(CUT, COPY, PASTE, DELETE, CLEAR_ALL, SELECT_ALL)
-            .collect(Collectors.toMap(
-                Function.identity(),
-                type -> new JMenuItem(type.getAction()),
-                (o1, o2) -> o1,
-                LinkedHashMap::new));
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        type -> new JMenuItem(type.getAction()),
+                        (o1, o2) -> o1,
+                        LinkedHashMap::new));
 
         this.popup = new JPopupMenu();
         this.popup.add(items.get(CUT));

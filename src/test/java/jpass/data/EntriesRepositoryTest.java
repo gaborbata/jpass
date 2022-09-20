@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
 import org.junit.Assert;
@@ -158,10 +157,9 @@ public class EntriesRepositoryTest {
     public void shouldBeAbleToReadEntriesFromFileVersion0() throws DocumentProcessException, IOException {
         // given
         Entries expectedEntries = createEntries();
-        Path filePath = Path.of("", "src/test/resources").resolve("jpass-test-v0.jpass");
 
         // when
-        Entries readEntries = EntriesRepository.newInstance(filePath.toString(), correctKey).readDocument();
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test-v0.jpass", correctKey).readDocument();
 
         // then
         assertEquals(expectedEntries, readEntries);
@@ -171,10 +169,9 @@ public class EntriesRepositoryTest {
     public void shouldBeAbleToReadEntriesFromFileVersion1() throws DocumentProcessException, IOException {
         // given
         Entries expectedEntries = createEntries();
-        Path filePath = Path.of("src/test/resources").resolve("jpass-test-v1.jpass");
 
         // when
-        Entries readEntries = EntriesRepository.newInstance(filePath.toString(), correctKey).readDocument();
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test-v1.jpass", correctKey).readDocument();
 
         // then
         assertEquals(expectedEntries, readEntries);
@@ -184,10 +181,9 @@ public class EntriesRepositoryTest {
     public void shouldBeAbleToImportEntriesFromFile() throws DocumentProcessException, IOException {
         // given
         Entries expectedEntries = createEntries();
-        Path filePath = Path.of("src/test/resources").resolve("jpass-test.xml");
 
         // when
-        Entries readEntries = EntriesRepository.newInstance(filePath.toString()).readDocument();
+        Entries readEntries = EntriesRepository.newInstance("src/test/resources/jpass-test.xml").readDocument();
 
         // then
         assertEquals(expectedEntries, readEntries);

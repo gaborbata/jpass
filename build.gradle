@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'distribution'
+    id 'org.gradle.crypto.checksum' version '1.4.0'
+}
+
+compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '1.0.0-RELEASE'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
+    implementation group: 'com.formdev', name: 'flatlaf', version: '1.5'
+    implementation group: 'com.formdev', name: 'svgSalamander', version: '1.1.2.4'
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+jar {
+    archiveBaseName = 'jpass'
+    archiveVersion = "$project.version"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes('Main-Class': 'jpass.JPass')
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task copyConfig(type: Copy) {
+    from 'src/main/config'
+    into 'build/libs'
+}
+
+distributions {
+    main {
+        distributionBaseName = 'jpass'
+        contents {
+            from jar
+            from { 'src/main/config' }
+            into '/'
+        }
+    }
+}
+
+task createChecksum(type: org.gradle.crypto.checksum.Checksum, dependsOn: distZip) {
+    files = fileTree(dir: "${buildDir}/distributions")
+    outputDir = new File("${buildDir}/distributions")
+    algorithm = org.gradle.crypto.checksum.Checksum.Algorithm.SHA256
+    appendFileNameToChecksum.set(true)
+}
+
+task bumpVersion {
+    doLast {
+        if (!project.hasProperty('toVersion')) {
+            throw new GradleException("Please provide 'toVersion' property e.g. gradle bumpVersion -PtoVersion=$project.version")
+        }
+        def extensions = ['java', 'gradle', 'sbt', 'xml', 'md', 'bat', 'sh', 'txt', 'command'].collect { "**/*.$it" }.join(",")
+        def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)
+        files.each { versionedFile ->
+            def file = new File(versionedFile)
+            file.write(file.getText('UTF-8').replaceAll("$project.version", "$toVersion"), 'UTF-8')
+        }
+    }
+}
+
+distTar.enabled = false
+distZip.finalizedBy(createChecksum)
+assembleDist.dependsOn copyConfig

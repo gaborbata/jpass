@@ -93,6 +93,10 @@ public final class Configuration {
 		return getValue(key, defaultValue, Boolean.class);
 	}
 
+	public Boolean isString(String key, String defaultValue) {
+		return get(key, defaultValue).equals(defaultValue);
+	}
+
 	public Integer getInteger(String key, Integer defaultValue) {
 		return getValue(key, defaultValue, Integer.class);
 	}

@@ -174,6 +174,7 @@ public final class JPassFrame extends JFrame {
 		this.SettingsMenu = new JMenu(JPass.getkey("Settings"));
 		this.SettingsMenu.setMnemonic(KeyEvent.VK_H);
 		this.SettingsMenu.add(MenuActionType.LANGUAGE.getAction());
+		this.SettingsMenu.add(MenuActionType.theme.getAction());
 		this.jpassMenuBar.add(this.SettingsMenu);
 
 		this.helpMenu = new JMenu(JPass.getkey("Help"));

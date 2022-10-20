@@ -39,7 +39,9 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -58,10 +60,17 @@ public class JPass {
 	private static final Logger LOG = Logger.getLogger(JPass.class.getName());
 	public static Locale loc = setLocale();
 	public static ResourceBundle lang = setLanguageBundle(loc);
+	public static String JdkVersion = System.getProperty("java.vm.specification.version");
 
 	public static String getkey(String key) {
 		try {
-			return new String(lang.getString(key).getBytes("ISO-8859-1"), "UTF8");
+			if ("17".equals(JdkVersion)) {
+				return new String(lang.getString(key));
+			}
+			if ("1.8".equals(JdkVersion)) {
+				return new String(lang.getString(key).getBytes("ISO-8859-1"), "UTF8");
+			}
+
 		} catch (UnsupportedEncodingException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -100,11 +109,19 @@ public class JPass {
 	public static void main(final String[] args) {
 		try {
 			UIManager.put("Button.arc", 4);
-			FlatLaf lookAndFeel;
-			if (Configuration.getInstance().is("ui.theme.dark.mode.enabled", false)) {
-				lookAndFeel = new FlatDarkLaf();
-			} else {
+			FlatLaf lookAndFeel = null;
+
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Light")) {
 				lookAndFeel = new FlatLightLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Dark")) {
+				lookAndFeel = new FlatDarkLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "IntelliJ")) {
+				lookAndFeel = new FlatIntelliJLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Darcula")) {
+				lookAndFeel = new FlatDarculaLaf();
 			}
 
 			JFrame.setDefaultLookAndFeelDecorated(true);

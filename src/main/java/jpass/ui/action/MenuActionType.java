@@ -52,6 +52,7 @@ import jpass.ui.GeneratePasswordDialog;
 import jpass.ui.JPassFrame;
 import jpass.ui.LanguageDialog;
 import jpass.ui.MessageDialog;
+import jpass.ui.ThemeDialog;
 import jpass.ui.helper.EntryHelper;
 import jpass.xml.bind.Entry;
 
@@ -140,6 +141,11 @@ public enum MenuActionType {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			new LanguageDialog(JPassFrame.getInstance());
+		}
+	}), theme(new AbstractMenuAction(JPass.getkey("theme"), getIcon("theme"), null) {
+		@Override
+		public void actionPerformed(ActionEvent ev) {
+			new ThemeDialog(JPassFrame.getInstance());
 		}
 	}), LICENSE(new AbstractMenuAction(JPass.getkey("License"), getIcon("license"), null) {
 		@Override

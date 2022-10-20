@@ -28,6 +28,7 @@
  */
 package jpass;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -57,6 +58,17 @@ public class JPass {
 	private static final Logger LOG = Logger.getLogger(JPass.class.getName());
 	public static Locale loc = setLocale();
 	public static ResourceBundle lang = setLanguageBundle(loc);
+
+	public static String getkey(String key) {
+		try {
+			return new String(lang.getString(key).getBytes("ISO-8859-1"), "UTF8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		return key;
+
+	}
 
 	/**
 	 * The function returns a Locale object that is set to the language specified in

@@ -72,9 +72,9 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 	 * Options for password generation.
 	 */
 	private static final String[][] PASSWORD_OPTIONS = {
-			{ JPass.lang.getString("Upper-case-letters") + " (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-			{ JPass.lang.getString("Lower-case-letters") + "(a-z)", "abcdefghijklmnopqrstuvwxyz" },
-			{ JPass.lang.getString("Numbers") + " (0-9)", "0123456789" } };
+			{ JPass.getkey("Upper-case-letters") + " (A-Z)", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+			{ JPass.getkey("Lower-case-letters") + "(a-z)", "abcdefghijklmnopqrstuvwxyz" },
+			{ JPass.getkey("Numbers") + " (0-9)", "0123456789" } };
 
 	private JCheckBox[] checkBoxes;
 	private JCheckBox customSymbolsCheck;
@@ -128,12 +128,12 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 	 */
 	private void initDialog(final Component parent, final boolean showAcceptButton) {
 		setModal(true);
-		setTitle(JPass.lang.getString("Generate-Password"));
+		setTitle(JPass.getkey("Generate-Password"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.generatedPassword = null;
 
 		this.lengthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-		this.lengthLabel = new JLabel(JPass.lang.getString("Password-length"));
+		this.lengthLabel = new JLabel(JPass.getkey("Password-length"));
 		this.lengthPanel.add(this.lengthLabel);
 
 		int passwordGenerationLength = Configuration.getInstance().getInteger("default.password.generation.length", 14);
@@ -155,7 +155,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 			this.checkBoxes[i] = new JCheckBox(PASSWORD_OPTIONS[i][0], true);
 			this.charactersPanel.add(this.checkBoxes[i]);
 		}
-		this.customSymbolsCheck = new JCheckBox(JPass.lang.getString("Custom-symbols"));
+		this.customSymbolsCheck = new JCheckBox(JPass.getkey("Custom-symbols"));
 		this.customSymbolsCheck.setActionCommand("custom_symbols_check");
 		this.customSymbolsCheck.addActionListener(this);
 		this.charactersPanel.add(this.customSymbolsCheck);
@@ -167,11 +167,11 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 		SpringUtilities.makeCompactGrid(this.charactersPanel, 6, 1, 5, 5, 5, 5);
 
 		this.passwordPanel = new JPanel(new BorderLayout());
-		this.passwordPanel.setBorder(new TitledBorder(JPass.lang.getString("Generated-password")));
+		this.passwordPanel.setBorder(new TitledBorder(JPass.getkey("Generated-password")));
 
 		this.passwordField = TextComponentFactory.newTextField();
 		this.passwordPanel.add(this.passwordField, BorderLayout.NORTH);
-		this.generateButton = new JButton(JPass.lang.getString("Generate"), MessageDialog.getIcon("generate"));
+		this.generateButton = new JButton(JPass.getkey("Generate"), MessageDialog.getIcon("generate"));
 		this.generateButton.setActionCommand("generate_button");
 		this.generateButton.addActionListener(this);
 		this.generateButton.setMnemonic(KeyEvent.VK_G);
@@ -182,13 +182,13 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 		this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		if (showAcceptButton) {
-			this.acceptButton = new JButton(JPass.lang.getString("Accept"), MessageDialog.getIcon("accept"));
+			this.acceptButton = new JButton(JPass.getkey("Accept"), MessageDialog.getIcon("accept"));
 			this.acceptButton.setActionCommand("accept_button");
 			this.acceptButton.setMnemonic(KeyEvent.VK_A);
 			this.acceptButton.addActionListener(this);
 			this.buttonPanel.add(this.acceptButton);
 
-			this.cancelButton = new JButton(JPass.lang.getString("Cancel"), MessageDialog.getIcon("cancel"));
+			this.cancelButton = new JButton(JPass.getkey("Cancel"), MessageDialog.getIcon("cancel"));
 		} else {
 			this.cancelButton = new JButton("Close", MessageDialog.getIcon("close"));
 		}
@@ -230,8 +230,8 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 			}
 
 			if (characterSet.isEmpty()) {
-				MessageDialog.showWarningMessage(this, JPass.lang.getString("annot-generate-password") + "\n"
-						+ JPass.lang.getString("select-a-character-set"));
+				MessageDialog.showWarningMessage(this,
+						JPass.getkey("annot-generate-password") + "\n" + JPass.getkey("select-a-character-set"));
 				return;
 			}
 
@@ -244,7 +244,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
 		} else if ("accept_button".equals(command)) {
 			this.generatedPassword = this.passwordField.getText();
 			if (this.generatedPassword.isEmpty()) {
-				MessageDialog.showWarningMessage(this, JPass.lang.getString("Please-generate-a-password"));
+				MessageDialog.showWarningMessage(this, JPass.getkey("Please-generate-a-password"));
 				return;
 			}
 			dispose();

@@ -115,15 +115,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 		this.ORIGINAL_ECHO = this.passwordField.getEchoChar();
 		this.repeatField = TextComponentFactory.newPasswordField(true);
 
-		this.showButton = new JToggleButton(JPass.lang.getString("Show"), MessageDialog.getIcon("show"));
+		this.showButton = new JToggleButton(JPass.getkey("Show"), MessageDialog.getIcon("show"));
 		this.showButton.setActionCommand("show_button");
 		this.showButton.setMnemonic(KeyEvent.VK_S);
 		this.showButton.addActionListener(this);
-		this.generateButton = new JButton(JPass.lang.getString("Generate"), MessageDialog.getIcon("generate"));
+		this.generateButton = new JButton(JPass.getkey("Generate"), MessageDialog.getIcon("generate"));
 		this.generateButton.setActionCommand("generate_button");
 		this.generateButton.setMnemonic(KeyEvent.VK_G);
 		this.generateButton.addActionListener(this);
-		this.copyButton = new JButton(JPass.lang.getString("Copy"), MessageDialog.getIcon("keyring"));
+		this.copyButton = new JButton(JPass.getkey("Copy"), MessageDialog.getIcon("keyring"));
 		this.copyButton.setActionCommand("copy_button");
 		this.copyButton.setMnemonic(KeyEvent.VK_P);
 		this.copyButton.addActionListener(this);
@@ -137,15 +137,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 				5, 0); // xPad, yPad
 
 		this.fieldPanel = new JPanel(new SpringLayout());
-		this.fieldPanel.add(new JLabel(JPass.lang.getString("Title") + ":"));
+		this.fieldPanel.add(new JLabel(JPass.getkey("Title") + ":"));
 		this.fieldPanel.add(this.titleField);
-		this.fieldPanel.add(new JLabel(JPass.lang.getString("URL") + ":"));
+		this.fieldPanel.add(new JLabel(JPass.getkey("URL") + ":"));
 		this.fieldPanel.add(this.urlField);
-		this.fieldPanel.add(new JLabel(JPass.lang.getString("Username") + ":"));
+		this.fieldPanel.add(new JLabel(JPass.getkey("Username") + ":"));
 		this.fieldPanel.add(this.userField);
-		this.fieldPanel.add(new JLabel(JPass.lang.getString("Password") + ":"));
+		this.fieldPanel.add(new JLabel(JPass.getkey("Password") + ":"));
 		this.fieldPanel.add(this.passwordField);
-		this.fieldPanel.add(new JLabel(JPass.lang.getString("Repeat") + ":"));
+		this.fieldPanel.add(new JLabel(JPass.getkey("Repeat") + ":"));
 		this.fieldPanel.add(this.repeatField);
 		this.fieldPanel.add(new JLabel(""));
 		this.fieldPanel.add(this.passwordButtonPanel);
@@ -160,15 +160,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 
 		this.notesPanel = new JPanel(new BorderLayout(5, 5));
 		this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
-		this.notesPanel.add(new JLabel(JPass.lang.getString("Notes") + ":"), BorderLayout.NORTH);
+		this.notesPanel.add(new JLabel(JPass.getkey("Notes") + ":"), BorderLayout.NORTH);
 		this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);
 
-		this.okButton = new JButton(JPass.lang.getString("OK"), MessageDialog.getIcon("accept"));
+		this.okButton = new JButton(JPass.getkey("OK"), MessageDialog.getIcon("accept"));
 		this.okButton.setActionCommand("ok_button");
 		this.okButton.setMnemonic(KeyEvent.VK_O);
 		this.okButton.addActionListener(this);
 
-		this.cancelButton = new JButton(JPass.lang.getString("Cancel"), MessageDialog.getIcon("cancel"));
+		this.cancelButton = new JButton(JPass.getkey("Cancel"), MessageDialog.getIcon("cancel"));
 		this.cancelButton.setActionCommand("cancel_button");
 		this.cancelButton.setMnemonic(KeyEvent.VK_C);
 		this.cancelButton.addActionListener(this);
@@ -196,15 +196,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 			this.repeatField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.ORIGINAL_ECHO);
 		} else if ("ok_button".equals(command)) {
 			if (this.titleField.getText().trim().isEmpty()) {
-				MessageDialog.showWarningMessage(this, JPass.lang.getString("Please-fill-the-title-field"));
+				MessageDialog.showWarningMessage(this, JPass.getkey("Please-fill-the-title-field"));
 				return;
 			} else if (!checkEntryTitle()) {
-				MessageDialog.showWarningMessage(this, JPass.lang.getString("Title-is-already-exists") + ",\nplease"
-						+ JPass.lang.getString("enter-a-different-title"));
+				MessageDialog.showWarningMessage(this, JPass.getkey("Title-is-already-exists") + ",\nplease"
+						+ JPass.getkey("enter-a-different-title"));
 				return;
 			} else if (!Arrays.equals(this.passwordField.getPassword(), this.repeatField.getPassword())) {
 				MessageDialog.showWarningMessage(this,
-						JPass.lang.getString("Password-and-repeated-passwords-are-not-identical"));
+						JPass.getkey("Password-and-repeated-passwords-are-not-identical"));
 				return;
 			}
 			this.modifiedEntry = getEntryFromDialog();

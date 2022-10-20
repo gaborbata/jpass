@@ -57,12 +57,11 @@ public class EntryDetailsTable extends JTable {
 			.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
 	private enum DetailType {
-		TITLE(JPass.lang.getString("Title"), Entry::getTitle), URL(JPass.lang.getString("URL"), Entry::getUrl),
-		NOTES(JPass.lang.getString("Notes"), Entry::getNotes), USER(JPass.lang.getString("User"), Entry::getUser),
-		MODIFIED(JPass.lang.getString("Modified"),
+		TITLE(JPass.getkey("Title"), Entry::getTitle), URL(JPass.getkey("URL"), Entry::getUrl),
+		NOTES(JPass.getkey("Notes"), Entry::getNotes), USER(JPass.getkey("User"), Entry::getUser),
+		MODIFIED(JPass.getkey("Modified"),
 				entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
-		CREATED(JPass.lang.getString("Created"),
-				entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
+		CREATED(JPass.getkey("Created"), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
 		private final String description;
 		private final Function<Entry, String> valueMapper;

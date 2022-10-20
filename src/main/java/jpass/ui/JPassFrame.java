@@ -136,7 +136,7 @@ public final class JPassFrame extends JFrame {
 
 		this.jpassMenuBar = new JMenuBar();
 
-		this.fileMenu = new JMenu(JPass.lang.getString("File"));
+		this.fileMenu = new JMenu(JPass.getkey("File"));
 		this.fileMenu.setMnemonic(KeyEvent.VK_F);
 		this.fileMenu.add(MenuActionType.NEW_FILE.getAction());
 		this.fileMenu.add(MenuActionType.OPEN_FILE.getAction());
@@ -151,7 +151,7 @@ public final class JPassFrame extends JFrame {
 		this.fileMenu.add(MenuActionType.EXIT.getAction());
 		this.jpassMenuBar.add(this.fileMenu);
 
-		this.editMenu = new JMenu(JPass.lang.getString("Edit"));
+		this.editMenu = new JMenu(JPass.getkey("Edit"));
 		this.editMenu.setMnemonic(KeyEvent.VK_E);
 		this.editMenu.add(MenuActionType.ADD_ENTRY.getAction());
 		this.editMenu.add(MenuActionType.EDIT_ENTRY.getAction());
@@ -165,18 +165,18 @@ public final class JPassFrame extends JFrame {
 		this.editMenu.add(MenuActionType.FIND_ENTRY.getAction());
 		this.jpassMenuBar.add(this.editMenu);
 
-		this.toolsMenu = new JMenu(JPass.lang.getString("Tools"));
+		this.toolsMenu = new JMenu(JPass.getkey("Tools"));
 		this.toolsMenu.setMnemonic(KeyEvent.VK_T);
 		this.toolsMenu.add(MenuActionType.GENERATE_PASSWORD.getAction());
 		this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
 		this.jpassMenuBar.add(this.toolsMenu);
 
-		this.SettingsMenu = new JMenu(JPass.lang.getString("Settings"));
+		this.SettingsMenu = new JMenu(JPass.getkey("Settings"));
 		this.SettingsMenu.setMnemonic(KeyEvent.VK_H);
 		this.SettingsMenu.add(MenuActionType.LANGUAGE.getAction());
 		this.jpassMenuBar.add(this.SettingsMenu);
 
-		this.helpMenu = new JMenu(JPass.lang.getString("Help"));
+		this.helpMenu = new JMenu(JPass.getkey("Help"));
 		this.helpMenu.setMnemonic(KeyEvent.VK_H);
 		this.helpMenu.add(MenuActionType.LICENSE.getAction());
 		this.helpMenu.addSeparator();
@@ -292,10 +292,10 @@ public final class JPassFrame extends JFrame {
 		}
 
 		if (searchCriteria.isEmpty()) {
-			this.statusPanel.setText(JPass.lang.getString("Entries-count") + entries.size());
+			this.statusPanel.setText(JPass.getkey("Entries-count") + entries.size());
 		} else {
-			this.statusPanel.setText(JPass.lang.getString("Entries-count") + this.entryDetailsTable.getRowCount()
-					+ " / " + entries.size());
+			this.statusPanel.setText(
+					JPass.getkey("Entries-count") + this.entryDetailsTable.getRowCount() + " / " + entries.size());
 		}
 	}
 

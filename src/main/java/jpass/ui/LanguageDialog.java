@@ -67,11 +67,11 @@ public class LanguageDialog extends JDialog implements ActionListener {
 	 */
 	private void initDialog(final Component parent, final boolean showAcceptButton) {
 		setModal(true);
-		setTitle(JPass.lang.getString("Settings"));
+		setTitle(JPass.getkey("Settings"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		this.languagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-		this.languageLabel = new JLabel(JPass.lang.getString("Language") + JPass.lang.getString("Settings"));
+		this.languageLabel = new JLabel(JPass.getkey("Language") + JPass.getkey("Settings"));
 		this.languagePanel.add(this.languageLabel);
 		this.charactersPanel = new JPanel();
 		this.charactersPanel.setBorder(new TitledBorder("Settings"));
@@ -80,7 +80,7 @@ public class LanguageDialog extends JDialog implements ActionListener {
 		// 创建子项
 		LanguageConverter Language = new LanguageConverter();
 		Map<String, String> langMap = Language.getLanguage();
-		this.languageBox.addItem(JPass.lang.getString("Please-select"));
+		this.languageBox.addItem(JPass.getkey("Please-select"));
 		for (Map.Entry entry : langMap.entrySet()) {
 			this.languageBox.addItem((String) entry.getValue());
 		}
@@ -91,13 +91,13 @@ public class LanguageDialog extends JDialog implements ActionListener {
 
 		this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		if (showAcceptButton) {
-			this.acceptButton = new JButton(JPass.lang.getString("Accept"), MessageDialog.getIcon("accept"));
+			this.acceptButton = new JButton(JPass.getkey("Accept"), MessageDialog.getIcon("accept"));
 			this.acceptButton.setActionCommand("accept_button");
 			this.acceptButton.setMnemonic(KeyEvent.VK_A);
 			this.acceptButton.addActionListener(this);
 			this.buttonPanel.add(this.acceptButton);
 
-			this.cancelButton = new JButton(JPass.lang.getString("Cancel"), MessageDialog.getIcon("cancel"));
+			this.cancelButton = new JButton(JPass.getkey("Cancel"), MessageDialog.getIcon("cancel"));
 		} else {
 			this.cancelButton = new JButton("Close", MessageDialog.getIcon("close"));
 		}
@@ -128,7 +128,7 @@ public class LanguageDialog extends JDialog implements ActionListener {
 			// TODO 自动生成的 catch 块
 			e1.printStackTrace();
 		}
-		MessageDialog.showWarningMessage(this, JPass.lang.getString("Please-restart"));
+		MessageDialog.showWarningMessage(this, JPass.getkey("Please-restart"));
 		System.exit(0);
 
 	}

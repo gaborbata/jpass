@@ -61,19 +61,19 @@ public final class FileHelper {
 
 	public static final String SAVE_MODIFIED_QUESTION_MESSAGE = JPass.lang
 			.getString("The-current-file-has-been-modified") + "\n"
-			+ JPass.lang.getString("Do-you-want-to-save-the-changes-before-closing");
+			+ JPass.getkey("Do-you-want-to-save-the-changes-before-closing");
 	private static final String UNENCRYPTED_DATA_WARNING_MESSAGE = JPass.lang
 			.getString("Please-note-that-all-data-will-be-stored-unencrypted") + "\n"
-			+ JPass.lang.getString("Make-sure-you-keep-the-exported-file-in-a-secure-location");
+			+ JPass.getkey("Make-sure-you-keep-the-exported-file-in-a-secure-location");
 	private static final String OPEN_ERROR_CHECK_PASSWORD_ERROR_MESSAGE = JPass.lang
 			.getString("An-error-occured-during-the-open-operation") + "\n"
-			+ JPass.lang.getString("The-password-might-be-incorrect") + "\n(Error: %s)";
-	private static final String CREATE_FILE_QUESTION_MESSAGE = JPass.lang.getString("File-not-found") + "\n%s\n\n"
-			+ JPass.lang.getString("Do-you-want-to-create-the-file");
-	private static final String OPERATION_ERROR_MESSAGE = JPass.lang.getString("An-error-occured-during-the") + " %s"
-			+ JPass.lang.getString("operation") + " \n%s";
-	private static final String FILE_OVERWRITE_QUESTION_MESSAGE = JPass.lang.getString("File-is-already-exists")
-			+ "\n%s\n\n" + JPass.lang.getString("Do-you-want-to-overwrite");
+			+ JPass.getkey("The-password-might-be-incorrect") + "\n(Error: %s)";
+	private static final String CREATE_FILE_QUESTION_MESSAGE = JPass.getkey("File-not-found") + "\n%s\n\n"
+			+ JPass.getkey("Do-you-want-to-create-the-file");
+	private static final String OPERATION_ERROR_MESSAGE = JPass.getkey("An-error-occured-during-the") + " %s"
+			+ JPass.getkey("operation") + " \n%s";
+	private static final String FILE_OVERWRITE_QUESTION_MESSAGE = JPass.getkey("File-is-already-exists") + "\n%s\n\n"
+			+ JPass.getkey("Do-you-want-to-overwrite");
 
 	private static final String JPASS_DATA_FILES = "JPass Data Files (*.jpass)";
 	private static final String XML_FILES = "XML Files (*.xml)";
@@ -265,7 +265,7 @@ public final class FileHelper {
 	 * @param parent parent component
 	 */
 	public static void openFile(final JPassFrame parent) {
-		final File file = showFileChooser(parent, JPass.lang.getString("Open"), "jpass", JPASS_DATA_FILES);
+		final File file = showFileChooser(parent, JPass.getkey("Open"), "jpass", JPASS_DATA_FILES);
 		if (file == null) {
 			return;
 		}

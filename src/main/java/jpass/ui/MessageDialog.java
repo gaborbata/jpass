@@ -209,7 +209,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
 	 * @param message dialog message
 	 */
 	public static void showWarningMessage(final Component parent, final String message) {
-		showMessageDialog(parent, message, JPass.lang.getString("Warning"), getIcon("dialog_warning"));
+		showMessageDialog(parent, message, JPass.getkey("Warning"), getIcon("dialog_warning"));
 	}
 
 	/**
@@ -219,7 +219,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
 	 * @param message dialog message
 	 */
 	public static void showErrorMessage(final Component parent, final String message) {
-		showMessageDialog(parent, message, JPass.lang.getString("Error"), getIcon("dialog_error"));
+		showMessageDialog(parent, message, JPass.getkey("Error"), getIcon("dialog_error"));
 	}
 
 	/**
@@ -229,7 +229,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
 	 * @param message dialog message
 	 */
 	public static void showInformationMessage(final Component parent, final String message) {
-		showMessageDialog(parent, message, JPass.lang.getString("Information"), getIcon("dialog_info"));
+		showMessageDialog(parent, message, JPass.getkey("Information"), getIcon("dialog_info"));
 	}
 
 	/**
@@ -241,8 +241,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
 	 * @return selected option
 	 */
 	public static int showQuestionMessage(final Component parent, final String message, final int optionType) {
-		return showMessageDialog(parent, message, JPass.lang.getString("Confirmation"), getIcon("dialog_question"),
-				optionType);
+		return showMessageDialog(parent, message, JPass.getkey("Confirmation"), getIcon("dialog_question"), optionType);
 	}
 
 	/**
@@ -254,13 +253,13 @@ public final class MessageDialog extends JDialog implements ActionListener {
 	 */
 	public static char[] showPasswordDialog(final Component parent, final boolean confirm) {
 		JPanel panel = new JPanel();
-		panel.add(new JLabel(JPass.lang.getString("Password") + ":"));
+		panel.add(new JLabel(JPass.getkey("Password") + ":"));
 		final JPasswordField password = TextComponentFactory.newPasswordField();
 		panel.add(password);
 		JPasswordField repeat = null;
 		if (confirm) {
 			repeat = TextComponentFactory.newPasswordField();
-			panel.add(new JLabel(JPass.lang.getString("Repeat") + ":"));
+			panel.add(new JLabel(JPass.getkey("Repeat") + ":"));
 			panel.add(repeat);
 		}
 		panel.setLayout(new SpringLayout());
@@ -269,14 +268,13 @@ public final class MessageDialog extends JDialog implements ActionListener {
 
 		boolean incorrect = true;
 		while (incorrect) {
-			int option = showMessageDialog(parent, panel, JPass.lang.getString("Enter-Password"),
-					getIcon("dialog_lock"), OK_CANCEL_OPTION);
+			int option = showMessageDialog(parent, panel, JPass.getkey("Enter-Password"), getIcon("dialog_lock"),
+					OK_CANCEL_OPTION);
 			if (option == OK_OPTION) {
 				if (password.getPassword().length == 0) {
-					showWarningMessage(parent, JPass.lang.getString("Please-Enter-Password"));
+					showWarningMessage(parent, JPass.getkey("Please-Enter-Password"));
 				} else if (confirm && !Arrays.equals(password.getPassword(), repeat.getPassword())) {
-					showWarningMessage(parent,
-							JPass.lang.getString("Password-and-repeated-passwords-are-not-identical"));
+					showWarningMessage(parent, JPass.getkey("Password-and-repeated-passwords-are-not-identical"));
 				} else {
 					incorrect = false;
 				}

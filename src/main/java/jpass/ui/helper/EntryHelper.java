@@ -59,10 +59,10 @@ public final class EntryHelper {
 	 */
 	public static void deleteEntry(JPassFrame parent) {
 		if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-			showWarningMessage(parent, JPass.lang.getString("Please-select-an-entry"));
+			showWarningMessage(parent, JPass.getkey("Please-select-an-entry"));
 			return;
 		}
-		int option = showQuestionMessage(parent, JPass.lang.getString("Do-you-really-want-to-delete-this-entry"),
+		int option = showQuestionMessage(parent, JPass.getkey("Do-you-really-want-to-delete-this-entry"),
 				YES_NO_OPTION);
 		if (option == YES_OPTION) {
 			String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(),
@@ -81,7 +81,7 @@ public final class EntryHelper {
 	 */
 	public static void duplicateEntry(JPassFrame parent) {
 		if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-			showWarningMessage(parent, JPass.lang.getString("Please-select-an-entry"));
+			showWarningMessage(parent, JPass.getkey("Please-select-an-entry"));
 			return;
 		}
 		String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
@@ -102,7 +102,7 @@ public final class EntryHelper {
 	 */
 	public static void editEntry(JPassFrame parent) {
 		if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-			showWarningMessage(parent, JPass.lang.getString("Please-select-an-entry"));
+			showWarningMessage(parent, JPass.getkey("Please-select-an-entry"));
 			return;
 		}
 		String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);
@@ -124,7 +124,7 @@ public final class EntryHelper {
 	 * @param parent parent component
 	 */
 	public static void addEntry(JPassFrame parent) {
-		EntryDialog dialog = new EntryDialog(parent, JPass.lang.getString("Add-New-Entry"), null, true);
+		EntryDialog dialog = new EntryDialog(parent, JPass.getkey("Add-New-Entry"), null, true);
 		dialog.getModifiedEntry().ifPresent(entry -> {
 			parent.getModel().getEntries().getEntry().add(entry);
 			parent.getModel().setModified(true);
@@ -141,7 +141,7 @@ public final class EntryHelper {
 	 */
 	public static Entry getSelectedEntry(JPassFrame parent) {
 		if (parent.getEntryTitleTable().getSelectedRow() == -1) {
-			showWarningMessage(parent, JPass.lang.getString("Please-select-an-entry"));
+			showWarningMessage(parent, JPass.getkey("Please-select-an-entry"));
 			return null;
 		}
 		String title = (String) parent.getEntryTitleTable().getValueAt(parent.getEntryTitleTable().getSelectedRow(), 0);

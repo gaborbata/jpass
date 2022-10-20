@@ -62,70 +62,69 @@ import jpass.xml.bind.Entry;
  *
  */
 public enum MenuActionType {
-	NEW_FILE(new AbstractMenuAction(JPass.lang.getString("New"), getIcon("new"),
-			getKeyStroke(KeyEvent.VK_N, CTRL_DOWN_MASK)) {
+	NEW_FILE(new AbstractMenuAction(JPass.getkey("New"), getIcon("new"), getKeyStroke(KeyEvent.VK_N, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			createNew(JPassFrame.getInstance());
 		}
-	}), OPEN_FILE(new AbstractMenuAction(JPass.lang.getString("Open-File"), getIcon("open"),
+	}), OPEN_FILE(new AbstractMenuAction(JPass.getkey("Open-File"), getIcon("open"),
 			getKeyStroke(KeyEvent.VK_O, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			openFile(JPassFrame.getInstance());
 		}
-	}), SAVE_FILE(new AbstractMenuAction(JPass.lang.getString("Save"), getIcon("save"),
-			getKeyStroke(KeyEvent.VK_S, CTRL_DOWN_MASK)) {
-		@Override
-		public void actionPerformed(ActionEvent ev) {
-			saveFile(JPassFrame.getInstance(), false);
-		}
-	}), SAVE_AS_FILE(new AbstractMenuAction(JPass.lang.getString("Save-As"), getIcon("save_as"), null) {
+	}), SAVE_FILE(
+			new AbstractMenuAction(JPass.getkey("Save"), getIcon("save"), getKeyStroke(KeyEvent.VK_S, CTRL_DOWN_MASK)) {
+				@Override
+				public void actionPerformed(ActionEvent ev) {
+					saveFile(JPassFrame.getInstance(), false);
+				}
+			}),
+	SAVE_AS_FILE(new AbstractMenuAction(JPass.getkey("Save-As"), getIcon("save_as"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			saveFile(JPassFrame.getInstance(), true);
 		}
-	}), EXPORT_XML(new AbstractMenuAction(JPass.lang.getString("Export-to-XML"), getIcon("export"), null) {
+	}), EXPORT_XML(new AbstractMenuAction(JPass.getkey("Export-to-XML"), getIcon("export"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			exportFile(JPassFrame.getInstance());
 		}
-	}), IMPORT_XML(new AbstractMenuAction(JPass.lang.getString("Import-from-XML"), getIcon("import"), null) {
+	}), IMPORT_XML(new AbstractMenuAction(JPass.getkey("Import-from-XML"), getIcon("import"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			importFile(JPassFrame.getInstance());
 		}
-	}), CHANGE_PASSWORD(new AbstractMenuAction(JPass.lang.getString("Change-Password") + "...", getIcon("lock"), null) {
+	}), CHANGE_PASSWORD(new AbstractMenuAction(JPass.getkey("Change-Password") + "...", getIcon("lock"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			JPassFrame parent = JPassFrame.getInstance();
 			char[] password = MessageDialog.showPasswordDialog(parent, true);
 			if (password == null) {
-				MessageDialog.showInformationMessage(parent, JPass.lang.getString("Password-has-not-been-modified"));
+				MessageDialog.showInformationMessage(parent, JPass.getkey("Password-has-not-been-modified"));
 			} else {
 				parent.getModel().setPassword(password);
 				parent.getModel().setModified(true);
 				parent.refreshFrameTitle();
 				MessageDialog.showInformationMessage(parent,
-						JPass.lang.getString("Password-has-been-successfully-modified") + "\n\n"
-								+ JPass.lang.getString("the-file-now-in-order-to") + "\n"
-								+ JPass.lang.getString("the-new-password-applied"));
+						JPass.getkey("Password-has-been-successfully-modified") + "\n\n"
+								+ JPass.getkey("the-file-now-in-order-to") + "\n"
+								+ JPass.getkey("the-new-password-applied"));
 			}
 		}
-	}), GENERATE_PASSWORD(new AbstractMenuAction(JPass.lang.getString("Generate-Password") + "...", getIcon("generate"),
+	}), GENERATE_PASSWORD(new AbstractMenuAction(JPass.getkey("Generate-Password") + "...", getIcon("generate"),
 			getKeyStroke(KeyEvent.VK_Z, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			new GeneratePasswordDialog(JPassFrame.getInstance());
 		}
-	}), EXIT(new AbstractMenuAction(JPass.lang.getString("Exit"), getIcon("exit"),
-			getKeyStroke(KeyEvent.VK_F4, ALT_DOWN_MASK)) {
+	}),
+	EXIT(new AbstractMenuAction(JPass.getkey("Exit"), getIcon("exit"), getKeyStroke(KeyEvent.VK_F4, ALT_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			JPassFrame.getInstance().exitFrame();
 		}
-	}), ABOUT(new AbstractMenuAction(JPass.lang.getString("About-JPass"), getIcon("info"),
-			getKeyStroke(KeyEvent.VK_F1, 0)) {
+	}), ABOUT(new AbstractMenuAction(JPass.getkey("About-JPass"), getIcon("info"), getKeyStroke(KeyEvent.VK_F1, 0)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			StringBuilder sb = new StringBuilder();
@@ -137,41 +136,41 @@ public enum MenuActionType {
 			sb.append(System.getProperties().getProperty("java.vendor"));
 			MessageDialog.showInformationMessage(JPassFrame.getInstance(), sb.toString());
 		}
-	}), LANGUAGE(new AbstractMenuAction(JPass.lang.getString("Language"), getIcon("language"), null) {
+	}), LANGUAGE(new AbstractMenuAction(JPass.getkey("Language"), getIcon("language"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			new LanguageDialog(JPassFrame.getInstance());
 		}
-	}), LICENSE(new AbstractMenuAction(JPass.lang.getString("License"), getIcon("license"), null) {
+	}), LICENSE(new AbstractMenuAction(JPass.getkey("License"), getIcon("license"), null) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			MessageDialog.showTextFile(JPassFrame.getInstance(), "License", "license.txt");
 		}
-	}), ADD_ENTRY(new AbstractMenuAction(JPass.lang.getString("Add-Entry") + "...", getIcon("entry_new"),
+	}), ADD_ENTRY(new AbstractMenuAction(JPass.getkey("Add-Entry") + "...", getIcon("entry_new"),
 			getKeyStroke(KeyEvent.VK_Y, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			EntryHelper.addEntry(JPassFrame.getInstance());
 		}
-	}), EDIT_ENTRY(new AbstractMenuAction(JPass.lang.getString("Edit-Entry") + "...", getIcon("entry_edit"),
+	}), EDIT_ENTRY(new AbstractMenuAction(JPass.getkey("Edit-Entry") + "...", getIcon("entry_edit"),
 			getKeyStroke(KeyEvent.VK_E, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			EntryHelper.editEntry(JPassFrame.getInstance());
 		}
-	}), DUPLICATE_ENTRY(new AbstractMenuAction(JPass.lang.getString("Duplicate-Entry") + "...",
-			getIcon("entry_duplicate"), getKeyStroke(KeyEvent.VK_K, CTRL_DOWN_MASK)) {
+	}), DUPLICATE_ENTRY(new AbstractMenuAction(JPass.getkey("Duplicate-Entry") + "...", getIcon("entry_duplicate"),
+			getKeyStroke(KeyEvent.VK_K, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			EntryHelper.duplicateEntry(JPassFrame.getInstance());
 		}
-	}), DELETE_ENTRY(new AbstractMenuAction(JPass.lang.getString("Delete-Entry") + "...", getIcon("entry_delete"),
+	}), DELETE_ENTRY(new AbstractMenuAction(JPass.getkey("Delete-Entry") + "...", getIcon("entry_delete"),
 			getKeyStroke(KeyEvent.VK_D, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			EntryHelper.deleteEntry(JPassFrame.getInstance());
 		}
-	}), COPY_URL(new AbstractMenuAction(JPass.lang.getString("Copy-URL"), getIcon("url"),
+	}), COPY_URL(new AbstractMenuAction(JPass.getkey("Copy-URL"), getIcon("url"),
 			getKeyStroke(KeyEvent.VK_U, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
@@ -181,7 +180,7 @@ public enum MenuActionType {
 				EntryHelper.copyEntryField(parent, entry.getUrl());
 			}
 		}
-	}), COPY_USER(new AbstractMenuAction(JPass.lang.getString("Copy-User-Name"), getIcon("user"),
+	}), COPY_USER(new AbstractMenuAction(JPass.getkey("Copy-User-Name"), getIcon("user"),
 			getKeyStroke(KeyEvent.VK_B, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
@@ -191,7 +190,7 @@ public enum MenuActionType {
 				EntryHelper.copyEntryField(parent, entry.getUser());
 			}
 		}
-	}), COPY_PASSWORD(new AbstractMenuAction(JPass.lang.getString("Copy-Password"), getIcon("keyring"),
+	}), COPY_PASSWORD(new AbstractMenuAction(JPass.getkey("Copy-Password"), getIcon("keyring"),
 			getKeyStroke(KeyEvent.VK_C, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
@@ -201,13 +200,13 @@ public enum MenuActionType {
 				EntryHelper.copyEntryField(parent, entry.getPassword());
 			}
 		}
-	}), CLEAR_CLIPBOARD(new AbstractMenuAction(JPass.lang.getString("Clear-Clipboard"), getIcon("clear"),
+	}), CLEAR_CLIPBOARD(new AbstractMenuAction(JPass.getkey("Clear-Clipboard"), getIcon("clear"),
 			getKeyStroke(KeyEvent.VK_X, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			EntryHelper.copyEntryField(JPassFrame.getInstance(), null);
 		}
-	}), FIND_ENTRY(new AbstractMenuAction(JPass.lang.getString("Find-Entry"), getIcon("find"),
+	}), FIND_ENTRY(new AbstractMenuAction(JPass.getkey("Find-Entry"), getIcon("find"),
 			getKeyStroke(KeyEvent.VK_F, CTRL_DOWN_MASK)) {
 		@Override
 		public void actionPerformed(ActionEvent ev) {

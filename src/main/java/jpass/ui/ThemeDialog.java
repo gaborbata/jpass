@@ -94,6 +94,9 @@ public class ThemeDialog extends JDialog implements ActionListener {
 			this.buttonPanel.add(this.acceptButton);
 
 			this.cancelButton = new JButton(JPass.getkey("Cancel"), MessageDialog.getIcon("cancel"));
+			this.cancelButton.setActionCommand("cancel_button");
+			this.cancelButton.setMnemonic(KeyEvent.VK_C);
+			this.cancelButton.addActionListener(this);
 		} else {
 			this.cancelButton = new JButton("Close", MessageDialog.getIcon("close"));
 		}
@@ -110,7 +113,12 @@ public class ThemeDialog extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO 自动生成的方法存根
+		String command = e.getActionCommand();
 
+		if ("cancel_button".equals(command)) {
+			dispose();
+			return;
+		}
 		Object petName = "";
 		for (int i = 0; i < THEME_OPTIONS.length; i++) {
 			if (this.checkBoxes[i].isSelected()) {

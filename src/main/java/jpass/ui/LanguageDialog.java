@@ -90,6 +90,7 @@ public class LanguageDialog extends JDialog implements ActionListener {
 		SpringUtilities.makeCompactGrid(this.charactersPanel, 2, 1, 5, 5, 5, 5); // xPad, yPad);
 
 		this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
 		if (showAcceptButton) {
 			this.acceptButton = new JButton(JPass.getkey("Accept"), MessageDialog.getIcon("accept"));
 			this.acceptButton.setActionCommand("accept_button");
@@ -98,6 +99,9 @@ public class LanguageDialog extends JDialog implements ActionListener {
 			this.buttonPanel.add(this.acceptButton);
 
 			this.cancelButton = new JButton(JPass.getkey("Cancel"), MessageDialog.getIcon("cancel"));
+			this.cancelButton.setActionCommand("cancel_button");
+			this.cancelButton.setMnemonic(KeyEvent.VK_C);
+			this.cancelButton.addActionListener(this);
 		} else {
 			this.cancelButton = new JButton("Close", MessageDialog.getIcon("close"));
 		}
@@ -114,8 +118,17 @@ public class LanguageDialog extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO 自动生成的方法存根
+		String command = e.getActionCommand();
 
+		if ("cancel_button".equals(command)) {
+			dispose();
+			return;
+		}
 		Object petName = this.languageBox.getSelectedItem();
+		if (petName == null || petName.equals("请选择")) {
+			MessageDialog.showWarningMessage(this, JPass.getkey("Please-select-a-language"));
+			return;
+		}
 
 		LanguageConverter Language = new LanguageConverter();
 

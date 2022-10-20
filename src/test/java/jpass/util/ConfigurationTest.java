@@ -28,57 +28,57 @@
  */
 package jpass.util;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import org.junit.Before;
+import org.junit.Test;
+
 public class ConfigurationTest {
 
-    private Configuration configuration;
+	private Configuration configuration;
 
-    @Before
-    public void setup() {
-        configuration = Configuration.getInstance();
-    }
+	@Before
+	public void setup() {
+		configuration = Configuration.getInstance();
+	}
 
-    @Test
-    public void configurationIsDarkModeEnabledTest() {
-        Boolean result = configuration.is("ui.theme.dark.mode.enabled", false);
-        assertFalse(result);
-    }
+	@Test
+	public void configurationIsDarkModeEnabledTest() {
+		Boolean result = configuration.is("ui.theme.dark.mode.enabled", false);
+		assertFalse(result);
+	}
 
-    @Test
-    public void configurationGetIntegerClearClipboardOnExitWrongConfigTest() {
-        int result = configuration.getInteger("clear.clipboard.on.exit.enabled", 0);
-        assertEquals(0, result);
-    }
+	@Test
+	public void configurationGetIntegerClearClipboardOnExitWrongConfigTest() {
+		int result = configuration.getInteger("clear.clipboard.on.exit.enabled", 0);
+		assertEquals(0, result);
+	}
 
-    @Test
-    public void configurationIsDefaultPasswordGenerationNullConfigTest() {
-        Boolean result = configuration.is("default.password.generation.size", false);
-        assertFalse(result);
-    }
+	@Test
+	public void configurationIsDefaultPasswordGenerationNullConfigTest() {
+		Boolean result = configuration.is("default.password.generation.size", false);
+		assertFalse(result);
+	}
 
-    @Test
-    public void configurationGetDateFormatTest() {
-        String result = configuration.get("date.format", "yyyy-MM-dd");
-        assertEquals("yyyy-MM-dd", result);
-    }
+	@Test
+	public void configurationGetDateFormatTest() {
+		String result = configuration.get("date.format", "yyyy-MM-dd");
+		assertEquals("yyyy-MM-dd", result);
+	}
 
-    @Test
-    public void configurationGetArrayEntryDetailsTest() {
-        String[] defaultValue = new String[]{"TITLE", "MODIFIED"};
-        String[] result = configuration.getArray("entry.details", defaultValue);
-        assertArrayEquals(defaultValue, result);
-    }
+	@Test
+	public void configurationGetArrayEntryDetailsTest() {
+		String[] defaultValue = new String[] { "TITLE", "URL", "CREATED", "MODIFIED", "NOTES" };
+		String[] result = configuration.getArray("entry.details", defaultValue);
+		assertArrayEquals(defaultValue, result);
+	}
 
-    @Test
-    public void configurationGetArrayEntryDetailsWrongKeyTest() {
-        String[] defaultValue = new String[]{"TITLE", "MODIFIED"};
-        String[] result = configuration.getArray("entry.detail", defaultValue);
-        assertArrayEquals(defaultValue, result);
-    }
+	@Test
+	public void configurationGetArrayEntryDetailsWrongKeyTest() {
+		String[] defaultValue = new String[] { "TITLE", "URL", "CREATED", "MODIFIED", "NOTES" };
+		String[] result = configuration.getArray("entry.detail", defaultValue);
+		assertArrayEquals(defaultValue, result);
+	}
 }

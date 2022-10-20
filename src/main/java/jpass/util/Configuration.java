@@ -28,6 +28,7 @@
  */
 package jpass.util;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,9 +37,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
 
 /**
  * Class for loading configurations from {@code jpass.properties}.
@@ -50,29 +55,37 @@ public final class Configuration {
 	private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
 	private static Configuration INSTANCE;
 	private Properties properties = new Properties();
+	private String propertiesfile = "jpass.properties";
 
 	private Configuration() {
 		try {
-			File filePath = new File("src/main/resources/jpass.properties");
-			if (filePath.exists() && filePath.isFile()) {
-				InputStream is = new FileInputStream(filePath);
-				properties.load(is);
-				is.close();
+			InputStream is = null;
+			if (Configuration.class.getResource("").getProtocol().equals("jar")) {
+				// 以 jar 的方式运行
+
+				String pathString = new File(".").getCanonicalPath();
+				File file = new File(pathString + "/jpass.properties");
+
+				if (!file.exists()) {
+					// 复制配置文件
+					Files.copy(getFileResource("" + propertiesfile), Paths.get(pathString + "/jpass.properties"));
+					is = new FileInputStream(pathString + "/jpass.properties");
+				} else {
+
+					is = new BufferedInputStream(new FileInputStream(pathString + "/jpass.properties"));
+				}
+
+			} else {
+				is = new FileInputStream(new File("src/main/resources/" + propertiesfile));
 			}
+
+			properties.load(is);
+
+			is.close();
+
 		} catch (Exception e) {
 			LOG.log(Level.WARNING, "An error occurred during loading configuration.", e);
 		}
-	}
-
-	public static File getConfigurationFolderPath() {
-		File configurationFolderPath = null;
-		try {
-			configurationFolderPath = new File(
-					Configuration.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
-		} catch (Exception e) {
-			LOG.log(Level.WARNING, "Could not determine configuration folder path.", e);
-		}
-		return configurationFolderPath;
 	}
 
 	private <T> T getValue(String key, T defaultValue, Class<T> type) {
@@ -106,10 +119,24 @@ public final class Configuration {
 	}
 
 	public void set(String key, String value) throws FileNotFoundException, IOException {
-		properties.setProperty(key, value);
-		File filePath = new File("src/main/resources/jpass.properties");
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));
-		properties.store(bw, "");
+
+		if (Configuration.class.getResource("").getProtocol().equals("jar")) {
+			String pathString = new File(".").getCanonicalPath();
+			File file = new File(pathString + "/jpass.properties");
+			// 有文件
+			if (file.exists()) {
+				File filePath = new File(pathString + "/jpass.properties");
+				properties.setProperty(key, value);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));
+				properties.store(bw, "");
+			}
+
+		} else {
+			File filePath = new File("src/main/resources/jpass.properties");
+			properties.setProperty(key, value);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));
+			properties.store(bw, "");
+		}
 
 	}
 
@@ -126,5 +153,17 @@ public final class Configuration {
 			INSTANCE = new Configuration();
 		}
 		return INSTANCE;
+	}
+
+	/**
+	 * 获取jar包文件流（resources目录下）
+	 *
+	 * @param name 文件名
+	 * @return msyh InputStream文件流
+	 */
+	public static InputStream getFileResource(String name) throws IOException, BadLocationException {
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		InputStream msyh = loader.getResourceAsStream(name);
+		return msyh;
 	}
 }

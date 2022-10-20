@@ -59,7 +59,7 @@ public class JPass {
 
 	private static final Logger LOG = Logger.getLogger(JPass.class.getName());
 	public static Locale loc = setLocale();
-	public static ResourceBundle lang = setLanguageBundle(loc);
+	public static ResourceBundle lang = setLanguageBundle();
 	public static String JdkVersion = System.getProperty("java.vm.specification.version");
 
 	public static String getkey(String key) {
@@ -97,8 +97,7 @@ public class JPass {
 	 * @param loc The locale of the language you want to use.
 	 * @return The ResourceBundle object.
 	 */
-	public static ResourceBundle setLanguageBundle(Locale loc) {
-
+	public static ResourceBundle setLanguageBundle() {
 		return ResourceBundle.getBundle("resources/language/language", loc); // NON-NLS
 	}
 

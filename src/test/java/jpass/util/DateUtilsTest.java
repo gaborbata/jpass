@@ -28,205 +28,205 @@
  */
 package jpass.util;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
 
 public class DateUtilsTest {
 
-    @Test
-    public void formatIsoDateTimeNullTest() {
+	@Test
+	public void formatIsoDateTimeNullTest() {
 
-        String dateStringCorrect = "2021-03-02T20:11:58";
-        DateTimeFormatter formatter = DateUtils.createFormatter(null);
+		String dateStringCorrect = "2021-03-02T20:11:58";
+		DateTimeFormatter formatter = DateUtils.createFormatter(null);
 
-        String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
+		String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
 
-        String expectedResult = "2021-03-02";
+		String expectedResult = "2021-03-02";
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeEmptyTest() {
+	@Test
+	public void formatIsoDateTimeEmptyTest() {
 
-        String dateStringCorrect = "2021-03-02T20:11:58";
-        DateTimeFormatter formatter = DateUtils.createFormatter("");
+		String dateStringCorrect = "2021-03-02T20:11:58";
+		DateTimeFormatter formatter = DateUtils.createFormatter("");
 
-        String expectedResult = "";
-        String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
+		String expectedResult = "";
+		String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeIncorrectDateCorrectTest() {
+	@Test
+	public void formatIsoDateTimeIncorrectDateCorrectTest() {
 
-        String dateStringCorrect = "2021-03-02T20:11:58";
-        String invalidFormat = "yyy mmm dddd";
-        DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
+		String dateStringCorrect = "2021-03-02T20:11:58";
+		String invalidFormat = "yyy mmm dddd";
+		DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
 
-        String expectedResult = "2021-03-02";
-        String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
+		String expectedResult = "2021-03-02";
+		String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeIncorrectDateIncorrectTest() {
+	@Test
+	public void formatIsoDateTimeIncorrectDateIncorrectTest() {
 
-        String dateStringIncorrect = "2021-03-0:11:58";
-        String invalidFormat = "yyy mmm dddd";
-        DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
+		String dateStringIncorrect = "2021-03-0:11:58";
+		String invalidFormat = "yyy mmm dddd";
+		DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeIncorrectDateEmptyTest() {
+	@Test
+	public void formatIsoDateTimeIncorrectDateEmptyTest() {
 
-        String dateStringEmpty = "";
-        String invalidFormat = "yyy mmm dddd";
-        DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
+		String dateStringEmpty = "";
+		String invalidFormat = "yyy mmm dddd";
+		DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeIncorrectDateNullTest() {
+	@Test
+	public void formatIsoDateTimeIncorrectDateNullTest() {
 
-        String dateStringEmpty = null;
-        String invalidFormat = "yyy mmm dddd";
-        DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
+		String dateStringEmpty = null;
+		String invalidFormat = "yyy mmm dddd";
+		DateTimeFormatter formatter = DateUtils.createFormatter(invalidFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeCorrectDateCorrectTest() {
+	@Test
+	public void formatIsoDateTimeCorrectDateCorrectTest() {
 
-        String dateStringCorrect = "2021-03-02T20:11:58";
-        String validFormat = "dd.MM.yyyy";
-        DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
+		String dateStringCorrect = "2021-03-02T20:11:58";
+		String validFormat = "dd.MM.yyyy";
+		DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
 
-        String expectedResult = "02.03.2021";
-        String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
+		String expectedResult = "02.03.2021";
+		String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeCorrectDateIncorrectTest() {
+	@Test
+	public void formatIsoDateTimeCorrectDateIncorrectTest() {
 
-        String dateStringIncorrect = "2021-03-0:11:58";
-        String validFormat = "dd.MM.yyyy";
-        DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
+		String dateStringIncorrect = "2021-03-0:11:58";
+		String validFormat = "dd.MM.yyyy";
+		DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
 
-        String expectedResult = "01.01.1970";
-        String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
+		String expectedResult = "01.01.1970";
+		String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeCorrectDateEmptyTest() {
+	@Test
+	public void formatIsoDateTimeCorrectDateEmptyTest() {
 
-        String dateStringEmpty = "";
-        String validFormat = "dd.MM.yyyy";
-        DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
+		String dateStringEmpty = "";
+		String validFormat = "dd.MM.yyyy";
+		DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
 
-        String expectedResult = "01.01.1970";
-        String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
+		String expectedResult = "01.01.1970";
+		String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeCorrectDateNullTest() {
+	@Test
+	public void formatIsoDateTimeCorrectDateNullTest() {
 
-        String dateStringNull = null;
-        String validFormat = "dd.MM.yyyy";
-        DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
+		String dateStringNull = null;
+		String validFormat = "dd.MM.yyyy";
+		DateTimeFormatter formatter = DateUtils.createFormatter(validFormat);
 
-        String expectedResult = "01.01.1970";
-        String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
+		String expectedResult = "01.01.1970";
+		String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeNullDateCorrect() {
+	@Test
+	public void formatIsoDateTimeNullDateCorrect() {
 
-        String dateStringCorrect = "2021-03-02T20:11:58";
-        String nullFormat = null;
-        DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
+		String dateStringCorrect = "2021-03-02T20:11:58";
+		String nullFormat = null;
+		DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
 
-        String expectedResult = "2021-03-02";
-        String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
+		String expectedResult = "2021-03-02";
+		String result = DateUtils.formatIsoDateTime(dateStringCorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeNullDateIncorrect() {
+	@Test
+	public void formatIsoDateTimeNullDateIncorrect() {
 
-        String dateStringIncorrect = "2021-03-0:11:58";
-        String nullFormat = null;
-        DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
+		String dateStringIncorrect = "2021-03-0:11:58";
+		String nullFormat = null;
+		DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringIncorrect, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeNullDateEmpty() {
+	@Test
+	public void formatIsoDateTimeNullDateEmpty() {
 
-        String dateStringEmpty = "";
-        String nullFormat = null;
-        DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
+		String dateStringEmpty = "";
+		String nullFormat = null;
+		DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringEmpty, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeNullDateNull() {
+	@Test
+	public void formatIsoDateTimeNullDateNull() {
 
-        String dateStringNull = null;
-        String nullFormat = null;
-        DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
+		String dateStringNull = null;
+		String nullFormat = null;
+		DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
 
-        String expectedResult = "1970-01-01";
-        String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
+		String expectedResult = "1970-01-01";
+		String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
 
-        assertEquals(result, expectedResult);
-    }
+		assertEquals(result, expectedResult);
+	}
 
-    @Test
-    public void formatIsoDateTimeNullDateNull2() {
-        String dateStringNull = "1616697411";
-        String nullFormat = null;
-        DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
+	@Test
+	public void formatIsoDateTimeNullDateNull2() {
+		String dateStringNull = "1616697411";
+		String nullFormat = null;
+		DateTimeFormatter formatter = DateUtils.createFormatter(nullFormat);
 
-        String expectedResult = "1970-01-19";
-        String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
+		String expectedResult = "1970-01-20";
 
-        assertEquals(result, expectedResult);
-    }
+		String result = DateUtils.formatIsoDateTime(dateStringNull, formatter);
+
+		assertEquals(result, expectedResult);
+	}
 }

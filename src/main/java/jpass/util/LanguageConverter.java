@@ -1,18 +1,9 @@
 package jpass.util;
 
-import java.net.URI;
-import java.net.URL;
-import java.security.CodeSource;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import jpass.JPass;
 
 public class LanguageConverter {
 
@@ -76,37 +67,4 @@ public class LanguageConverter {
 		return 0;
 	}
 
-	/**
-	 * Reads the languages from the jar file / ide scope project
-	 *
-	 * @return An ObservableList of languages names.
-	 */
-	public static List<String> readLanguages() {
-		try {
-			CodeSource src = JPass.class.getProtectionDomain().getCodeSource();
-
-			URI uri = JPass.class.getResource("").toURI();
-			URL jar = src.getLocation();
-			if (uri.getScheme().equals("jar")) {// NON-NLS
-				ZipInputStream zip = new ZipInputStream(jar.openStream());
-				List<String> options = new ArrayList<String>();
-				while (true) {
-					ZipEntry e = zip.getNextEntry();
-					if (e == null)
-						break;
-					String name = e.getName();
-					if (name.startsWith("language_")) {// NON-NLS
-						String[] tmp = name.split("\\.");
-						String actual = tmp[0].split("_")[1];
-						options.add(actual);
-					}
-				}
-				return options;
-			}
-		} catch (Exception e) {
-
-		}
-
-		return null;
-	}
 }

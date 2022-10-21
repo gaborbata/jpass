@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+
+  <!-- Main classes -->
+
+  <!-- Javadoc -->
+  <suppress
+    checks="(JavadocMethodCheck|JavadocPackageCheck|JavadocStyleCheck|JavadocVariableCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java"/>
+
+  <!-- Naming -->
+  <suppress
+    checks="(StaticVariableNameCheck|ConstantNameCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java"/>
+
+  <suppress
+    checks="(MemberNameCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]ui[/\\]EntryDialog\.java"/>
+  
+  <!-- Design -->
+  <suppress
+    checks="(LineLengthCheck|MagicNumberCheck|FinalParametersCheck|FinalClassCheck|HiddenFieldCheck|DesignForExtensionCheck|RedundantModifierCheck|HideUtilityClassConstructorCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java"/>
+
+  <!-- Generated classes -->
+  <suppress
+    checks="(VisibilityModifierCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]xml[/\\]bind[/\\](Entry|Entries)\.java"/>
+
+  <!-- Inherited code -->
+  <suppress
+    checks="(MemberNameCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]crypt[/\\]Aes256\.java"/>
+
+  <suppress
+    checks="(MemberNameCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]crypt[/\\]Cbc\.java"/>
+
+  <suppress
+    checks="(MemberNameCheck)"
+    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]crypt[/\\]io[/\\]Crypt(Input|Output)Stream\.java"/>
+
+  <!-- Test classes -->
+
+  <!-- Javadoc -->
+  <suppress
+    checks="(MissingJavadocMethodCheck|JavadocVariableCheck|JavadocPackageCheck)"
+    files=".*[/\\]src[/\\]test[/\\]java"/>
+
+
+  <!-- Naming -->
+  <suppress
+    checks="(MemberNameCheck|MethodNameCheck|LocalVariableNameCheck)"
+    files=".*[/\\]src[/\\]test[/\\]java"/>
+
+  <!-- Design -->
+  <suppress
+    checks="(FinalParametersCheck|MagicNumberCheck|VisibilityModifierCheck|ParenPadCheck|LineLengthCheck)"
+    files=".*[/\\]src[/\\]test[/\\]java"/>
+
+</suppressions>

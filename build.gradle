@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'distribution'
     id 'org.gradle.crypto.checksum' version '1.4.0'
+    id 'checkstyle'
 }
 
 compileJava.options.encoding = 'UTF-8'

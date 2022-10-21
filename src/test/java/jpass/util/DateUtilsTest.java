@@ -32,7 +32,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.format.DateTimeFormatter;
 
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class DateUtilsTest {
 

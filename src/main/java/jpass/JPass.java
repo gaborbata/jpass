@@ -28,18 +28,26 @@
  */
 package jpass;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import jpass.ui.JPassFrame;
 import jpass.util.Configuration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import jpass.util.LanguageConverter;
 
 /**
  * Entry point of JPass.
@@ -49,28 +57,79 @@ import javax.swing.JFrame;
  */
 public class JPass {
 
-    private static final Logger LOG = Logger.getLogger(JPass.class.getName());
+	private static final Logger LOG = Logger.getLogger(JPass.class.getName());
+	public static Locale loc = setLocale();
+	public static ResourceBundle lang = setLanguageBundle();
+	public static String JdkVersion = System.getProperty("java.vm.specification.version");
 
-    static {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
-    }
+	public static String getkey(String key) {
+		try {
+			if ("17".equals(JdkVersion)) {
+				return new String(lang.getString(key));
+			}
+			if ("1.8".equals(JdkVersion)) {
+				return new String(lang.getString(key).getBytes("ISO-8859-1"), "UTF8");
+			}
 
-    public static void main(final String[] args) {
-        try {
-            UIManager.put("Button.arc", 4);
-            FlatLaf lookAndFeel;
-            if (Configuration.getInstance().is("ui.theme.dark.mode.enabled", false)) {
-                lookAndFeel = new FlatDarkLaf();
-            } else {
-                lookAndFeel = new FlatLightLaf();
-            }
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JDialog.setDefaultLookAndFeelDecorated(true);
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            LOG.log(Level.CONFIG, "Could not set look and feel for the application", e);
-        }
+		} catch (UnsupportedEncodingException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		return key;
 
-        SwingUtilities.invokeLater(() -> JPassFrame.getInstance((args.length > 0) ? args[0] : null));
-    }
+	}
+
+	/**
+	 * The function returns a Locale object that is set to the language specified in
+	 * the configuration file
+	 *
+	 * @return The locale object.
+	 */
+	public static Locale setLocale() {
+		String lang = LanguageConverter.getConfigLanguage();
+		return new Locale(lang);
+	}
+
+	/**
+	 * This function returns a ResourceBundle object that contains the localized
+	 * strings for the given locale
+	 *
+	 * @param loc The locale of the language you want to use.
+	 * @return The ResourceBundle object.
+	 */
+	public static ResourceBundle setLanguageBundle() {
+		return ResourceBundle.getBundle("resources/language/language", loc); // NON-NLS
+	}
+
+	static {
+		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
+	}
+
+	public static void main(final String[] args) {
+		try {
+			UIManager.put("Button.arc", 4);
+			FlatLaf lookAndFeel = null;
+
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Light")) {
+				lookAndFeel = new FlatLightLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Dark")) {
+				lookAndFeel = new FlatDarkLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "IntelliJ")) {
+				lookAndFeel = new FlatIntelliJLaf();
+			}
+			if (Configuration.getInstance().isString("ui.theme.dark.mode.enabled", "Darcula")) {
+				lookAndFeel = new FlatDarculaLaf();
+			}
+
+			JFrame.setDefaultLookAndFeelDecorated(true);
+			JDialog.setDefaultLookAndFeelDecorated(true);
+			UIManager.setLookAndFeel(lookAndFeel);
+		} catch (Exception e) {
+			LOG.log(Level.CONFIG, "Could not set look and feel for the application", e);
+		}
+
+		SwingUtilities.invokeLater(() -> JPassFrame.getInstance((args.length > 0) ? args[0] : null));
+	}
 }

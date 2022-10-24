@@ -36,10 +36,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+
+import jpass.JPass;
 import jpass.ui.action.TableListener;
 import jpass.util.Configuration;
 import jpass.util.DateUtils;
@@ -50,95 +53,86 @@ import jpass.xml.bind.Entry;
  */
 public class EntryDetailsTable extends JTable {
 
-    private static final DateTimeFormatter FORMATTER
-            = DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
+	private static final DateTimeFormatter FORMATTER = DateUtils
+			.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
-    private enum DetailType {
-        TITLE("Title", Entry::getTitle),
-        URL("URL", Entry::getUrl),
-        USER("User", Entry::getUser),
-        MODIFIED("Modified", entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
-        CREATED("Created", entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
+	private enum DetailType {
+		TITLE(JPass.getkey("Title"), Entry::getTitle), URL(JPass.getkey("URL"), Entry::getUrl),
+		NOTES(JPass.getkey("Notes"), Entry::getNotes), USER(JPass.getkey("User"), Entry::getUser),
+		MODIFIED(JPass.getkey("Modified"),
+				entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
+		CREATED(JPass.getkey("Created"), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
-        private final String description;
-        private final Function<Entry, String> valueMapper;
+		private final String description;
+		private final Function<Entry, String> valueMapper;
 
-        private DetailType(String description, Function<Entry, String> valueMapper) {
-            this.description = description;
-            this.valueMapper = valueMapper;
-        }
+		private DetailType(String description, Function<Entry, String> valueMapper) {
+			this.description = description;
+			this.valueMapper = valueMapper;
+		}
 
-        public String getDescription() {
-            return description;
-        }
+		public String getDescription() {
+			return description;
+		}
 
-        public String getValue(Entry entry) {
-            return entry != null ? valueMapper.apply(entry) : "";
-        }
-    }
+		public String getValue(Entry entry) {
+			return entry != null ? valueMapper.apply(entry) : "";
+		}
+	}
 
-    private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
-            .collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
+	private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
+			.collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
 
-    private static final String[] DEFAULT_DETAILS = {
-        DetailType.TITLE.name(),
-        DetailType.MODIFIED.name()
-    };
+	private static final String[] DEFAULT_DETAILS = { DetailType.TITLE.name(), DetailType.MODIFIED.name() };
 
-    private final List<DetailType> detailsToDisplay;
-    private final DefaultTableModel tableModel;
+	private final List<DetailType> detailsToDisplay;
+	private final DefaultTableModel tableModel;
 
-    public EntryDetailsTable() {
-        super();
+	public EntryDetailsTable() {
+		super();
 
-        detailsToDisplay = Arrays.stream(Configuration.getInstance().getArray("entry.details", DEFAULT_DETAILS))
-                .map(name -> DETAILS_BY_NAME.get(name))
-                .filter(Objects::nonNull)
-                .distinct()
-                .collect(Collectors.toList());
+		detailsToDisplay = Arrays.stream(Configuration.getInstance().getArray("entry.details", DEFAULT_DETAILS))
+				.map(name -> DETAILS_BY_NAME.get(name)).filter(Objects::nonNull).distinct()
+				.collect(Collectors.toList());
 
-        if (detailsToDisplay.isEmpty()) {
-            Arrays.stream(DEFAULT_DETAILS)
-                    .map(name -> DETAILS_BY_NAME.get(name))
-                    .forEach(detailsToDisplay::add);
-        }
+		if (detailsToDisplay.isEmpty()) {
+			Arrays.stream(DEFAULT_DETAILS).map(name -> DETAILS_BY_NAME.get(name)).forEach(detailsToDisplay::add);
+		}
 
-        tableModel = new DefaultTableModel();
-        detailsToDisplay.forEach(detail -> tableModel.addColumn(detail.getDescription()));
-        setModel(tableModel);
-        getTableHeader().setReorderingAllowed(false);
-        addMouseListener(new TableListener());
-    }
+		tableModel = new DefaultTableModel();
+		detailsToDisplay.forEach(detail -> tableModel.addColumn(detail.getDescription()));
+		setModel(tableModel);
+		getTableHeader().setReorderingAllowed(false);
+		addMouseListener(new TableListener());
+	}
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
-    }
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
 
-    @Override
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-        Component component = super.prepareRenderer(renderer, row, column);
-        if (column > 0) {
-            int rendererWidth = component.getPreferredSize().width;
-            TableColumn tableColumn = getColumnModel().getColumn(column);
-            int columnWidth = Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth());
-            tableColumn.setPreferredWidth(columnWidth);
-            tableColumn.setMaxWidth(columnWidth);
-        }
-        return component;
-    }
+	@Override
+	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+		Component component = super.prepareRenderer(renderer, row, column);
+		if (column > 0) {
+			int rendererWidth = component.getPreferredSize().width;
+			TableColumn tableColumn = getColumnModel().getColumn(column);
+			int columnWidth = Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth());
+			tableColumn.setPreferredWidth(columnWidth);
+			tableColumn.setMaxWidth(columnWidth);
+		}
+		return component;
+	}
 
-    public void clear() {
-        tableModel.setRowCount(0);
-    }
+	public void clear() {
+		tableModel.setRowCount(0);
+	}
 
-    public void addRow(Entry entry) {
-        tableModel.addRow(detailsToDisplay.stream()
-                .map(detail -> detail.getValue(entry))
-                .toArray(Object[]::new));
-    }
+	public void addRow(Entry entry) {
+		tableModel.addRow(detailsToDisplay.stream().map(detail -> detail.getValue(entry)).toArray(Object[]::new));
+	}
 
-    public int rowCount() {
-        return tableModel.getRowCount();
-    }
+	public int rowCount() {
+		return tableModel.getRowCount();
+	}
 }

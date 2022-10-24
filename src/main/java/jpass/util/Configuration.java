@@ -28,12 +28,22 @@
  */
 package jpass.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
 
 /**
  * Class for loading configurations from {@code jpass.properties}.
@@ -42,74 +52,118 @@ import java.util.logging.Logger;
  */
 public final class Configuration {
 
-    private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
-    private static Configuration INSTANCE;
-    private Properties properties = new Properties();
+	private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
+	private static Configuration INSTANCE;
+	private Properties properties = new Properties();
+	private String propertiesfile = "jpass.properties";
 
-    private Configuration() {
-        try {
-            File filePath = new File(getConfigurationFolderPath(), "jpass.properties");
-            if (filePath.exists() && filePath.isFile()) {
-                InputStream is = new FileInputStream(filePath);
-                properties.load(is);
-                is.close();
-            }
-        } catch (Exception e) {
-            LOG.log(Level.WARNING, "An error occurred during loading configuration.", e);
-        }
-    }
+	private Configuration() {
+		try {
+			InputStream is = null;
+			if (Configuration.class.getResource("").getProtocol().equals("jar")) {
+				// 以 jar 的方式运行
 
-    private File getConfigurationFolderPath() {
-        File configurationFolderPath = null;
-        try {
-            configurationFolderPath = new File(Configuration.class
-                    .getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .toURI()).getParentFile();
-        } catch (Exception e) {
-            LOG.log(Level.WARNING, "Could not determine configuration folder path.", e);
-        }
-        return configurationFolderPath;
-    }
+				String pathString = new File(".").getCanonicalPath();
+				File file = new File(pathString + "/jpass.properties");
 
-    private <T> T getValue(String key, T defaultValue, Class<T> type) {
-        T value = defaultValue;
-        String prop = properties.getProperty(key);
-        if (prop != null) {
-            try {
-                value = type.getConstructor(String.class).newInstance(prop);
-            } catch (Exception e) {
-                LOG.log(Level.WARNING, String.format("Could not parse value as [%s] for key [%s]", type.getName(), key));
-            }
-        }
-        return value;
-    }
+				if (!file.exists()) {
+					// 复制配置文件
+					Files.copy(getFileResource("" + propertiesfile), Paths.get(pathString + "/jpass.properties"));
+					is = new FileInputStream(pathString + "/jpass.properties");
+				} else {
 
-    public Boolean is(String key, Boolean defaultValue) {
-        return getValue(key, defaultValue, Boolean.class);
-    }
+					is = new BufferedInputStream(new FileInputStream(pathString + "/jpass.properties"));
+				}
 
-    public Integer getInteger(String key, Integer defaultValue) {
-        return getValue(key, defaultValue, Integer.class);
-    }
+			} else {
+				is = new FileInputStream(new File("src/main/resources/" + propertiesfile));
+			}
 
-    public String get(String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
-    }
+			properties.load(is);
 
-    public String[] getArray(String key, String[] defaultValue) {
-        String prop = properties.getProperty(key);
-        if (prop != null) {
-            return prop.split(",");
-        }
-        return defaultValue;
-    }
+			is.close();
 
-    public static synchronized Configuration getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Configuration();
-        }
-        return INSTANCE;
-    }
+		} catch (Exception e) {
+			LOG.log(Level.WARNING, "An error occurred during loading configuration.", e);
+		}
+	}
+
+	private <T> T getValue(String key, T defaultValue, Class<T> type) {
+		T value = defaultValue;
+		String prop = properties.getProperty(key);
+		if (prop != null) {
+			try {
+				value = type.getConstructor(String.class).newInstance(prop);
+			} catch (Exception e) {
+				LOG.log(Level.WARNING,
+						String.format("Could not parse value as [%s] for key [%s]", type.getName(), key));
+			}
+		}
+		return value;
+	}
+
+	public Boolean is(String key, Boolean defaultValue) {
+		return getValue(key, defaultValue, Boolean.class);
+	}
+
+	public Boolean isString(String key, String defaultValue) {
+		return get(key, defaultValue).equals(defaultValue);
+	}
+
+	public Integer getInteger(String key, Integer defaultValue) {
+		return getValue(key, defaultValue, Integer.class);
+	}
+
+	public String get(String key, String defaultValue) {
+		return properties.getProperty(key, defaultValue);
+	}
+
+	public void set(String key, String value) throws FileNotFoundException, IOException {
+
+		if (Configuration.class.getResource("").getProtocol().equals("jar")) {
+			String pathString = new File(".").getCanonicalPath();
+			File file = new File(pathString + "/jpass.properties");
+			// 有文件
+			if (file.exists()) {
+				File filePath = new File(pathString + "/jpass.properties");
+				properties.setProperty(key, value);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));
+				properties.store(bw, "");
+			}
+
+		} else {
+			File filePath = new File("src/main/resources/jpass.properties");
+			properties.setProperty(key, value);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));
+			properties.store(bw, "");
+		}
+
+	}
+
+	public String[] getArray(String key, String[] defaultValue) {
+		String prop = properties.getProperty(key);
+		if (prop != null) {
+			return prop.split(",");
+		}
+		return defaultValue;
+	}
+
+	public static synchronized Configuration getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Configuration();
+		}
+		return INSTANCE;
+	}
+
+	/**
+	 * 获取jar包文件流（resources目录下）
+	 *
+	 * @param name 文件名
+	 * @return msyh InputStream文件流
+	 */
+	public static InputStream getFileResource(String name) throws IOException, BadLocationException {
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		InputStream msyh = loader.getResourceAsStream(name);
+		return msyh;
+	}
 }

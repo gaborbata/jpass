@@ -40,7 +40,7 @@ import javax.swing.SpringLayout;
  * Provides utility methods for creating form- or grid-style layouts with
  * SpringLayout.
  */
-public class SpringUtilities {
+public final class SpringUtilities {
 
     private SpringUtilities() {
         // utility class

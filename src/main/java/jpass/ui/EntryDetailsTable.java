@@ -63,7 +63,7 @@ public class EntryDetailsTable extends JTable {
         private final String description;
         private final Function<Entry, String> valueMapper;
 
-        private DetailType(String description, Function<Entry, String> valueMapper) {
+        DetailType(String description, Function<Entry, String> valueMapper) {
             this.description = description;
             this.valueMapper = valueMapper;
         }

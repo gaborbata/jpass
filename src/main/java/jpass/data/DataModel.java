@@ -40,9 +40,9 @@ import jpass.xml.bind.Entry;
  * @author Gabor_Bata
  *
  */
-public class DataModel {
+public final class DataModel {
 
-    private static DataModel INSTANCE;
+    private static DataModel instance;
 
     private Entries entries = new Entries();
     private String fileName = null;
@@ -59,10 +59,10 @@ public class DataModel {
      * @return instance of the DataModel
      */
     public static synchronized DataModel getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DataModel();
+        if (instance == null) {
+            instance = new DataModel();
         }
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -70,7 +70,7 @@ public class DataModel {
      *
      * @return list of entries
      */
-    public final Entries getEntries() {
+    public Entries getEntries() {
         return this.entries;
     }
 
@@ -79,7 +79,7 @@ public class DataModel {
      *
      * @param entries entries
      */
-    public final void setEntries(final Entries entries) {
+    public void setEntries(final Entries entries) {
         this.entries = entries;
     }
 
@@ -88,7 +88,7 @@ public class DataModel {
      *
      * @return file name
      */
-    public final String getFileName() {
+    public String getFileName() {
         return this.fileName;
     }
 
@@ -97,7 +97,7 @@ public class DataModel {
      *
      * @param fileName file name
      */
-    public final void setFileName(final String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -106,7 +106,7 @@ public class DataModel {
      *
      * @return modified state of the data model
      */
-    public final boolean isModified() {
+    public boolean isModified() {
         return this.modified;
     }
 
@@ -115,7 +115,7 @@ public class DataModel {
      *
      * @param modified modified state
      */
-    public final void setModified(final boolean modified) {
+    public void setModified(final boolean modified) {
         this.modified = modified;
     }
 
@@ -130,7 +130,7 @@ public class DataModel {
     /**
      * Clears all fields of the data model.
      */
-    public final void clear() {
+    public void clear() {
         this.entries.getEntry().clear();
         this.fileName = null;
         this.password = null;

@@ -47,12 +47,16 @@ import javax.swing.JFrame;
  * @author Gabor_Bata
  *
  */
-public class JPass {
+public final class JPass {
 
     private static final Logger LOG = Logger.getLogger(JPass.class.getName());
 
     static {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
+    }
+
+    private JPass() {
+        // not intended to be instantiated
     }
 
     public static void main(final String[] args) {

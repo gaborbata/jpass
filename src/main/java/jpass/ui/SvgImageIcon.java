@@ -47,7 +47,7 @@ public class SvgImageIcon extends ImageIcon {
     private static final Logger LOG = Logger.getLogger(SvgImageIcon.class.getName());
 
     // use own SVG universe so that it can not be cleared from anywhere
-    private static final SVGUniverse svgUniverse = new SVGUniverse();
+    private static final SVGUniverse SVG_UNIVERSE = new SVGUniverse();
 
     private final String name;
     private final int width;
@@ -77,7 +77,7 @@ public class SvgImageIcon extends ImageIcon {
         }
         // load/get image
         try {
-            diagram = svgUniverse.getDiagram(url.toURI());
+            diagram = SVG_UNIVERSE.getDiagram(url.toURI());
         } catch (Exception ex) {
             LOG.log(Level.WARNING, String.format("Could not get SVG image [%s] due to [%s]", name, ex.getMessage()));
         }

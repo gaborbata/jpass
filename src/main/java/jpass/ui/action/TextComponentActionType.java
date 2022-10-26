@@ -199,7 +199,7 @@ public enum TextComponentActionType {
     private final String name;
     private final TextComponentAction action;
 
-    private TextComponentActionType(TextComponentAction action) {
+    TextComponentActionType(TextComponentAction action) {
         this.name = String.format("jpass.text.%s_action", this.name().toLowerCase());
         this.action = action;
     }

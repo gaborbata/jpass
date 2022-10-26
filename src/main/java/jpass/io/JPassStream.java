@@ -53,7 +53,7 @@ public interface JPassStream {
         private final int saltLength;
         private final BiFunction<char[], byte[], byte[]> keyGenerator;
 
-        private FileVersionType(int version, int saltLength, BiFunction<char[], byte[], byte[]> keyGenerator) {
+        FileVersionType(int version, int saltLength, BiFunction<char[], byte[], byte[]> keyGenerator) {
             this.version = version;
             this.saltLength = saltLength;
             this.keyGenerator = Objects.requireNonNull(keyGenerator, "keyGenerator must be provided");

@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 public final class Configuration {
 
     private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
-    private static Configuration INSTANCE;
+    private static Configuration instance;
     private Properties properties = new Properties();
 
     private Configuration() {
@@ -107,9 +107,9 @@ public final class Configuration {
     }
 
     public static synchronized Configuration getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Configuration();
+        if (instance == null) {
+            instance = new Configuration();
         }
-        return INSTANCE;
+        return instance;
     }
 }

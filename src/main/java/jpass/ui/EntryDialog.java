@@ -84,7 +84,7 @@ public class EntryDialog extends JDialog implements ActionListener {
     private final JButton generateButton;
     private final JButton copyButton;
 
-    private final char ORIGINAL_ECHO;
+    private final char originalEcho;
 
     private Entry modifiedEntry;
 
@@ -111,7 +111,7 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.urlField = TextComponentFactory.newTextField();
         this.userField = TextComponentFactory.newTextField();
         this.passwordField = TextComponentFactory.newPasswordField(true);
-        this.ORIGINAL_ECHO = this.passwordField.getEchoChar();
+        this.originalEcho = this.passwordField.getEchoChar();
         this.repeatField = TextComponentFactory.newPasswordField(true);
 
         this.showButton = new JToggleButton("Show", MessageDialog.getIcon("show"));
@@ -193,8 +193,8 @@ public class EntryDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if ("show_button".equals(command)) {
-            this.passwordField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.ORIGINAL_ECHO);
-            this.repeatField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.ORIGINAL_ECHO);
+            this.passwordField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.originalEcho);
+            this.repeatField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.originalEcho);
         } else if ("ok_button".equals(command)) {
             if (this.titleField.getText().trim().isEmpty()) {
                 MessageDialog.showWarningMessage(this, "Please fill the title field.");

@@ -11,18 +11,9 @@
     checks="(JavadocMethodCheck|JavadocPackageCheck|JavadocStyleCheck|JavadocVariableCheck)"
     files=".*[/\\]src[/\\]main[/\\]java"/>
 
-  <!-- Naming -->
-  <suppress
-    checks="(StaticVariableNameCheck|ConstantNameCheck)"
-    files=".*[/\\]src[/\\]main[/\\]java"/>
-
-  <suppress
-    checks="(MemberNameCheck)"
-    files=".*[/\\]src[/\\]main[/\\]java[/\\]jpass[/\\]ui[/\\]EntryDialog\.java"/>
-  
   <!-- Design -->
   <suppress
-    checks="(LineLengthCheck|MagicNumberCheck|FinalParametersCheck|FinalClassCheck|HiddenFieldCheck|DesignForExtensionCheck|RedundantModifierCheck|HideUtilityClassConstructorCheck)"
+    checks="(LineLengthCheck|MagicNumberCheck|FinalParametersCheck|HiddenFieldCheck|DesignForExtensionCheck)"
     files=".*[/\\]src[/\\]main[/\\]java"/>
 
   <!-- Generated classes -->

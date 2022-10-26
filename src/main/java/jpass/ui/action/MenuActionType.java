@@ -213,7 +213,7 @@ public enum MenuActionType {
     private final String name;
     private final AbstractMenuAction action;
 
-    private MenuActionType(AbstractMenuAction action) {
+    MenuActionType(AbstractMenuAction action) {
         this.name = String.format("jpass.menu.%s_action", this.name().toLowerCase());
         this.action = action;
     }

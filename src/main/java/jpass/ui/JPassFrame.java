@@ -74,7 +74,7 @@ public final class JPassFrame extends JFrame {
 
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
-    private static JPassFrame INSTANCE;
+    private static JPassFrame instance;
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
     public static final String PROGRAM_VERSION = "1.0.0-RELEASE";
@@ -219,10 +219,10 @@ public final class JPassFrame extends JFrame {
     }
 
     public static synchronized JPassFrame getInstance(String fileName) {
-        if (INSTANCE == null) {
-            INSTANCE = new JPassFrame(fileName);
+        if (instance == null) {
+            instance = new JPassFrame(fileName);
         }
-        return INSTANCE;
+        return instance;
     }
 
     /**

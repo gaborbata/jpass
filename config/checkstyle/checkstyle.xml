@@ -197,7 +197,7 @@
 
   <!-- SuppressionFilter for Gradle -->
   <module name="SuppressionFilter">
-    <property name="file" value="${config_loc}/suppressions.xml"/>
+    <property name="file" value="${config_loc}/suppressions.xml" default="config/checkstyle/suppressions.xml"/>
   </module>
 
 </module>

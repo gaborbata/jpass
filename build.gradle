@@ -3,6 +3,7 @@ plugins {
     id 'distribution'
     id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -72,6 +73,44 @@ task bumpVersion {
     }
 }
 
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'PACKAGE'
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.8
+            }
+            includes = [
+                'jpass.data',
+                'jpass.crypt',
+                'jpass.crypt.io',
+                'jpass.io',
+                'jpass.xml.converter',
+                'jpass.xml.bind'
+            ]
+        }
+
+        rule {
+            element = 'PACKAGE'
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.4
+            }
+            includes = [
+                'jpass.util'
+            ]
+        }
+    }
+}
+
 distTar.enabled = false
 distZip.finalizedBy(createChecksum)
 assembleDist.dependsOn copyConfig
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.dependsOn test
+jacocoTestCoverageVerification.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification

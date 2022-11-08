@@ -106,7 +106,7 @@ public final class EntriesRepository {
      * Reads and XML file to an {@link Entries} object.
      *
      * @return the document
-     * @throws FileNotFoundException if file is not exists
+     * @throws FileNotFoundException if file not exists
      * @throws IOException when I/O error occurred (including incorrect
      * password, or file format issues)
      * @throws DocumentProcessException when document could not be read

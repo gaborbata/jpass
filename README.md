@@ -40,8 +40,8 @@ For Windows, you can also install JPass using [scoop](https://scoop.sh/) from th
 
 How to compile
 --------------
+* Gradle: `gradle clean build` (preferred)
 * Maven: `mvn clean package`
-* Gradle: `gradle clean build`
 * sbt: `sbt clean package`
 
 Configuration

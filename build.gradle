@@ -10,7 +10,7 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '1.0.1-RELEASE'
+version = '1.0.2-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -74,6 +74,7 @@ task bumpVersion {
 }
 
 task updateScoopManifest {
+    enabled = "${project.version}".endsWith('-RELEASE')
     doLast {
         def manifestFile = new File("$projectDir/jpass.json")
         def manifest = new groovy.json.JsonSlurper().parse(manifestFile)

@@ -4,11 +4,11 @@ name := "JPass"
 
 version := "1.0.2-SNAPSHOT"
 
-libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.12.4"
+libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.15.2"
 
-libraryDependencies += "com.formdev" % "flatlaf" % "1.5"
+libraryDependencies += "com.formdev" % "flatlaf" % "3.1.1"
 
-libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.2.4"
+libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.4"
 
 libraryDependencies += "junit" % "junit" % "4.13.2" % "test"
 

@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Password manager application with strong encryption (AES-256)",
     "homepage": "https://github.com/gaborbata/jpass",
     "license": {

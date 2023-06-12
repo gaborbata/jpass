@@ -43,7 +43,7 @@ Default configurations can be overridden in `jpass.properties` file:
 
 License
 -------
-Copyright (c) 2009-2022 Gabor Bata
+Copyright (c) 2009-2023 Gabor Bata
 
 All rights reserved.
 

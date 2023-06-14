@@ -2,7 +2,7 @@ organization:= "jpass.id"
 
 name := "JPass"
 
-version := "1.0.2-SNAPSHOT"
+version := "1.0.2-RELEASE"
 
 libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.15.2"
 

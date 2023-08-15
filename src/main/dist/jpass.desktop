@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=JPass
+Comment=Password manager with strong encryption
+Exec=/opt/jpass/jpass.sh
+Icon=/opt/jpass/jpass.png
+Terminal=False

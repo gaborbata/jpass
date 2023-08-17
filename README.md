@@ -34,7 +34,7 @@ Please make sure `PATH`, or `JAVA_HOME` environment variables point to a valid J
 Download
 --------
 
-You can find the latest distribution packages under the [releases](https://github.com/gaborbata/jpass/releases) link.
+You can find the latest distribution package under the [releases](https://github.com/gaborbata/jpass/releases/latest) link.
 
 Alternatively, for Windows, you can also download and install JPass using [scoop](https://scoop.sh/):
 

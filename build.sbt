@@ -6,7 +6,7 @@ version := "1.0.3-SNAPSHOT"
 
 libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.15.2"
 
-libraryDependencies += "com.formdev" % "flatlaf" % "3.2"
+libraryDependencies += "com.formdev" % "flatlaf" % "3.2.1"
 
 libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.4"
 

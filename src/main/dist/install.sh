@@ -42,6 +42,7 @@ fi
 
 mkdir -p "/opt/jpass"
 cp -R "$JPASS_PATH" "/opt/jpass"
+chmod +x "/opt/jpass/jpass.sh"
 
 echo "Add JPass desktop entry..."
 if [ ! -d "/usr/share/applications" ]; then

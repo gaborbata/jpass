@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.FixCrLfFilter
+
 plugins {
     id 'java'
     id 'distribution'
@@ -36,8 +38,8 @@ jar {
 }
 
 task copyConfig(type: Copy) {
-    from 'src/main/config'
-    into 'build/libs'
+    from "$projectDir/src/main/config"
+    into "$buildDir/libs"
 }
 
 distributions {
@@ -45,15 +47,32 @@ distributions {
         distributionBaseName = 'jpass'
         contents {
             from jar
-            from { 'src/main/config' }
+            from "$projectDir/src/main/config"
+            from("$projectDir/src/main/distribution") {
+                include 'jpass.sh'
+                include 'jpass.desktop'
+                include 'jpass.command'
+                include 'install.sh'
+                filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('unix'))
+            }
+            from("$projectDir/src/main/distribution") {
+                include 'jpass.bat'
+                filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('dos'))
+            }
+            from("$projectDir/src/main/distribution") {
+                include 'jpass.ico'
+                include 'jpass.png'
+                include 'jpass.svg'
+                include 'readme.txt'
+            }
             into '/'
         }
     }
 }
 
 task createChecksum(type: org.gradle.crypto.checksum.Checksum, dependsOn: distZip) {
-    files = fileTree(dir: "${buildDir}/distributions").matching { include "*.zip" }
-    outputDir = new File("${buildDir}/distributions")
+    files = fileTree(dir: "$buildDir/distributions").matching { include "*.zip" }
+    outputDir = new File("$buildDir/distributions")
     algorithm = org.gradle.crypto.checksum.Checksum.Algorithm.SHA256
     appendFileNameToChecksum.set(true)
 }
@@ -127,3 +146,4 @@ jacocoTestCoverageVerification.dependsOn jacocoTestReport
 check.dependsOn jacocoTestCoverageVerification
 
 createChecksum.finalizedBy updateScoopManifest
+

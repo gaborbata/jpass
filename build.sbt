@@ -2,11 +2,11 @@ organization:= "jpass.id"
 
 name := "JPass"
 
-version := "1.0.4-RELEASE"
+version := "1.0.5-RELEASE"
 
-libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.15.2"
+libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-xml" % "2.15.3"
 
-libraryDependencies += "com.formdev" % "flatlaf" % "3.2.1"
+libraryDependencies += "com.formdev" % "flatlaf" % "3.2.2"
 
 libraryDependencies += "com.formdev" % "svgSalamander" % "1.1.4"
 

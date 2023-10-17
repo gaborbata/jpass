@@ -4,7 +4,7 @@
     <groupId>jpass</groupId>
     <artifactId>jpass</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.4-RELEASE</version>
+    <version>1.0.5-RELEASE</version>
     <name>JPass</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -13,12 +13,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.15.2</version>
+            <version>2.15.3</version>
         </dependency>
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>3.2.1</version>
+            <version>3.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.formdev</groupId>

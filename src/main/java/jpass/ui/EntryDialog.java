@@ -54,7 +54,16 @@ import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 import jpass.xml.bind.Entry;
 
+import static jpass.ui.JPassFrame.MESSAGES;
 import static jpass.ui.helper.EntryHelper.copyEntryField;
+import static jpass.util.Constants.ENTRY_DIALOG_COPY_ENTRY;
+import static jpass.util.Constants.ENTRY_DIALOG_GENERATE_ENTRY;
+import static jpass.util.Constants.ENTRY_DIALOG_SHOW_ENTRY;
+import static jpass.util.Constants.VIEW_WINDOW_PASSWORD;
+import static jpass.util.Constants.VIEW_WINDOW_REPEAT;
+import static jpass.util.Constants.VIEW_WINDOW_TITLE;
+import static jpass.util.Constants.VIEW_WINDOW_URL;
+import static jpass.util.Constants.VIEW_WINDOW_USER_NAME;
 
 /**
  * A dialog with the entry data.
@@ -114,15 +123,15 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.originalEcho = this.passwordField.getEchoChar();
         this.repeatField = TextComponentFactory.newPasswordField(true);
 
-        this.showButton = new JToggleButton("Show", MessageDialog.getIcon("show"));
+        this.showButton = new JToggleButton(MESSAGES.getString(ENTRY_DIALOG_SHOW_ENTRY), MessageDialog.getIcon("show"));
         this.showButton.setActionCommand("show_button");
         this.showButton.setMnemonic(KeyEvent.VK_S);
         this.showButton.addActionListener(this);
-        this.generateButton = new JButton("Generate", MessageDialog.getIcon("generate"));
+        this.generateButton = new JButton(MESSAGES.getString(ENTRY_DIALOG_GENERATE_ENTRY), MessageDialog.getIcon("generate"));
         this.generateButton.setActionCommand("generate_button");
         this.generateButton.setMnemonic(KeyEvent.VK_G);
         this.generateButton.addActionListener(this);
-        this.copyButton = new JButton("Copy", MessageDialog.getIcon("keyring"));
+        this.copyButton = new JButton(MESSAGES.getString(ENTRY_DIALOG_COPY_ENTRY), MessageDialog.getIcon("keyring"));
         this.copyButton.setActionCommand("copy_button");
         this.copyButton.setMnemonic(KeyEvent.VK_P);
         this.copyButton.addActionListener(this);
@@ -137,15 +146,15 @@ public class EntryDialog extends JDialog implements ActionListener {
                 5, 0); // xPad, yPad
 
         this.fieldPanel = new JPanel(new SpringLayout());
-        this.fieldPanel.add(new JLabel("Title:"));
+        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_TITLE))));
         this.fieldPanel.add(this.titleField);
-        this.fieldPanel.add(new JLabel("URL:"));
+        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_URL))));
         this.fieldPanel.add(this.urlField);
-        this.fieldPanel.add(new JLabel("User name:"));
+        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_USER_NAME))));
         this.fieldPanel.add(this.userField);
-        this.fieldPanel.add(new JLabel("Password:"));
+        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_PASSWORD))));
         this.fieldPanel.add(this.passwordField);
-        this.fieldPanel.add(new JLabel("Repeat:"));
+        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_REPEAT))));
         this.fieldPanel.add(this.repeatField);
         this.fieldPanel.add(new JLabel(""));
         this.fieldPanel.add(this.passwordButtonPanel);

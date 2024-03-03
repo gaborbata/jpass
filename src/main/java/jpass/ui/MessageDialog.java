@@ -62,11 +62,18 @@ import javax.swing.border.EmptyBorder;
 import jpass.util.SpringUtilities;
 
 import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
+import static jpass.util.Constants.BUTTON_MESSAGE_NO;
+import static jpass.util.Constants.BUTTON_MESSAGE_OK;
+import static jpass.util.Constants.BUTTON_MESSAGE_YES;
 import static jpass.util.Constants.CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST;
 import static jpass.util.Constants.SHOW_MESSAGE_CONFIRMATION;
 import static jpass.util.Constants.SHOW_MESSAGE_ERROR;
 import static jpass.util.Constants.SHOW_MESSAGE_INFORMATION;
 import static jpass.util.Constants.SHOW_MESSAGE_WARNING;
+import static jpass.util.Constants.VIEW_WINDOW_PASSWORD;
+import static jpass.util.Constants.VIEW_WINDOW_REPEAT;
+import static jpass.util.Constants.VIEW_WINDOW_TITLE;
 
 /**
  * Utility class for displaying message dialog.
@@ -111,23 +118,23 @@ public final class MessageDialog extends JDialog implements ActionListener {
         JButton defaultButton;
         switch (optionType) {
             case YES_NO_OPTION:
-                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
+                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
                 break;
             case YES_NO_CANCEL_OPTION:
-                defaultButton = createButton("Yes", YES_OPTION, getIcon("accept"));
+                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("No", NO_OPTION, getIcon("close")));
-                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
+                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
                 break;
             case OK_CANCEL_OPTION:
-                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton("Cancel", CANCEL_OPTION, getIcon("cancel")));
+                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
                 break;
             default:
-                defaultButton = createButton("OK", OK_OPTION, getIcon("accept"));
+                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
                 break;
         }
@@ -254,13 +261,13 @@ public final class MessageDialog extends JDialog implements ActionListener {
      */
     public static char[] showPasswordDialog(final Component parent, final boolean confirm) {
         JPanel panel = new JPanel();
-        panel.add(new JLabel("Password:"));
+        panel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_PASSWORD))));
         final JPasswordField password = TextComponentFactory.newPasswordField();
         panel.add(password);
         JPasswordField repeat = null;
         if (confirm) {
             repeat = TextComponentFactory.newPasswordField();
-            panel.add(new JLabel("Repeat:"));
+            panel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_REPEAT))));
             panel.add(repeat);
         }
         panel.setLayout(new SpringLayout());

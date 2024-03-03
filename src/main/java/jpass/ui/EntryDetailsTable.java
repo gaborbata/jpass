@@ -85,7 +85,7 @@ public class EntryDetailsTable extends JTable {
     }
 
     private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
-            .collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
+            .collect(Collectors.toMap(Enum::name, Function.identity()));
 
     private static final String[] DEFAULT_DETAILS = {
         DetailType.TITLE.name(),
@@ -99,14 +99,14 @@ public class EntryDetailsTable extends JTable {
         super();
 
         detailsToDisplay = Arrays.stream(Configuration.getInstance().getArray("entry.details", DEFAULT_DETAILS))
-                .map(name -> DETAILS_BY_NAME.get(name))
+                .map(DETAILS_BY_NAME::get)
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
 
         if (detailsToDisplay.isEmpty()) {
             Arrays.stream(DEFAULT_DETAILS)
-                    .map(name -> DETAILS_BY_NAME.get(name))
+                    .map(DETAILS_BY_NAME::get)
                     .forEach(detailsToDisplay::add);
         }
 

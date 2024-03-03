@@ -61,6 +61,13 @@ import javax.swing.border.EmptyBorder;
 
 import jpass.util.SpringUtilities;
 
+import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.util.Constants.CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST;
+import static jpass.util.Constants.SHOW_MESSAGE_CONFIRMATION;
+import static jpass.util.Constants.SHOW_MESSAGE_ERROR;
+import static jpass.util.Constants.SHOW_MESSAGE_INFORMATION;
+import static jpass.util.Constants.SHOW_MESSAGE_WARNING;
+
 /**
  * Utility class for displaying message dialog.
  *
@@ -203,7 +210,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showWarningMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, "Warning", getIcon("dialog_warning"));
+        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_WARNING), getIcon("dialog_warning"));
     }
 
     /**
@@ -213,7 +220,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showErrorMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, "Error", getIcon("dialog_error"));
+        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_ERROR), getIcon("dialog_error"));
     }
 
     /**
@@ -223,7 +230,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showInformationMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, "Information", getIcon("dialog_info"));
+        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_INFORMATION), getIcon("dialog_info"));
     }
 
     /**
@@ -235,7 +242,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @return selected option
      */
     public static int showQuestionMessage(final Component parent, final String message, final int optionType) {
-        return showMessageDialog(parent, message, "Confirmation", getIcon("dialog_question"), optionType);
+        return showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_CONFIRMATION), getIcon("dialog_question"), optionType);
     }
 
     /**
@@ -261,7 +268,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
 
         boolean incorrect = true;
         while (incorrect) {
-            int option = showMessageDialog(parent, panel, "Enter Password", getIcon("dialog_lock"), OK_CANCEL_OPTION);
+            int option = showMessageDialog(parent, panel, MESSAGES.getString(CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST), getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
                 if (password.getPassword().length == 0) {
                     showWarningMessage(parent, "Please enter a password.");

@@ -66,14 +66,14 @@ import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.BUTTON_MESSAGE_NO;
 import static jpass.util.Constants.BUTTON_MESSAGE_OK;
 import static jpass.util.Constants.BUTTON_MESSAGE_YES;
-import static jpass.util.Constants.CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST;
+import static jpass.util.Constants.PASSWORD_ENTER_PASSWORD_REQUEST;
+import static jpass.util.Constants.PASSWORD_PASSWORDS_NOT_IDENTICAL;
 import static jpass.util.Constants.SHOW_MESSAGE_CONFIRMATION;
 import static jpass.util.Constants.SHOW_MESSAGE_ERROR;
 import static jpass.util.Constants.SHOW_MESSAGE_INFORMATION;
 import static jpass.util.Constants.SHOW_MESSAGE_WARNING;
 import static jpass.util.Constants.VIEW_WINDOW_PASSWORD;
 import static jpass.util.Constants.VIEW_WINDOW_REPEAT;
-import static jpass.util.Constants.VIEW_WINDOW_TITLE;
 
 /**
  * Utility class for displaying message dialog.
@@ -275,12 +275,12 @@ public final class MessageDialog extends JDialog implements ActionListener {
 
         boolean incorrect = true;
         while (incorrect) {
-            int option = showMessageDialog(parent, panel, MESSAGES.getString(CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST), getIcon("dialog_lock"), OK_CANCEL_OPTION);
+            int option = showMessageDialog(parent, panel, MESSAGES.getString(PASSWORD_ENTER_PASSWORD_REQUEST), getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
                 if (password.getPassword().length == 0) {
-                    showWarningMessage(parent, "Please enter a password.");
+                    showWarningMessage(parent, MESSAGES.getString(PASSWORD_ENTER_PASSWORD_REQUEST));
                 } else if (confirm && !Arrays.equals(password.getPassword(), repeat.getPassword())) {
-                    showWarningMessage(parent, "Password and repeated password are not identical.");
+                    showWarningMessage(parent, MESSAGES.getString(PASSWORD_PASSWORDS_NOT_IDENTICAL));
                 } else {
                     incorrect = false;
                 }

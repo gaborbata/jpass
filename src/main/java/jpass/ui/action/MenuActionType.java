@@ -56,8 +56,8 @@ import static jpass.ui.MessageDialog.getIcon;
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.InputEvent.ALT_DOWN_MASK;
 
-import static jpass.util.Constants.CHANGE_PASSWORD_PASSWORD_NOT_MODIFIED;
-import static jpass.util.Constants.CHANGE_PASSWORD_SUCCESSFULLY_MODIFED;
+import static jpass.util.Constants.PASSWORD_PASSWORD_NOT_MODIFIED;
+import static jpass.util.Constants.PASSWORD_SUCCESSFULLY_MODIFIED;
 import static jpass.util.Constants.EDIT_MENU_ADD_ENTRY;
 import static jpass.util.Constants.EDIT_MENU_CLEAR_CLIPBOARD;
 import static jpass.util.Constants.EDIT_MENU_COPY_PASSWORD;
@@ -127,13 +127,13 @@ public enum MenuActionType {
             JPassFrame parent = JPassFrame.getInstance();
             char[] password = MessageDialog.showPasswordDialog(parent, true);
             if (password == null) {
-                MessageDialog.showInformationMessage(parent, MESSAGES.getString(CHANGE_PASSWORD_PASSWORD_NOT_MODIFIED));
+                MessageDialog.showInformationMessage(parent, MESSAGES.getString(PASSWORD_PASSWORD_NOT_MODIFIED));
             } else {
                 parent.getModel().setPassword(password);
                 parent.getModel().setModified(true);
                 parent.refreshFrameTitle();
                 MessageDialog.showInformationMessage(parent,
-                        MESSAGES.getString(CHANGE_PASSWORD_SUCCESSFULLY_MODIFED));
+                        MESSAGES.getString(PASSWORD_SUCCESSFULLY_MODIFIED));
             }
         }
     }),

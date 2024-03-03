@@ -56,9 +56,12 @@ import jpass.xml.bind.Entry;
 
 import static jpass.ui.JPassFrame.MESSAGES;
 import static jpass.ui.helper.EntryHelper.copyEntryField;
+import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
+import static jpass.util.Constants.BUTTON_MESSAGE_OK;
 import static jpass.util.Constants.ENTRY_DIALOG_COPY_ENTRY;
 import static jpass.util.Constants.ENTRY_DIALOG_GENERATE_ENTRY;
 import static jpass.util.Constants.ENTRY_DIALOG_SHOW_ENTRY;
+import static jpass.util.Constants.VIEW_WINDOW_NOTES;
 import static jpass.util.Constants.VIEW_WINDOW_PASSWORD;
 import static jpass.util.Constants.VIEW_WINDOW_REPEAT;
 import static jpass.util.Constants.VIEW_WINDOW_TITLE;
@@ -170,15 +173,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 
         this.notesPanel = new JPanel(new BorderLayout(5, 5));
         this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
-        this.notesPanel.add(new JLabel("Notes:"), BorderLayout.NORTH);
+        this.notesPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_NOTES))), BorderLayout.NORTH);
         this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);
 
-        this.okButton = new JButton("OK", MessageDialog.getIcon("accept"));
+        this.okButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_OK), MessageDialog.getIcon("accept"));
         this.okButton.setActionCommand("ok_button");
         this.okButton.setMnemonic(KeyEvent.VK_O);
         this.okButton.addActionListener(this);
 
-        this.cancelButton = new JButton("Cancel", MessageDialog.getIcon("cancel"));
+        this.cancelButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), MessageDialog.getIcon("cancel"));
         this.cancelButton.setActionCommand("cancel_button");
         this.cancelButton.setMnemonic(KeyEvent.VK_C);
         this.cancelButton.addActionListener(this);

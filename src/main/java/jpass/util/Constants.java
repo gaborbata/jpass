@@ -2,7 +2,7 @@ package jpass.util;
 
 public class Constants {
     private Constants() {
-        // No instances can be created
+        // not intended to be instantiated
     }
 
     public static final String FILE_MENU = "menuBar.fileMenu";
@@ -19,9 +19,15 @@ public class Constants {
     public static final String FILE_MENU_CHANGE_PASSWORD = "fileMenu.changePassword";
     public static final String FILE_MENU_EXIT = "fileMenu.exitMenu";
 
-    public static final String CHANGE_PASSWORD_ENTER_PASSWORD_REQUEST = "changePassword.enterPasswordRequest";
-    public static final String CHANGE_PASSWORD_PASSWORD_NOT_MODIFIED = "changePassword.passwordNotModified";
-    public static final String CHANGE_PASSWORD_SUCCESSFULLY_MODIFED = "changePassword.successfullyModified";
+    public static final String PASSWORD_ENTER_PASSWORD_REQUEST = "password.enterPasswordRequest";
+    public static final String PASSWORD_GENERATE_PASSWORD_REQUEST = "password.generatePasswordRequest";
+    public static final String PASSWORD_PASSWORD_NOT_MODIFIED = "password.passwordNotModified";
+    public static final String PASSWORD_SUCCESSFULLY_MODIFIED = "password.successfullyModified";
+    public static final String PASSWORD_PASSWORDS_NOT_IDENTICAL = "password.passwordsNotIdentical";
+    public static final String PASSWORD_GENERATE_PASSWORD = "password.generatePassword";
+    public static final String PASSWORD_PASSWORD_LENGTH = "password.passwordLength";
+    public static final String PASSWORD_GENERATED_PASSWORD = "password.generatedPassword";
+    public static final String PASSWORD_CAN_NOT_GENERATE_PASSWORD = "password.canNotGeneratePassword";
 
     public static final String EDIT_MENU_ADD_ENTRY = "editMenu.addEntry";
     public static final String EDIT_MENU_EDIT_ENTRY = "editMenu.editEntry";
@@ -46,6 +52,12 @@ public class Constants {
     public static final String VIEW_WINDOW_CREATED = "viewWindow.created";
     public static final String VIEW_WINDOW_PASSWORD = "viewWindow.password";
     public static final String VIEW_WINDOW_REPEAT = "viewWindow.repeat";
+    public static final String VIEW_WINDOW_NOTES = "viewWindow.notes";
+    public static final String VIEW_WINDOW_SETTINGS = "viewWindow.settings";
+    public static final String VIEW_WINDOW_CUSTOM_SYMBOLS = "viewWindow.customSymbols";
+    public static final String VIEW_WINDOW_UPPER_CASE_LETTERS = "viewWindow.upperCaseLetters";
+    public static final String VIEW_WINDOW_LOWER_CASE_LETTERS = "viewWindow.lowerCaseLetters";
+    public static final String VIEW_WINDOW_NUMBERS = "viewWindow.numbers";
 
     public static final String SHOW_MESSAGE_INFORMATION = "showMessage.information";
     public static final String SHOW_MESSAGE_CONFIRMATION = "showMessage.confirmation";
@@ -54,8 +66,10 @@ public class Constants {
 
     public static final String BUTTON_MESSAGE_YES = "buttonMessage.yes";
     public static final String BUTTON_MESSAGE_OK = "buttonMessage.ok";
+    public static final String BUTTON_MESSAGE_ACCEPT = "buttonMessage.accept";
     public static final String BUTTON_MESSAGE_NO = "buttonMessage.no";
     public static final String BUTTON_MESSAGE_CANCEL = "buttonMessage.cancel";
+    public static final String BUTTON_MESSAGE_CLOSE = "buttonMessage.close";
 
     public static final String ENTRY_DIALOG_SHOW_ENTRY = "entryDialog.showEntry";
     public static final String ENTRY_DIALOG_GENERATE_ENTRY = "entryDialog.generateEntry";

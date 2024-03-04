@@ -45,7 +45,7 @@ import jpass.util.Configuration;
 import jpass.util.DateUtils;
 import jpass.xml.bind.Entry;
 
-import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.ui.JPassFrame.localizedMessages;
 import static jpass.util.Constants.VIEW_WINDOW_CREATED;
 import static jpass.util.Constants.VIEW_WINDOW_MODIFIED;
 import static jpass.util.Constants.VIEW_WINDOW_TITLE;
@@ -61,11 +61,11 @@ public class EntryDetailsTable extends JTable {
             = DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
     private enum DetailType {
-        TITLE(MESSAGES.getString(VIEW_WINDOW_TITLE), Entry::getTitle),
-        URL(MESSAGES.getString(VIEW_WINDOW_URL), Entry::getUrl),
-        USER(MESSAGES.getString(VIEW_WINDOW_USER), Entry::getUser),
-        MODIFIED(MESSAGES.getString(VIEW_WINDOW_MODIFIED), entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
-        CREATED(MESSAGES.getString(VIEW_WINDOW_CREATED), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
+        TITLE(localizedMessages.getString(VIEW_WINDOW_TITLE), Entry::getTitle),
+        URL(localizedMessages.getString(VIEW_WINDOW_URL), Entry::getUrl),
+        USER(localizedMessages.getString(VIEW_WINDOW_USER), Entry::getUser),
+        MODIFIED(localizedMessages.getString(VIEW_WINDOW_MODIFIED), entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
+        CREATED(localizedMessages.getString(VIEW_WINDOW_CREATED), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
         private final String description;
         private final Function<Entry, String> valueMapper;

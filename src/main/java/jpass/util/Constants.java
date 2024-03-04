@@ -1,6 +1,6 @@
 package jpass.util;
 
-public class Constants {
+public final class Constants {
     private Constants() {
         // not intended to be instantiated
     }
@@ -74,7 +74,23 @@ public class Constants {
     public static final String ENTRY_DIALOG_SHOW_ENTRY = "entryDialog.showEntry";
     public static final String ENTRY_DIALOG_GENERATE_ENTRY = "entryDialog.generateEntry";
     public static final String ENTRY_DIALOG_COPY_ENTRY = "entryDialog.copyEntry";
+    public static final String ENTRY_DIALOG_FILL_TITLE_FIELD = "entryDialog.fillTitleField";
+    public static final String ENTRY_DIALOG_TITLE_ALREADY_EXISTS = "entryDialog.titleAlreadyExists";
+    public static final String ENTRY_DIALOG_PLEASE_SELECT_ENTRY = "entryDialog.pleaseSelectEntry";
+    public static final String ENTRY_DIALOG_WANT_DELETE_ENTRY = "entryDialog.wantDeleteEntry";
+    public static final String ENTRY_DIALOG_DUPLICATE_ENTRY = "entryDialog.duplicateEntry";
+    public static final String ENTRY_DIALOG_EDIT_ENTRY = "entryDialog.editEntry";
+    public static final String ENTRY_DIALOG_ADD_NEW_ENTRY = "entryDialog.addNewEntry";
 
     public static final String BOTTOM_MENU_ENTRIES_COUNT = "bottomMenu.entriesCount";
-    public static final String BOTTOM_MENU_ENTRIES_FOUND= "bottomMenu.entriesFound";
+    public static final String BOTTOM_MENU_ENTRIES_FOUND = "bottomMenu.entriesFound";
+
+    public static final String PANEL_PROCESSING = "panel.processing";
+    public static final String PANEL_FIND = "panel.find";
+    public static final String PANEL_EXPORT = "panel.export";
+    public static final String PANEL_IMPORT = "panel.import";
+    public static final String PANEL_SAVE = "panel.save";
+    public static final String PANEL_OPEN = "panel.open";
+    public static final String PANEL_SAVE_MODIFIED_QUESTION_MESSAGE = "panel.saveModifiedQuestionMessage";
+    public static final String PANEL_UNENCRYPTED_DATA_WARNING_MESSAGE = "panel.unencryptedDataWarningMessage";
 }

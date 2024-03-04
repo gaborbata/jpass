@@ -51,11 +51,10 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import jpass.util.Configuration;
-import jpass.util.Constants;
 import jpass.util.CryptUtils;
 import jpass.util.SpringUtilities;
 
-import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.ui.JPassFrame.localizedMessages;
 import static jpass.util.Constants.BUTTON_MESSAGE_ACCEPT;
 import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.BUTTON_MESSAGE_CLOSE;
@@ -88,9 +87,9 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
      * Options for password generation.
      */
     private static final String[][] PASSWORD_OPTIONS = {
-        {MESSAGES.getString(VIEW_WINDOW_UPPER_CASE_LETTERS), "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
-        {MESSAGES.getString(VIEW_WINDOW_LOWER_CASE_LETTERS), "abcdefghijklmnopqrstuvwxyz"},
-        {MESSAGES.getString(VIEW_WINDOW_NUMBERS), "0123456789"}
+        {localizedMessages.getString(VIEW_WINDOW_UPPER_CASE_LETTERS), "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
+        {localizedMessages.getString(VIEW_WINDOW_LOWER_CASE_LETTERS), "abcdefghijklmnopqrstuvwxyz"},
+        {localizedMessages.getString(VIEW_WINDOW_NUMBERS), "0123456789"}
     };
 
     private JCheckBox[] checkBoxes;
@@ -145,12 +144,12 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
      */
     private void initDialog(final Component parent, final boolean showAcceptButton) {
         setModal(true);
-        setTitle(MESSAGES.getString(PASSWORD_GENERATE_PASSWORD));
+        setTitle(localizedMessages.getString(PASSWORD_GENERATE_PASSWORD));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.generatedPassword = null;
 
         this.lengthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-        this.lengthLabel = new JLabel(String.format("%s:", MESSAGES.getString(PASSWORD_PASSWORD_LENGTH)));
+        this.lengthLabel = new JLabel(String.format("%s:", localizedMessages.getString(PASSWORD_PASSWORD_LENGTH)));
         this.lengthPanel.add(this.lengthLabel);
 
         int passwordGenerationLength = Configuration.getInstance().getInteger("default.password.generation.length", 14);
@@ -165,14 +164,14 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.lengthPanel.add(this.lengthSpinner);
 
         this.charactersPanel = new JPanel();
-        this.charactersPanel.setBorder(new TitledBorder(MESSAGES.getString(VIEW_WINDOW_SETTINGS)));
+        this.charactersPanel.setBorder(new TitledBorder(localizedMessages.getString(VIEW_WINDOW_SETTINGS)));
         this.charactersPanel.add(this.lengthPanel);
         this.checkBoxes = new JCheckBox[PASSWORD_OPTIONS.length];
         for (int i = 0; i < PASSWORD_OPTIONS.length; i++) {
             this.checkBoxes[i] = new JCheckBox(PASSWORD_OPTIONS[i][0], true);
             this.charactersPanel.add(this.checkBoxes[i]);
         }
-        this.customSymbolsCheck = new JCheckBox(MESSAGES.getString(VIEW_WINDOW_CUSTOM_SYMBOLS));
+        this.customSymbolsCheck = new JCheckBox(localizedMessages.getString(VIEW_WINDOW_CUSTOM_SYMBOLS));
         this.customSymbolsCheck.setActionCommand("custom_symbols_check");
         this.customSymbolsCheck.addActionListener(this);
         this.charactersPanel.add(this.customSymbolsCheck);
@@ -184,11 +183,11 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         SpringUtilities.makeCompactGrid(this.charactersPanel, 6, 1, 5, 5, 5, 5);
 
         this.passwordPanel = new JPanel(new BorderLayout());
-        this.passwordPanel.setBorder(new TitledBorder(MESSAGES.getString(PASSWORD_GENERATED_PASSWORD)));
+        this.passwordPanel.setBorder(new TitledBorder(localizedMessages.getString(PASSWORD_GENERATED_PASSWORD)));
 
         this.passwordField = TextComponentFactory.newTextField();
         this.passwordPanel.add(this.passwordField, BorderLayout.NORTH);
-        this.generateButton = new JButton(MESSAGES.getString(ENTRY_DIALOG_GENERATE_ENTRY), MessageDialog.getIcon("generate"));
+        this.generateButton = new JButton(localizedMessages.getString(ENTRY_DIALOG_GENERATE_ENTRY), MessageDialog.getIcon("generate"));
         this.generateButton.setActionCommand("generate_button");
         this.generateButton.addActionListener(this);
         this.generateButton.setMnemonic(KeyEvent.VK_G);
@@ -199,15 +198,15 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         if (showAcceptButton) {
-            this.acceptButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_ACCEPT), MessageDialog.getIcon("accept"));
+            this.acceptButton = new JButton(localizedMessages.getString(BUTTON_MESSAGE_ACCEPT), MessageDialog.getIcon("accept"));
             this.acceptButton.setActionCommand("accept_button");
             this.acceptButton.setMnemonic(KeyEvent.VK_A);
             this.acceptButton.addActionListener(this);
             this.buttonPanel.add(this.acceptButton);
 
-            this.cancelButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), MessageDialog.getIcon("cancel"));
+            this.cancelButton = new JButton(localizedMessages.getString(BUTTON_MESSAGE_CANCEL), MessageDialog.getIcon("cancel"));
         } else {
-            this.cancelButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_CLOSE), MessageDialog.getIcon("close"));
+            this.cancelButton = new JButton(localizedMessages.getString(BUTTON_MESSAGE_CLOSE), MessageDialog.getIcon("close"));
         }
 
         this.cancelButton.setActionCommand("cancel_button");
@@ -248,7 +247,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
             }
 
             if (characterSet.isEmpty()) {
-                MessageDialog.showWarningMessage(this, MESSAGES.getString(PASSWORD_CAN_NOT_GENERATE_PASSWORD));
+                MessageDialog.showWarningMessage(this, localizedMessages.getString(PASSWORD_CAN_NOT_GENERATE_PASSWORD));
                 return;
             }
 
@@ -261,7 +260,7 @@ public final class GeneratePasswordDialog extends JDialog implements ActionListe
         } else if ("accept_button".equals(command)) {
             this.generatedPassword = this.passwordField.getText();
             if (this.generatedPassword.isEmpty()) {
-                MessageDialog.showWarningMessage(this, MESSAGES.getString(PASSWORD_GENERATE_PASSWORD_REQUEST));
+                MessageDialog.showWarningMessage(this, localizedMessages.getString(PASSWORD_GENERATE_PASSWORD_REQUEST));
                 return;
             }
             dispose();

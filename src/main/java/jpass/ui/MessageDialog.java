@@ -61,7 +61,7 @@ import javax.swing.border.EmptyBorder;
 
 import jpass.util.SpringUtilities;
 
-import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.ui.JPassFrame.localizedMessages;
 import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.BUTTON_MESSAGE_NO;
 import static jpass.util.Constants.BUTTON_MESSAGE_OK;
@@ -118,23 +118,23 @@ public final class MessageDialog extends JDialog implements ActionListener {
         JButton defaultButton;
         switch (optionType) {
             case YES_NO_OPTION:
-                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
+                defaultButton = createButton(localizedMessages.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
+                buttonPanel.add(createButton(localizedMessages.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
                 break;
             case YES_NO_CANCEL_OPTION:
-                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
+                defaultButton = createButton(localizedMessages.getString(BUTTON_MESSAGE_YES), YES_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
-                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
+                buttonPanel.add(createButton(localizedMessages.getString(BUTTON_MESSAGE_NO), NO_OPTION, getIcon("close")));
+                buttonPanel.add(createButton(localizedMessages.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
                 break;
             case OK_CANCEL_OPTION:
-                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
+                defaultButton = createButton(localizedMessages.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
-                buttonPanel.add(createButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
+                buttonPanel.add(createButton(localizedMessages.getString(BUTTON_MESSAGE_CANCEL), CANCEL_OPTION, getIcon("cancel")));
                 break;
             default:
-                defaultButton = createButton(MESSAGES.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
+                defaultButton = createButton(localizedMessages.getString(BUTTON_MESSAGE_OK), OK_OPTION, getIcon("accept"));
                 buttonPanel.add(defaultButton);
                 break;
         }
@@ -217,7 +217,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showWarningMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_WARNING), getIcon("dialog_warning"));
+        showMessageDialog(parent, message, localizedMessages.getString(SHOW_MESSAGE_WARNING), getIcon("dialog_warning"));
     }
 
     /**
@@ -227,7 +227,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showErrorMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_ERROR), getIcon("dialog_error"));
+        showMessageDialog(parent, message, localizedMessages.getString(SHOW_MESSAGE_ERROR), getIcon("dialog_error"));
     }
 
     /**
@@ -237,7 +237,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @param message dialog message
      */
     public static void showInformationMessage(final Component parent, final String message) {
-        showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_INFORMATION), getIcon("dialog_info"));
+        showMessageDialog(parent, message, localizedMessages.getString(SHOW_MESSAGE_INFORMATION), getIcon("dialog_info"));
     }
 
     /**
@@ -249,7 +249,7 @@ public final class MessageDialog extends JDialog implements ActionListener {
      * @return selected option
      */
     public static int showQuestionMessage(final Component parent, final String message, final int optionType) {
-        return showMessageDialog(parent, message, MESSAGES.getString(SHOW_MESSAGE_CONFIRMATION), getIcon("dialog_question"), optionType);
+        return showMessageDialog(parent, message, localizedMessages.getString(SHOW_MESSAGE_CONFIRMATION), getIcon("dialog_question"), optionType);
     }
 
     /**
@@ -261,13 +261,13 @@ public final class MessageDialog extends JDialog implements ActionListener {
      */
     public static char[] showPasswordDialog(final Component parent, final boolean confirm) {
         JPanel panel = new JPanel();
-        panel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_PASSWORD))));
+        panel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_PASSWORD))));
         final JPasswordField password = TextComponentFactory.newPasswordField();
         panel.add(password);
         JPasswordField repeat = null;
         if (confirm) {
             repeat = TextComponentFactory.newPasswordField();
-            panel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_REPEAT))));
+            panel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_REPEAT))));
             panel.add(repeat);
         }
         panel.setLayout(new SpringLayout());
@@ -275,12 +275,12 @@ public final class MessageDialog extends JDialog implements ActionListener {
 
         boolean incorrect = true;
         while (incorrect) {
-            int option = showMessageDialog(parent, panel, MESSAGES.getString(PASSWORD_ENTER_PASSWORD_REQUEST), getIcon("dialog_lock"), OK_CANCEL_OPTION);
+            int option = showMessageDialog(parent, panel, localizedMessages.getString(PASSWORD_ENTER_PASSWORD_REQUEST), getIcon("dialog_lock"), OK_CANCEL_OPTION);
             if (option == OK_OPTION) {
                 if (password.getPassword().length == 0) {
-                    showWarningMessage(parent, MESSAGES.getString(PASSWORD_ENTER_PASSWORD_REQUEST));
+                    showWarningMessage(parent, localizedMessages.getString(PASSWORD_ENTER_PASSWORD_REQUEST));
                 } else if (confirm && !Arrays.equals(password.getPassword(), repeat.getPassword())) {
-                    showWarningMessage(parent, MESSAGES.getString(PASSWORD_PASSWORDS_NOT_IDENTICAL));
+                    showWarningMessage(parent, localizedMessages.getString(PASSWORD_PASSWORDS_NOT_IDENTICAL));
                 } else {
                     incorrect = false;
                 }

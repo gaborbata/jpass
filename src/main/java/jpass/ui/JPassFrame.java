@@ -70,6 +70,7 @@ import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_FOUND;
 import static jpass.util.Constants.EDIT_MENU;
 import static jpass.util.Constants.FILE_MENU;
 import static jpass.util.Constants.HELP_MENU;
+import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
 import static jpass.util.Constants.TOOLS_MENU;
 
 /**
@@ -80,7 +81,7 @@ import static jpass.util.Constants.TOOLS_MENU;
  */
 public final class JPassFrame extends JFrame {
 
-    public static ResourceBundle MESSAGES = null;
+    public static ResourceBundle localizedMessages = null;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
@@ -113,7 +114,7 @@ public final class JPassFrame extends JFrame {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
-        MESSAGES = ResourceBundle.getBundle("resources.languages.Messages", locale);
+        localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -146,7 +147,7 @@ public final class JPassFrame extends JFrame {
 
         this.jpassMenuBar = new JMenuBar();
 
-        this.fileMenu = new JMenu(MESSAGES.getString(FILE_MENU));
+        this.fileMenu = new JMenu(localizedMessages.getString(FILE_MENU));
         this.fileMenu.setMnemonic(KeyEvent.VK_F);
         this.fileMenu.add(MenuActionType.NEW_FILE.getAction());
         this.fileMenu.add(MenuActionType.OPEN_FILE.getAction());
@@ -161,7 +162,7 @@ public final class JPassFrame extends JFrame {
         this.fileMenu.add(MenuActionType.EXIT.getAction());
         this.jpassMenuBar.add(this.fileMenu);
 
-        this.editMenu = new JMenu(MESSAGES.getString(EDIT_MENU));
+        this.editMenu = new JMenu(localizedMessages.getString(EDIT_MENU));
         this.editMenu.setMnemonic(KeyEvent.VK_E);
         this.editMenu.add(MenuActionType.ADD_ENTRY.getAction());
         this.editMenu.add(MenuActionType.EDIT_ENTRY.getAction());
@@ -175,13 +176,13 @@ public final class JPassFrame extends JFrame {
         this.editMenu.add(MenuActionType.FIND_ENTRY.getAction());
         this.jpassMenuBar.add(this.editMenu);
 
-        this.toolsMenu = new JMenu(MESSAGES.getString(TOOLS_MENU));
+        this.toolsMenu = new JMenu(localizedMessages.getString(TOOLS_MENU));
         this.toolsMenu.setMnemonic(KeyEvent.VK_T);
         this.toolsMenu.add(MenuActionType.GENERATE_PASSWORD.getAction());
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
         this.jpassMenuBar.add(this.toolsMenu);
 
-        this.helpMenu = new JMenu(MESSAGES.getString(HELP_MENU));
+        this.helpMenu = new JMenu(localizedMessages.getString(HELP_MENU));
         this.helpMenu.setMnemonic(KeyEvent.VK_H);
         this.helpMenu.add(MenuActionType.LICENSE.getAction());
         this.helpMenu.addSeparator();
@@ -231,7 +232,7 @@ public final class JPassFrame extends JFrame {
 
     public static synchronized JPassFrame getInstance(String fileName) {
         if (instance == null) {
-            Locale locale = new Locale("es", "US");
+            Locale locale = new Locale("es", "MX");
             instance = new JPassFrame(fileName, locale);
         }
         return instance;
@@ -298,9 +299,9 @@ public final class JPassFrame extends JFrame {
         }
 
         if (searchCriteria.isEmpty()) {
-            this.statusPanel.setText(String.format("%s: %d", MESSAGES.getString(BOTTOM_MENU_ENTRIES_COUNT), entries.size()));
+            this.statusPanel.setText(String.format("%s: %d", localizedMessages.getString(BOTTOM_MENU_ENTRIES_COUNT), entries.size()));
         } else {
-            this.statusPanel.setText(String.format("%s: %d / %d", MESSAGES.getString(BOTTOM_MENU_ENTRIES_FOUND), this.entryDetailsTable.getRowCount(), entries.size()));
+            this.statusPanel.setText(String.format("%s: %d / %d", localizedMessages.getString(BOTTOM_MENU_ENTRIES_FOUND), this.entryDetailsTable.getRowCount(), entries.size()));
         }
     }
 
@@ -323,7 +324,7 @@ public final class JPassFrame extends JFrame {
             return;
         }
         if (this.model.isModified()) {
-            int option = showQuestionMessage(this, FileHelper.SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(this, localizedMessages.getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
                 FileHelper.saveFile(this, false, () -> System.exit(0));
                 return;

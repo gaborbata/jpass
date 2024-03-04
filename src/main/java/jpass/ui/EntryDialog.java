@@ -54,13 +54,16 @@ import jpass.util.SpringUtilities;
 import jpass.util.StringUtils;
 import jpass.xml.bind.Entry;
 
-import static jpass.ui.JPassFrame.MESSAGES;
+import static jpass.ui.JPassFrame.localizedMessages;
 import static jpass.ui.helper.EntryHelper.copyEntryField;
 import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.BUTTON_MESSAGE_OK;
 import static jpass.util.Constants.ENTRY_DIALOG_COPY_ENTRY;
+import static jpass.util.Constants.ENTRY_DIALOG_FILL_TITLE_FIELD;
 import static jpass.util.Constants.ENTRY_DIALOG_GENERATE_ENTRY;
 import static jpass.util.Constants.ENTRY_DIALOG_SHOW_ENTRY;
+import static jpass.util.Constants.ENTRY_DIALOG_TITLE_ALREADY_EXISTS;
+import static jpass.util.Constants.PASSWORD_PASSWORDS_NOT_IDENTICAL;
 import static jpass.util.Constants.VIEW_WINDOW_NOTES;
 import static jpass.util.Constants.VIEW_WINDOW_PASSWORD;
 import static jpass.util.Constants.VIEW_WINDOW_REPEAT;
@@ -126,15 +129,15 @@ public class EntryDialog extends JDialog implements ActionListener {
         this.originalEcho = this.passwordField.getEchoChar();
         this.repeatField = TextComponentFactory.newPasswordField(true);
 
-        this.showButton = new JToggleButton(MESSAGES.getString(ENTRY_DIALOG_SHOW_ENTRY), MessageDialog.getIcon("show"));
+        this.showButton = new JToggleButton(localizedMessages.getString(ENTRY_DIALOG_SHOW_ENTRY), MessageDialog.getIcon("show"));
         this.showButton.setActionCommand("show_button");
         this.showButton.setMnemonic(KeyEvent.VK_S);
         this.showButton.addActionListener(this);
-        this.generateButton = new JButton(MESSAGES.getString(ENTRY_DIALOG_GENERATE_ENTRY), MessageDialog.getIcon("generate"));
+        this.generateButton = new JButton(localizedMessages.getString(ENTRY_DIALOG_GENERATE_ENTRY), MessageDialog.getIcon("generate"));
         this.generateButton.setActionCommand("generate_button");
         this.generateButton.setMnemonic(KeyEvent.VK_G);
         this.generateButton.addActionListener(this);
-        this.copyButton = new JButton(MESSAGES.getString(ENTRY_DIALOG_COPY_ENTRY), MessageDialog.getIcon("keyring"));
+        this.copyButton = new JButton(localizedMessages.getString(ENTRY_DIALOG_COPY_ENTRY), MessageDialog.getIcon("keyring"));
         this.copyButton.setActionCommand("copy_button");
         this.copyButton.setMnemonic(KeyEvent.VK_P);
         this.copyButton.addActionListener(this);
@@ -149,15 +152,15 @@ public class EntryDialog extends JDialog implements ActionListener {
                 5, 0); // xPad, yPad
 
         this.fieldPanel = new JPanel(new SpringLayout());
-        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_TITLE))));
+        this.fieldPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_TITLE))));
         this.fieldPanel.add(this.titleField);
-        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_URL))));
+        this.fieldPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_URL))));
         this.fieldPanel.add(this.urlField);
-        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_USER_NAME))));
+        this.fieldPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_USER_NAME))));
         this.fieldPanel.add(this.userField);
-        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_PASSWORD))));
+        this.fieldPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_PASSWORD))));
         this.fieldPanel.add(this.passwordField);
-        this.fieldPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_REPEAT))));
+        this.fieldPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_REPEAT))));
         this.fieldPanel.add(this.repeatField);
         this.fieldPanel.add(new JLabel(""));
         this.fieldPanel.add(this.passwordButtonPanel);
@@ -173,15 +176,15 @@ public class EntryDialog extends JDialog implements ActionListener {
 
         this.notesPanel = new JPanel(new BorderLayout(5, 5));
         this.notesPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
-        this.notesPanel.add(new JLabel(String.format("%s:", MESSAGES.getString(VIEW_WINDOW_NOTES))), BorderLayout.NORTH);
+        this.notesPanel.add(new JLabel(String.format("%s:", localizedMessages.getString(VIEW_WINDOW_NOTES))), BorderLayout.NORTH);
         this.notesPanel.add(new JScrollPane(this.notesField), BorderLayout.CENTER);
 
-        this.okButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_OK), MessageDialog.getIcon("accept"));
+        this.okButton = new JButton(localizedMessages.getString(BUTTON_MESSAGE_OK), MessageDialog.getIcon("accept"));
         this.okButton.setActionCommand("ok_button");
         this.okButton.setMnemonic(KeyEvent.VK_O);
         this.okButton.addActionListener(this);
 
-        this.cancelButton = new JButton(MESSAGES.getString(BUTTON_MESSAGE_CANCEL), MessageDialog.getIcon("cancel"));
+        this.cancelButton = new JButton(localizedMessages.getString(BUTTON_MESSAGE_CANCEL), MessageDialog.getIcon("cancel"));
         this.cancelButton.setActionCommand("cancel_button");
         this.cancelButton.setMnemonic(KeyEvent.VK_C);
         this.cancelButton.addActionListener(this);
@@ -209,13 +212,13 @@ public class EntryDialog extends JDialog implements ActionListener {
             this.repeatField.setEchoChar(this.showButton.isSelected() ? NULL_ECHO : this.originalEcho);
         } else if ("ok_button".equals(command)) {
             if (this.titleField.getText().trim().isEmpty()) {
-                MessageDialog.showWarningMessage(this, "Please fill the title field.");
+                MessageDialog.showWarningMessage(this, localizedMessages.getString(ENTRY_DIALOG_FILL_TITLE_FIELD));
                 return;
             } else if (!checkEntryTitle()) {
-                MessageDialog.showWarningMessage(this, "Title is already exists,\nplease enter a different title.");
+                MessageDialog.showWarningMessage(this, localizedMessages.getString(ENTRY_DIALOG_TITLE_ALREADY_EXISTS));
                 return;
             } else if (!Arrays.equals(this.passwordField.getPassword(), this.repeatField.getPassword())) {
-                MessageDialog.showWarningMessage(this, "Password and repeated passwords are not identical.");
+                MessageDialog.showWarningMessage(this, localizedMessages.getString(PASSWORD_PASSWORDS_NOT_IDENTICAL));
                 return;
             }
             this.modifiedEntry = getEntryFromDialog();

@@ -30,10 +30,13 @@ package jpass.ui;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import static jpass.ui.JPassFrame.getLocalizedMessages;
+import static jpass.util.Constants.PANEL_PROCESSING;
 
 /**
  * Class for representing a status bar.
@@ -67,6 +70,6 @@ public class StatusPanel extends JPanel {
     public void setProcessing(boolean processing) {
         this.progressBar.setVisible(processing);
         this.progressBar.setIndeterminate(processing);
-        setText(processing ? "Processing..." : " ");
+        setText(processing ? getLocalizedMessages().getString(PANEL_PROCESSING) : " ");
     }
 }

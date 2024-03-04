@@ -45,6 +45,13 @@ import jpass.util.Configuration;
 import jpass.util.DateUtils;
 import jpass.xml.bind.Entry;
 
+import static jpass.ui.JPassFrame.getLocalizedMessages;
+import static jpass.util.Constants.VIEW_WINDOW_CREATED;
+import static jpass.util.Constants.VIEW_WINDOW_MODIFIED;
+import static jpass.util.Constants.VIEW_WINDOW_TITLE;
+import static jpass.util.Constants.VIEW_WINDOW_URL;
+import static jpass.util.Constants.VIEW_WINDOW_USER;
+
 /**
  * Table to display entry details.
  */
@@ -54,11 +61,11 @@ public class EntryDetailsTable extends JTable {
             = DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
     private enum DetailType {
-        TITLE("Title", Entry::getTitle),
-        URL("URL", Entry::getUrl),
-        USER("User", Entry::getUser),
-        MODIFIED("Modified", entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
-        CREATED("Created", entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
+        TITLE(getLocalizedMessages().getString(VIEW_WINDOW_TITLE), Entry::getTitle),
+        URL(getLocalizedMessages().getString(VIEW_WINDOW_URL), Entry::getUrl),
+        USER(getLocalizedMessages().getString(VIEW_WINDOW_USER), Entry::getUser),
+        MODIFIED(getLocalizedMessages().getString(VIEW_WINDOW_MODIFIED), entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
+        CREATED(getLocalizedMessages().getString(VIEW_WINDOW_CREATED), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
         private final String description;
         private final Function<Entry, String> valueMapper;
@@ -78,7 +85,7 @@ public class EntryDetailsTable extends JTable {
     }
 
     private static final Map<String, DetailType> DETAILS_BY_NAME = Arrays.stream(DetailType.values())
-            .collect(Collectors.toMap(detail -> detail.name(), Function.identity()));
+            .collect(Collectors.toMap(Enum::name, Function.identity()));
 
     private static final String[] DEFAULT_DETAILS = {
         DetailType.TITLE.name(),
@@ -92,14 +99,14 @@ public class EntryDetailsTable extends JTable {
         super();
 
         detailsToDisplay = Arrays.stream(Configuration.getInstance().getArray("entry.details", DEFAULT_DETAILS))
-                .map(name -> DETAILS_BY_NAME.get(name))
+                .map(DETAILS_BY_NAME::get)
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
 
         if (detailsToDisplay.isEmpty()) {
             Arrays.stream(DEFAULT_DETAILS)
-                    .map(name -> DETAILS_BY_NAME.get(name))
+                    .map(DETAILS_BY_NAME::get)
                     .forEach(detailsToDisplay::add);
         }
 

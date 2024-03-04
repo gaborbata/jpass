@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -63,6 +65,13 @@ import static jpass.ui.MessageDialog.YES_NO_CANCEL_OPTION;
 import static jpass.ui.MessageDialog.YES_OPTION;
 import static jpass.ui.MessageDialog.getIcon;
 import static jpass.ui.MessageDialog.showQuestionMessage;
+import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_COUNT;
+import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_FOUND;
+import static jpass.util.Constants.EDIT_MENU;
+import static jpass.util.Constants.FILE_MENU;
+import static jpass.util.Constants.HELP_MENU;
+import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
+import static jpass.util.Constants.TOOLS_MENU;
 
 /**
  * The main frame for JPass.
@@ -72,6 +81,7 @@ import static jpass.ui.MessageDialog.showQuestionMessage;
  */
 public final class JPassFrame extends JFrame {
 
+    private static ResourceBundle localizedMessages;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
@@ -95,7 +105,7 @@ public final class JPassFrame extends JFrame {
     private final StatusPanel statusPanel;
     private volatile boolean processing = false;
 
-    private JPassFrame(String fileName) {
+    private JPassFrame(String fileName, Locale locale) {
         try {
             setIconImages(Stream.of(16, 20, 32, 40, 64, 80, 128, 160)
                     .map(size -> getIcon("jpass", size, size).getImage())
@@ -103,6 +113,8 @@ public final class JPassFrame extends JFrame {
         } catch (Exception e) {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
+
+        localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -135,7 +147,7 @@ public final class JPassFrame extends JFrame {
 
         this.jpassMenuBar = new JMenuBar();
 
-        this.fileMenu = new JMenu("File");
+        this.fileMenu = new JMenu(localizedMessages.getString(FILE_MENU));
         this.fileMenu.setMnemonic(KeyEvent.VK_F);
         this.fileMenu.add(MenuActionType.NEW_FILE.getAction());
         this.fileMenu.add(MenuActionType.OPEN_FILE.getAction());
@@ -150,7 +162,7 @@ public final class JPassFrame extends JFrame {
         this.fileMenu.add(MenuActionType.EXIT.getAction());
         this.jpassMenuBar.add(this.fileMenu);
 
-        this.editMenu = new JMenu("Edit");
+        this.editMenu = new JMenu(localizedMessages.getString(EDIT_MENU));
         this.editMenu.setMnemonic(KeyEvent.VK_E);
         this.editMenu.add(MenuActionType.ADD_ENTRY.getAction());
         this.editMenu.add(MenuActionType.EDIT_ENTRY.getAction());
@@ -164,13 +176,13 @@ public final class JPassFrame extends JFrame {
         this.editMenu.add(MenuActionType.FIND_ENTRY.getAction());
         this.jpassMenuBar.add(this.editMenu);
 
-        this.toolsMenu = new JMenu("Tools");
+        this.toolsMenu = new JMenu(localizedMessages.getString(TOOLS_MENU));
         this.toolsMenu.setMnemonic(KeyEvent.VK_T);
         this.toolsMenu.add(MenuActionType.GENERATE_PASSWORD.getAction());
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
         this.jpassMenuBar.add(this.toolsMenu);
 
-        this.helpMenu = new JMenu("Help");
+        this.helpMenu = new JMenu(localizedMessages.getString(HELP_MENU));
         this.helpMenu.setMnemonic(KeyEvent.VK_H);
         this.helpMenu.add(MenuActionType.LICENSE.getAction());
         this.helpMenu.addSeparator();
@@ -220,7 +232,8 @@ public final class JPassFrame extends JFrame {
 
     public static synchronized JPassFrame getInstance(String fileName) {
         if (instance == null) {
-            instance = new JPassFrame(fileName);
+            String languageTag = Configuration.getInstance().get("language.languageSetting", "en-US");
+            instance = new JPassFrame(fileName, Locale.forLanguageTag(languageTag));
         }
         return instance;
     }
@@ -286,9 +299,9 @@ public final class JPassFrame extends JFrame {
         }
 
         if (searchCriteria.isEmpty()) {
-            this.statusPanel.setText("Entries count: " + entries.size());
+            this.statusPanel.setText(String.format("%s: %d", localizedMessages.getString(BOTTOM_MENU_ENTRIES_COUNT), entries.size()));
         } else {
-            this.statusPanel.setText("Entries found: " + this.entryDetailsTable.getRowCount() + " / " + entries.size());
+            this.statusPanel.setText(String.format("%s: %d / %d", localizedMessages.getString(BOTTOM_MENU_ENTRIES_FOUND), this.entryDetailsTable.getRowCount(), entries.size()));
         }
     }
 
@@ -311,7 +324,7 @@ public final class JPassFrame extends JFrame {
             return;
         }
         if (this.model.isModified()) {
-            int option = showQuestionMessage(this, FileHelper.SAVE_MODIFIED_QUESTION_MESSAGE, YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(this, localizedMessages.getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
                 FileHelper.saveFile(this, false, () -> System.exit(0));
                 return;
@@ -357,5 +370,13 @@ public final class JPassFrame extends JFrame {
      */
     public SearchPanel getSearchPanel() {
         return searchPanel;
+    }
+
+    /**
+     * Gets the resource bundle for localization
+     * @return resource bundle
+     */
+    public static ResourceBundle getLocalizedMessages() {
+        return localizedMessages;
     }
 }

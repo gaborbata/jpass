@@ -64,9 +64,9 @@ Default configurations can be overridden in `jpass.properties` file:
 | date.format                        | string     | `yyyy-MM-dd`     |
 | entry.details                      | list       | `TITLE,MODIFIED` |
 | file.chooser.directory             | string     | `./`             |
+| language.languageSetting           | string     | en-US            |
 
-Contributors
-------------
-
-Thanks for Jibbie R. Eguna (@jbeguna04) for the nice application logo.
+Regarding `language.languageSetting` please check
+[languages](https://github.com/gaborbata/jpass/tree/master/src/main/resources/resources/languages)
+resources folder for possible configuration values.
 

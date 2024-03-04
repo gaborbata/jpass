@@ -40,10 +40,11 @@ Default configurations can be overridden in `jpass.properties` file:
 | date.format                        | string     | yyyy-MM-dd     |
 | entry.details                      | list       | TITLE,MODIFIED |
 | file.chooser.directory             | string     | ./             |
+| language.languageSetting           | string     | en-US          |
 
 License
 -------
-Copyright (c) 2009-2023 Gabor Bata
+Copyright (c) 2009-2024 Gabor Bata
 
 All rights reserved.
 

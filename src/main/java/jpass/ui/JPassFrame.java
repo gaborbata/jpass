@@ -81,7 +81,7 @@ import static jpass.util.Constants.TOOLS_MENU;
  */
 public final class JPassFrame extends JFrame {
 
-    private static ResourceBundle localizedMessages = null;
+    private static ResourceBundle localizedMessages;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
@@ -232,8 +232,8 @@ public final class JPassFrame extends JFrame {
 
     public static synchronized JPassFrame getInstance(String fileName) {
         if (instance == null) {
-            Locale locale = new Locale("es", "MX");
-            instance = new JPassFrame(fileName, locale);
+            String languageTag = Configuration.getInstance().get("language.languageSetting", "en-US");
+            instance = new JPassFrame(fileName, Locale.forLanguageTag(languageTag));
         }
         return instance;
     }

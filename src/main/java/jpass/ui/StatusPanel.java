@@ -35,7 +35,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import static jpass.ui.JPassFrame.localizedMessages;
+import static jpass.ui.JPassFrame.getLocalizedMessages;
 import static jpass.util.Constants.PANEL_PROCESSING;
 
 /**
@@ -70,6 +70,6 @@ public class StatusPanel extends JPanel {
     public void setProcessing(boolean processing) {
         this.progressBar.setVisible(processing);
         this.progressBar.setIndeterminate(processing);
-        setText(processing ? localizedMessages.getString(PANEL_PROCESSING) : " ");
+        setText(processing ? getLocalizedMessages().getString(PANEL_PROCESSING) : " ");
     }
 }

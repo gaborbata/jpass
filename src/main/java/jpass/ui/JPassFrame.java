@@ -81,7 +81,7 @@ import static jpass.util.Constants.TOOLS_MENU;
  */
 public final class JPassFrame extends JFrame {
 
-    public static ResourceBundle localizedMessages = null;
+    private static ResourceBundle localizedMessages = null;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
@@ -370,5 +370,13 @@ public final class JPassFrame extends JFrame {
      */
     public SearchPanel getSearchPanel() {
         return searchPanel;
+    }
+
+    /**
+     * Gets the resource bundle for localization
+     * @return resource bundle
+     */
+    public static ResourceBundle getLocalizedMessages() {
+        return localizedMessages;
     }
 }

@@ -46,7 +46,7 @@ import javax.swing.event.DocumentListener;
 
 import static javax.swing.KeyStroke.getKeyStroke;
 import static java.awt.event.KeyEvent.VK_ESCAPE;
-import static jpass.ui.JPassFrame.localizedMessages;
+import static jpass.ui.JPassFrame.getLocalizedMessages;
 import static jpass.util.Constants.PANEL_FIND;
 
 /**
@@ -73,7 +73,7 @@ public class SearchPanel extends JPanel implements ActionListener {
         super(new BorderLayout());
         setBorder(new EmptyBorder(2, 2, 2, 2));
 
-        this.label = new JLabel(String.format("%s: ", localizedMessages.getString(PANEL_FIND)), MessageDialog.getIcon("find"), SwingConstants.LEADING);
+        this.label = new JLabel(String.format("%s: ", getLocalizedMessages().getString(PANEL_FIND)), MessageDialog.getIcon("find"), SwingConstants.LEADING);
 
         this.criteriaField = TextComponentFactory.newTextField();
 

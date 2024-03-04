@@ -40,7 +40,7 @@ import jpass.ui.JPassFrame;
 import jpass.ui.action.Worker;
 import jpass.util.Configuration;
 
-import static jpass.ui.JPassFrame.localizedMessages;
+import static jpass.ui.JPassFrame.getLocalizedMessages;
 import static jpass.ui.MessageDialog.showPasswordDialog;
 import static jpass.ui.MessageDialog.showWarningMessage;
 import static jpass.ui.MessageDialog.showQuestionMessage;
@@ -89,7 +89,7 @@ public final class FileHelper {
      */
     public static void createNew(final JPassFrame parent) {
         if (parent.getModel().isModified()) {
-            int option = showQuestionMessage(parent, localizedMessages.getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(parent, getLocalizedMessages().getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
                 saveFile(parent, false, () -> {
                     parent.clearModel();
@@ -112,8 +112,8 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void exportFile(final JPassFrame parent) {
-        showWarningMessage(parent, localizedMessages.getString(PANEL_UNENCRYPTED_DATA_WARNING_MESSAGE));
-        File file = showFileChooser(parent, localizedMessages.getString(PANEL_EXPORT), "xml", XML_FILES);
+        showWarningMessage(parent, getLocalizedMessages().getString(PANEL_UNENCRYPTED_DATA_WARNING_MESSAGE));
+        File file = showFileChooser(parent, getLocalizedMessages().getString(PANEL_EXPORT), "xml", XML_FILES);
         if (file == null) {
             return;
         }
@@ -141,13 +141,13 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void importFile(final JPassFrame parent) {
-        File file = showFileChooser(parent, localizedMessages.getString(PANEL_IMPORT), "xml", XML_FILES);
+        File file = showFileChooser(parent, getLocalizedMessages().getString(PANEL_IMPORT), "xml", XML_FILES);
         if (file == null) {
             return;
         }
         final String fileName = file.getPath();
         if (parent.getModel().isModified()) {
-            int option = showQuestionMessage(parent, localizedMessages.getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(parent, getLocalizedMessages().getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
                 saveFile(parent, false, () -> importFileInBackground(fileName, parent));
                 return;
@@ -206,7 +206,7 @@ public final class FileHelper {
     public static void saveFile(final JPassFrame parent, final boolean saveAs, final Runnable successCallback) {
         final String fileName;
         if (saveAs || parent.getModel().getFileName() == null) {
-            File file = showFileChooser(parent, localizedMessages.getString(PANEL_SAVE), "jpass", JPASS_DATA_FILES);
+            File file = showFileChooser(parent, getLocalizedMessages().getString(PANEL_SAVE), "jpass", JPASS_DATA_FILES);
             if (file == null) {
                 return;
             }
@@ -265,12 +265,12 @@ public final class FileHelper {
      * @param parent parent component
      */
     public static void openFile(final JPassFrame parent) {
-        final File file = showFileChooser(parent, localizedMessages.getString(PANEL_OPEN), "jpass", JPASS_DATA_FILES);
+        final File file = showFileChooser(parent, getLocalizedMessages().getString(PANEL_OPEN), "jpass", JPASS_DATA_FILES);
         if (file == null) {
             return;
         }
         if (parent.getModel().isModified()) {
-            int option = showQuestionMessage(parent, localizedMessages.getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
+            int option = showQuestionMessage(parent, getLocalizedMessages().getString(PANEL_SAVE_MODIFIED_QUESTION_MESSAGE), YES_NO_CANCEL_OPTION);
             if (option == YES_OPTION) {
                 saveFile(parent, false, () -> openFileInBackground(file.getPath(), parent));
                 return;

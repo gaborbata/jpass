@@ -51,6 +51,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -96,6 +97,7 @@ public final class JPassFrame extends JFrame {
     private final JMenu fileMenu;
     private final JMenu editMenu;
     private final JMenu toolsMenu;
+    private final JMenu settingsMenu;
     private final JMenu helpMenu;
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
@@ -181,6 +183,18 @@ public final class JPassFrame extends JFrame {
         this.toolsMenu.add(MenuActionType.GENERATE_PASSWORD.getAction());
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
         this.jpassMenuBar.add(this.toolsMenu);
+
+        this.settingsMenu = new JMenu("Settings");
+        this.settingsMenu.setMnemonic(KeyEvent.VK_S);
+        JMenu languageMenu = new JMenu("Language");
+        JMenuItem english = new JMenuItem("English");
+        JMenuItem spanish = new JMenuItem("Spanish");
+        english.addActionListener(e -> LOG.log(Level.INFO, "Click on english"));
+        english.setIcon(getIcon("check_mark"));
+        languageMenu.add(english);
+        languageMenu.add(spanish);
+        settingsMenu.add(languageMenu);
+        this.jpassMenuBar.add(this.settingsMenu);
 
         this.helpMenu = new JMenu(localizedMessages.getString(HELP_MENU));
         this.helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -374,6 +388,7 @@ public final class JPassFrame extends JFrame {
 
     /**
      * Gets the resource bundle for localization
+     *
      * @return resource bundle
      */
     public static ResourceBundle getLocalizedMessages() {

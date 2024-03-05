@@ -28,11 +28,12 @@
  */
 package jpass.util;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import org.junit.jupiter.api.Test;
 
-public class StringUtilsTest {
+class StringUtilsTest {
 
     @Test
     public void stripStringLength0String10Test() {
@@ -90,16 +91,13 @@ public class StringUtilsTest {
         assertEquals(expectedResult, resultFunction);
     }
 
-    @Test(expected = StringIndexOutOfBoundsException.class)
+    @Test
     public void StripStringLength_2String10Test() {
-
         int length_2 = -2;
         String stringEqual10Char = "Teste da f";
 
-        String expectedResult = "Teste da f...";
-        String resultFunction = StringUtils.stripString(stringEqual10Char, length_2);
-
-        assertEquals(expectedResult, resultFunction);
+        Assertions.assertThrows(StringIndexOutOfBoundsException.class,
+                () -> StringUtils.stripString(stringEqual10Char, length_2));
     }
 
     @Test

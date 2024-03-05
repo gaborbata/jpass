@@ -5,9 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
-
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link jpass.crypt.io.CryptInputStream} and
@@ -54,7 +53,7 @@ public class CryptIOStreamTest {
         decrypted.close();
         decrypter.close();
 
-        Assert.assertEquals(plain.length, decrypted.toByteArray().length);
-        Assert.assertTrue(Arrays.equals(plain, decrypted.toByteArray()));
+        Assertions.assertEquals(plain.length, decrypted.toByteArray().length);
+        Assertions.assertTrue(Arrays.equals(plain, decrypted.toByteArray()));
     }
 }

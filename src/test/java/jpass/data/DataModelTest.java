@@ -30,22 +30,22 @@ package jpass.data;
 
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class DataModelTest {
+class DataModelTest {
 
     public DataModel dataModel;
 
-    @Before
+    @BeforeEach
     public void setup() {
         dataModel = DataModel.getInstance();
         dataModel.clear();

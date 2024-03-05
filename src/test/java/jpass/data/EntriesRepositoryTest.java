@@ -34,16 +34,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import jpass.xml.bind.Entries;
 import jpass.xml.bind.Entry;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for {@link EntriesRepository}.
  *
  * @author Gabor Bata
  */
-public class EntriesRepositoryTest {
+class EntriesRepositoryTest {
 
     private static final String TITLE = "Duff Beer Webshop";
     private static final String URL = "http://duffbeer.com";
@@ -55,7 +55,7 @@ public class EntriesRepositoryTest {
     private char[] correctKey;
     private char[] incorrectKey;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         File tempFile = File.createTempFile("jpass", "temp");
         tempFile.deleteOnExit();
@@ -78,35 +78,38 @@ public class EntriesRepositoryTest {
         assertEquals(expectedEntries, readEntries);
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void shouldThrowExceptionWhenReadingDocumentWithIncorrectKey() throws DocumentProcessException, IOException {
         // given
         EntriesRepository.newInstance(filePath, correctKey).writeDocument(createEntries());
 
         // when
-        EntriesRepository.newInstance(filePath, incorrectKey).readDocument();
+        Assertions.assertThrows(IOException.class,
+                () -> EntriesRepository.newInstance(filePath, incorrectKey).readDocument());
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void shouldThrowExceptionWhenReadingDocumentWithInvalidFormat() throws DocumentProcessException, IOException {
         // given
         try ( FileWriter writer = new FileWriter(filePath)) {
             writer.append("invalid content");
         } catch (Exception e) {
-            Assert.fail("could not prepare test data");
+            Assertions.fail("could not prepare test data");
         }
 
         // when
-        EntriesRepository.newInstance(filePath, correctKey).readDocument();
+        Assertions.assertThrows(IOException.class,
+                () -> EntriesRepository.newInstance(filePath, correctKey).readDocument());
     }
 
-    @Test(expected = FileNotFoundException.class)
+    @Test
     public void shouldThrowExceptionWhenReadingDocumentWithNonExistingFile() throws DocumentProcessException, IOException {
         // given
         EntriesRepository entriesRepository = EntriesRepository.newInstance("not_existing_path", correctKey);
 
         // when
-        entriesRepository.readDocument();
+        Assertions.assertThrows(FileNotFoundException.class,
+                () -> entriesRepository.readDocument());
     }
 
     @Test
@@ -122,35 +125,38 @@ public class EntriesRepositoryTest {
         assertEquals(expectedEntries, readEntries);
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void shouldNotBeAbleToReadEncryptedFileWithoutKey() throws DocumentProcessException, IOException {
         // given
         EntriesRepository.newInstance(filePath, correctKey).writeDocument(createEntries());
 
         // when
-        EntriesRepository.newInstance(filePath).readDocument();
+        Assertions.assertThrows(IOException.class,
+                () -> EntriesRepository.newInstance(filePath).readDocument());
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void shouldThrowExceptionWhenReadingUnencryptedDocumentWithInvalidFormat() throws DocumentProcessException, IOException {
         // given
         try ( FileWriter writer = new FileWriter(filePath)) {
             writer.append("invalid content");
         } catch (Exception e) {
-            Assert.fail("could not prepare test data");
+            Assertions.fail("could not prepare test data");
         }
 
         // when
-        EntriesRepository.newInstance(filePath).readDocument();
+        Assertions.assertThrows(IOException.class,
+                () -> EntriesRepository.newInstance(filePath).readDocument());
     }
 
-    @Test(expected = FileNotFoundException.class)
+    @Test
     public void shouldThrowExceptionWhenReadingUnecrypredDocumentWithNonExistingFile() throws DocumentProcessException, IOException {
         // given
         EntriesRepository entriesRepository = EntriesRepository.newInstance("not_existing_path");
 
         // when
-        entriesRepository.readDocument();
+        Assertions.assertThrows(FileNotFoundException.class,
+                () -> entriesRepository.readDocument());
     }
 
     @Test
@@ -206,15 +212,15 @@ public class EntriesRepositoryTest {
     }
 
     private void assertEquals(Entries expectedEntries, Entries actualEntries) {
-        Assert.assertEquals(expectedEntries.getEntry().size(), actualEntries.getEntry().size(), 1);
+        Assertions.assertEquals(expectedEntries.getEntry().size(), actualEntries.getEntry().size(), 1);
         assertEquals(expectedEntries.getEntry().iterator().next(), actualEntries.getEntry().iterator().next());
     }
 
     private void assertEquals(Entry expectedEntry, Entry actualEntry) {
-        Assert.assertEquals(expectedEntry.getTitle(), actualEntry.getTitle());
-        Assert.assertEquals(expectedEntry.getUrl(), actualEntry.getUrl());
-        Assert.assertEquals(expectedEntry.getUser(), actualEntry.getUser());
-        Assert.assertEquals(expectedEntry.getPassword(), actualEntry.getPassword());
-        Assert.assertEquals(expectedEntry.getNotes(), actualEntry.getNotes());
+        Assertions.assertEquals(expectedEntry.getTitle(), actualEntry.getTitle());
+        Assertions.assertEquals(expectedEntry.getUrl(), actualEntry.getUrl());
+        Assertions.assertEquals(expectedEntry.getUser(), actualEntry.getUser());
+        Assertions.assertEquals(expectedEntry.getPassword(), actualEntry.getPassword());
+        Assertions.assertEquals(expectedEntry.getNotes(), actualEntry.getNotes());
     }
 }

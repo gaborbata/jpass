@@ -49,7 +49,6 @@ How to compile
 
 * Gradle: `gradle clean build` (preferred)
 * Maven: `mvn clean package`
-* sbt: `sbt clean package` (experimental)
 
 Configuration
 -------------

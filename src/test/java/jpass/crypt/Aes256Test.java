@@ -2,9 +2,8 @@ package jpass.crypt;
 
 import java.util.Arrays;
 import java.util.Random;
-
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test values for the &quot;Advanced Encryption Standard&quot; (AES). These
@@ -47,11 +46,11 @@ public class Aes256Test {
             (byte) 0x45, (byte) 0xbf, (byte) 0xea, (byte) 0xfc, (byte) 0x49, (byte) 0x90, (byte) 0x4b, (byte) 0x49,
             (byte) 0x60, (byte) 0x89};
 
-        Assert.assertTrue(Arrays.equals(expectedEncrypted, encrypted));
+        Assertions.assertTrue(Arrays.equals(expectedEncrypted, encrypted));
 
         byte[] decrypted = new byte[16];
         cipher.decrypt(expectedEncrypted, 0, decrypted, 0);
-        Assert.assertTrue(Arrays.equals(block, decrypted));
+        Assertions.assertTrue(Arrays.equals(block, decrypted));
     }
 
     /**
@@ -73,7 +72,7 @@ public class Aes256Test {
             Aes256 cipher = new Aes256(key);
             cipher.encrypt(data, 0, encrypted, 0);
             cipher.decrypt(encrypted, 0, decrypted, 0);
-            Assert.assertTrue(Arrays.equals(data, decrypted));
+            Assertions.assertTrue(Arrays.equals(data, decrypted));
         }
     }
 }

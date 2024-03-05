@@ -29,8 +29,8 @@
 package jpass.util;
 
 import java.nio.charset.StandardCharsets;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for {@link CryptUtils}.
@@ -57,7 +57,7 @@ public class CryptUtilsTest {
         byte[] hash = CryptUtils.getSha256Hash("sesame".toCharArray());
 
         // then
-        Assert.assertArrayEquals(expectedHash, hash);
+        Assertions.assertArrayEquals(expectedHash, hash);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CryptUtilsTest {
         byte[] hash = CryptUtils.getSha256HashWithDefaultIterations("sesame".toCharArray());
 
         // then
-        Assert.assertArrayEquals(expectedHash, hash);
+        Assertions.assertArrayEquals(expectedHash, hash);
     }
 
     @Test
@@ -100,6 +100,6 @@ public class CryptUtilsTest {
         byte[] key = CryptUtils.getPBKDF2KeyWithDefaultIterations("sesame".toCharArray(), salt);
 
         // then
-        Assert.assertArrayEquals(expectedKey, key);
+        Assertions.assertArrayEquals(expectedKey, key);
     }
 }

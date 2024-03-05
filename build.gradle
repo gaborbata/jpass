@@ -6,6 +6,7 @@ plugins {
     id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'checkstyle'
     id 'jacoco'
+    id 'jvm-test-suite'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -17,10 +18,17 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.15.3'
-    implementation group: 'com.formdev', name: 'flatlaf', version: '3.2.2'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.16.1'
+    implementation group: 'com.formdev', name: 'flatlaf', version: '3.4'
     implementation group: 'com.formdev', name: 'svgSalamander', version: '1.1.4'
-    testImplementation 'junit:junit:4.13.2'
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
 }
 
 java {
@@ -85,7 +93,7 @@ task bumpVersion {
         if (!project.hasProperty('toVersion')) {
             throw new GradleException("Please provide 'toVersion' property e.g. gradle bumpVersion -PtoVersion=$project.version")
         }
-        def extensions = ['java', 'gradle', 'sbt', 'xml', 'md', 'bat', 'sh', 'txt', 'command'].collect { "**/*.$it" }.join(",")
+        def extensions = ['java', 'gradle', 'xml', 'md', 'bat', 'sh', 'txt', 'command'].collect { "**/*.$it" }.join(",")
         def files = new groovy.util.FileNameFinder().getFileNames("$projectDir", extensions)
         files.each { versionedFile ->
             def file = new File(versionedFile)

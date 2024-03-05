@@ -28,18 +28,17 @@
  */
 package jpass.util;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-public class ConfigurationTest {
+class ConfigurationTest {
 
     private Configuration configuration;
 
-    @Before
+    @BeforeEach
     public void setup() {
         configuration = Configuration.getInstance();
     }

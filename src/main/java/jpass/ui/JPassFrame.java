@@ -38,7 +38,6 @@ import jpass.xml.bind.Entry;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +52,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
@@ -79,6 +79,8 @@ import static jpass.util.Constants.LANGUAGE_ES_MX;
 import static jpass.util.Constants.LANGUAGE_HU_HU;
 import static jpass.util.Constants.LANGUAGE_IT_IT;
 import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
+import static jpass.util.Constants.SETTINGS_MENU;
+import static jpass.util.Constants.SETTINGS_MENU_LANGUAGE;
 import static jpass.util.Constants.TOOLS_MENU;
 
 /**
@@ -193,24 +195,20 @@ public final class JPassFrame extends JFrame {
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
         this.jpassMenuBar.add(this.toolsMenu);
 
-        this.settingsMenu = new JMenu("Settings");
+        this.settingsMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU));
         this.settingsMenu.setMnemonic(KeyEvent.VK_S);
 
-        JMenu languageMenu = new JMenu("Language");
+        JMenu languageMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU_LANGUAGE));
 
-        ActionListener menuItemActionListener = e -> {
-            String command = e.getActionCommand();
-            LOG.log(Level.INFO, String.format("Calling AL with command %s", command));
-            refreshComponentsWithLanguage(command);
-        };
-
-        SUPPORTED_LANGUAGES.forEach((k, v) -> {
-            JMenuItem language = new JMenuItem(v);
-            language.setActionCommand(k);
-            language.addActionListener(menuItemActionListener);
+        SUPPORTED_LANGUAGES.forEach((key, value) -> {
+            JMenuItem language = new JMenuItem(localizedMessages.getString(value));
+            language.setActionCommand(key);
+            language.addActionListener(e -> {
+                String command = e.getActionCommand();
+                refreshComponentsWithLanguage(command);
+            });
             languageMenu.add(language);
         });
-
         settingsMenu.add(languageMenu);
         this.jpassMenuBar.add(this.settingsMenu);
 
@@ -347,8 +345,36 @@ public final class JPassFrame extends JFrame {
 
     public void refreshComponentsWithLanguage(String localeTag) {
         Locale locale = Locale.forLanguageTag(localeTag);
+
         setLocalizedMessages(locale);
+        setSupportedLanguages();
+
         fileMenu.setText(localizedMessages.getString(FILE_MENU));
+        editMenu.setText(localizedMessages.getString(EDIT_MENU));
+        toolsMenu.setText(localizedMessages.getString(TOOLS_MENU));
+        settingsMenu.setText(localizedMessages.getString(SETTINGS_MENU));
+        helpMenu.setText(localizedMessages.getString(HELP_MENU));
+
+        updateMenuComponents(fileMenu);
+        updateMenuComponents(editMenu);
+        updateMenuComponents(toolsMenu);
+        updateMenuComponents(settingsMenu);
+        updateMenuComponents(helpMenu);
+
+        refreshEntryTitleList(null);
+    }
+
+    public void updateMenuComponents(JMenu menu) {
+        for (int i = 0; i < menu.getItemCount(); i++) {
+            JMenuItem item = menu.getItem(i);
+            if (null != item && null != item.getAction()) {
+                String actionName = (String) item.getAction().getValue(Action.NAME);
+                if (null != actionName) {
+                    LOG.log(Level.INFO, String.format("ActionName: %s", actionName));
+                    item.setText(localizedMessages.getString(actionName));
+                }
+            }
+        }
     }
 
     /**
@@ -429,9 +455,9 @@ public final class JPassFrame extends JFrame {
     }
 
     public static void setSupportedLanguages() {
-        SUPPORTED_LANGUAGES.put("en-US", localizedMessages.getString(LANGUAGE_EN_US));
-        SUPPORTED_LANGUAGES.put("es-MX",  localizedMessages.getString(LANGUAGE_ES_MX));
-        SUPPORTED_LANGUAGES.put("hu-HU",  localizedMessages.getString(LANGUAGE_HU_HU));
-        SUPPORTED_LANGUAGES.put("it-IT",  localizedMessages.getString(LANGUAGE_IT_IT));
+        SUPPORTED_LANGUAGES.put("en-US", LANGUAGE_EN_US);
+        SUPPORTED_LANGUAGES.put("es-MX",  LANGUAGE_ES_MX);
+        SUPPORTED_LANGUAGES.put("hu-HU",  LANGUAGE_HU_HU);
+        SUPPORTED_LANGUAGES.put("it-IT",  LANGUAGE_IT_IT);
     }
 }

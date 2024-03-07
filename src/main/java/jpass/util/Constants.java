@@ -96,4 +96,6 @@ public final class Constants {
 
     public static final String LANGUAGE_EN_US = "language.en.us";
     public static final String LANGUAGE_ES_MX = "language.es.mx";
+    public static final String LANGUAGE_HU_HU = "language.hu.hu";
+    public static final String LANGUAGE_IT_IT = "language.it.it";
 }

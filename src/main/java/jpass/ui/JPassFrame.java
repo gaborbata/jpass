@@ -38,12 +38,15 @@ import jpass.xml.bind.Entry;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,6 +74,8 @@ import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_FOUND;
 import static jpass.util.Constants.EDIT_MENU;
 import static jpass.util.Constants.FILE_MENU;
 import static jpass.util.Constants.HELP_MENU;
+import static jpass.util.Constants.LANGUAGE_EN_US;
+import static jpass.util.Constants.LANGUAGE_ES_MX;
 import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
 import static jpass.util.Constants.TOOLS_MENU;
 
@@ -82,10 +87,11 @@ import static jpass.util.Constants.TOOLS_MENU;
  */
 public final class JPassFrame extends JFrame {
 
-    private static ResourceBundle localizedMessages;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
+    private static ResourceBundle localizedMessages;
+    private static final Map<String, String> SUPPORTED_LANGUAGES = new HashMap<>();
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
     public static final String PROGRAM_VERSION = "1.0.7-SNAPSHOT";
@@ -116,7 +122,8 @@ public final class JPassFrame extends JFrame {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
-        localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
+        setLocalizedMessages(ResourceBundle.getBundle("resources.languages.languages", locale));
+        setSupportedLanguages();
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -186,13 +193,22 @@ public final class JPassFrame extends JFrame {
 
         this.settingsMenu = new JMenu("Settings");
         this.settingsMenu.setMnemonic(KeyEvent.VK_S);
+
         JMenu languageMenu = new JMenu("Language");
-        JMenuItem english = new JMenuItem("English");
-        JMenuItem spanish = new JMenuItem("Spanish");
-        english.addActionListener(e -> LOG.log(Level.INFO, "Click on english"));
-        english.setIcon(getIcon("check_mark"));
-        languageMenu.add(english);
-        languageMenu.add(spanish);
+
+        ActionListener menuItemActionListener = e -> {
+            LOG.log(Level.INFO, "Clicking on language");
+            String command = e.getActionCommand();
+            LOG.log(Level.INFO, String.format("Calling AL with command %s", command));
+        };
+
+        SUPPORTED_LANGUAGES.forEach((k, v) -> {
+            JMenuItem language = new JMenuItem(v);
+            language.setActionCommand(k);
+            language.addActionListener(menuItemActionListener);
+            languageMenu.add(language);
+        });
+
         settingsMenu.add(languageMenu);
         this.jpassMenuBar.add(this.settingsMenu);
 
@@ -369,6 +385,15 @@ public final class JPassFrame extends JFrame {
     }
 
     /**
+     * Sets the resource bundle for localization
+     *
+     * @param localizedMessages resource bundle
+     */
+    public static void setLocalizedMessages(ResourceBundle localizedMessages) {
+        JPassFrame.localizedMessages = localizedMessages;
+    }
+
+    /**
      * Gets the processing state of this frame.
      *
      * @return processing state
@@ -393,5 +418,10 @@ public final class JPassFrame extends JFrame {
      */
     public static ResourceBundle getLocalizedMessages() {
         return localizedMessages;
+    }
+
+    public static void setSupportedLanguages() {
+        SUPPORTED_LANGUAGES.put("en-US", localizedMessages.getString(LANGUAGE_EN_US));
+        SUPPORTED_LANGUAGES.put("es-MX",  localizedMessages.getString(LANGUAGE_ES_MX));
     }
 }

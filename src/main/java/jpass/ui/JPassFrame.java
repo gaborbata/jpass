@@ -76,6 +76,8 @@ import static jpass.util.Constants.FILE_MENU;
 import static jpass.util.Constants.HELP_MENU;
 import static jpass.util.Constants.LANGUAGE_EN_US;
 import static jpass.util.Constants.LANGUAGE_ES_MX;
+import static jpass.util.Constants.LANGUAGE_HU_HU;
+import static jpass.util.Constants.LANGUAGE_IT_IT;
 import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
 import static jpass.util.Constants.TOOLS_MENU;
 
@@ -122,7 +124,7 @@ public final class JPassFrame extends JFrame {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
-        setLocalizedMessages(ResourceBundle.getBundle("resources.languages.languages", locale));
+        setLocalizedMessages(locale);
         setSupportedLanguages();
 
         this.toolBar = new JToolBar();
@@ -197,9 +199,9 @@ public final class JPassFrame extends JFrame {
         JMenu languageMenu = new JMenu("Language");
 
         ActionListener menuItemActionListener = e -> {
-            LOG.log(Level.INFO, "Clicking on language");
             String command = e.getActionCommand();
             LOG.log(Level.INFO, String.format("Calling AL with command %s", command));
+            refreshComponentsWithLanguage(command);
         };
 
         SUPPORTED_LANGUAGES.forEach((k, v) -> {
@@ -343,6 +345,12 @@ public final class JPassFrame extends JFrame {
         refreshEntryTitleList(null);
     }
 
+    public void refreshComponentsWithLanguage(String localeTag) {
+        Locale locale = Locale.forLanguageTag(localeTag);
+        setLocalizedMessages(locale);
+        fileMenu.setText(localizedMessages.getString(FILE_MENU));
+    }
+
     /**
      * Exits the application.
      */
@@ -387,10 +395,10 @@ public final class JPassFrame extends JFrame {
     /**
      * Sets the resource bundle for localization
      *
-     * @param localizedMessages resource bundle
+     * @param locale locale for the resources bundle
      */
-    public static void setLocalizedMessages(ResourceBundle localizedMessages) {
-        JPassFrame.localizedMessages = localizedMessages;
+    public static void setLocalizedMessages(Locale locale) {
+        JPassFrame.localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
     }
 
     /**
@@ -423,5 +431,7 @@ public final class JPassFrame extends JFrame {
     public static void setSupportedLanguages() {
         SUPPORTED_LANGUAGES.put("en-US", localizedMessages.getString(LANGUAGE_EN_US));
         SUPPORTED_LANGUAGES.put("es-MX",  localizedMessages.getString(LANGUAGE_ES_MX));
+        SUPPORTED_LANGUAGES.put("hu-HU",  localizedMessages.getString(LANGUAGE_HU_HU));
+        SUPPORTED_LANGUAGES.put("it-IT",  localizedMessages.getString(LANGUAGE_IT_IT));
     }
 }

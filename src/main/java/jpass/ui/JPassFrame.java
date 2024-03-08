@@ -52,7 +52,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
@@ -126,8 +125,8 @@ public final class JPassFrame extends JFrame {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
-        setLocalizedMessages(locale);
         setSupportedLanguages();
+        setLocalizedMessages(locale);
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -199,13 +198,13 @@ public final class JPassFrame extends JFrame {
         this.settingsMenu.setMnemonic(KeyEvent.VK_S);
 
         JMenu languageMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU_LANGUAGE));
+        languageMenu.setActionCommand(SETTINGS_MENU_LANGUAGE);
 
         SUPPORTED_LANGUAGES.forEach((key, value) -> {
-            JMenuItem language = new JMenuItem(localizedMessages.getString(value));
+            JMenuItem language = new JMenuItem(localizedMessages.getString(key));
             language.setActionCommand(key);
             language.addActionListener(e -> {
-                String command = e.getActionCommand();
-                refreshComponentsWithLanguage(command);
+                refreshComponentsWithLanguage(e.getActionCommand());
             });
             languageMenu.add(language);
         });
@@ -343,11 +342,9 @@ public final class JPassFrame extends JFrame {
         refreshEntryTitleList(null);
     }
 
-    public void refreshComponentsWithLanguage(String localeTag) {
-        Locale locale = Locale.forLanguageTag(localeTag);
-
+    private void refreshComponentsWithLanguage(String actionCommand) {
+        Locale locale = Locale.forLanguageTag(getSupportedLanguages().get(actionCommand));
         setLocalizedMessages(locale);
-        setSupportedLanguages();
 
         fileMenu.setText(localizedMessages.getString(FILE_MENU));
         editMenu.setText(localizedMessages.getString(EDIT_MENU));
@@ -364,14 +361,17 @@ public final class JPassFrame extends JFrame {
         refreshEntryTitleList(null);
     }
 
-    public void updateMenuComponents(JMenu menu) {
+    private void updateMenuComponents(JMenu menu) {
         for (int i = 0; i < menu.getItemCount(); i++) {
             JMenuItem item = menu.getItem(i);
-            if (null != item && null != item.getAction()) {
-                String actionName = (String) item.getAction().getValue(Action.NAME);
-                if (null != actionName) {
-                    LOG.log(Level.INFO, String.format("ActionName: %s", actionName));
-                    item.setText(localizedMessages.getString(actionName));
+            if (null != item) {
+                if (null != item.getActionCommand()) {
+                    LOG.log(Level.INFO, String.format("ActionCommand: %s ", item.getActionCommand()));
+                    item.setText(localizedMessages.getString(item.getActionCommand()));
+                }
+
+                if (item instanceof JMenu) {
+                    updateMenuComponents((JMenu) item);
                 }
             }
         }
@@ -454,10 +454,14 @@ public final class JPassFrame extends JFrame {
         return localizedMessages;
     }
 
-    public static void setSupportedLanguages() {
-        SUPPORTED_LANGUAGES.put("en-US", LANGUAGE_EN_US);
-        SUPPORTED_LANGUAGES.put("es-MX",  LANGUAGE_ES_MX);
-        SUPPORTED_LANGUAGES.put("hu-HU",  LANGUAGE_HU_HU);
-        SUPPORTED_LANGUAGES.put("it-IT",  LANGUAGE_IT_IT);
+    private static void setSupportedLanguages() {
+        SUPPORTED_LANGUAGES.put(LANGUAGE_EN_US, "en-US");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_ES_MX, "es-MX");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_HU_HU, "hu-HU");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_IT_IT, "it-IT");
+    }
+
+    private static Map<String, String> getSupportedLanguages() {
+        return SUPPORTED_LANGUAGES;
     }
 }

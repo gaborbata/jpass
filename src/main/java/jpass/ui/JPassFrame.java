@@ -61,6 +61,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import static jpass.ui.MessageDialog.NO_OPTION;
@@ -70,7 +71,9 @@ import static jpass.ui.MessageDialog.getIcon;
 import static jpass.ui.MessageDialog.showQuestionMessage;
 import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_COUNT;
 import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_FOUND;
+import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.EDIT_MENU;
+import static jpass.util.Constants.FILE_CHOOSER_CANCEL_BUTTON_TEXT;
 import static jpass.util.Constants.FILE_MENU;
 import static jpass.util.Constants.HELP_MENU;
 import static jpass.util.Constants.LANGUAGE_EN_US;
@@ -127,6 +130,7 @@ public final class JPassFrame extends JFrame {
 
         setSupportedLanguages();
         setLocalizedMessages(locale);
+        UIManager.put("FileChooser.cancelButtonText", localizedMessages.getString(BUTTON_MESSAGE_CANCEL));
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -199,13 +203,12 @@ public final class JPassFrame extends JFrame {
 
         JMenu languageMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU_LANGUAGE));
         languageMenu.setActionCommand(SETTINGS_MENU_LANGUAGE);
+        languageMenu.setIcon(getIcon("world"));
 
         SUPPORTED_LANGUAGES.forEach((key, value) -> {
             JMenuItem language = new JMenuItem(localizedMessages.getString(key));
             language.setActionCommand(key);
-            language.addActionListener(e -> {
-                refreshComponentsWithLanguage(e.getActionCommand());
-            });
+            language.addActionListener(e -> refreshComponentsWithLanguage(e.getActionCommand()));
             languageMenu.add(language);
         });
         settingsMenu.add(languageMenu);
@@ -346,6 +349,8 @@ public final class JPassFrame extends JFrame {
         Locale locale = Locale.forLanguageTag(getSupportedLanguages().get(actionCommand));
         setLocalizedMessages(locale);
 
+        UIManager.put(FILE_CHOOSER_CANCEL_BUTTON_TEXT, localizedMessages.getString(BUTTON_MESSAGE_CANCEL));
+
         fileMenu.setText(localizedMessages.getString(FILE_MENU));
         editMenu.setText(localizedMessages.getString(EDIT_MENU));
         toolsMenu.setText(localizedMessages.getString(TOOLS_MENU));
@@ -357,8 +362,11 @@ public final class JPassFrame extends JFrame {
         updateMenuComponents(toolsMenu);
         updateMenuComponents(settingsMenu);
         updateMenuComponents(helpMenu);
+        //updateMenuComponents(toolBar);
 
         refreshEntryTitleList(null);
+
+        MessageDialog.showInformationMessage(this, "Language has been changed");
     }
 
     private void updateMenuComponents(JMenu menu) {
@@ -366,7 +374,6 @@ public final class JPassFrame extends JFrame {
             JMenuItem item = menu.getItem(i);
             if (null != item) {
                 if (null != item.getActionCommand()) {
-                    LOG.log(Level.INFO, String.format("ActionCommand: %s ", item.getActionCommand()));
                     item.setText(localizedMessages.getString(item.getActionCommand()));
                 }
 

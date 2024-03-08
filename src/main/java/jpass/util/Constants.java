@@ -5,6 +5,8 @@ public final class Constants {
         // not intended to be instantiated
     }
 
+    public static final String FILE_CHOOSER_CANCEL_BUTTON_TEXT = "FileChooser.cancelButtonText";
+
     public static final String FILE_MENU = "menuBar.fileMenu";
     public static final String EDIT_MENU = "menuBar.editMenu";
     public static final String TOOLS_MENU = "menuBar.toolsMenu";

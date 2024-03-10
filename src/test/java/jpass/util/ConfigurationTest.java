@@ -44,38 +44,44 @@ class ConfigurationTest {
     }
 
     @Test
-    public void configurationIsDarkModeEnabledTest() {
+    void configurationIsDarkModeEnabledTest() {
         Boolean result = configuration.is("ui.theme.dark.mode.enabled", false);
         assertFalse(result);
     }
 
     @Test
-    public void configurationGetIntegerClearClipboardOnExitWrongConfigTest() {
+    void configurationGetIntegerClearClipboardOnExitWrongConfigTest() {
         int result = configuration.getInteger("clear.clipboard.on.exit.enabled", 0);
         assertEquals(0, result);
     }
 
     @Test
-    public void configurationIsDefaultPasswordGenerationNullConfigTest() {
+    void configurationIsDefaultPasswordGenerationNullConfigTest() {
         Boolean result = configuration.is("default.password.generation.size", false);
         assertFalse(result);
     }
 
     @Test
-    public void configurationGetDateFormatTest() {
+    void configurationGetDateFormatTest() {
         String result = configuration.get("date.format", "yyyy-MM-dd");
         assertEquals("yyyy-MM-dd", result);
     }
 
     @Test
-    public void configurationGetArrayEntryDetailsTest() {
+    void configurationGetLanguageTest() {
+        String result = configuration.get("language.languageSetting", "en-US");
+        assertEquals("en-US", result);
+    }
+
+    @Test
+    void configurationGetArrayEntryDetailsTest() {
         String[] defaultValue = new String[]{"TITLE", "MODIFIED"};
         String[] result = configuration.getArray("entry.details", defaultValue);
         assertArrayEquals(defaultValue, result);
     }
 
     @Test
-    public void configurationGetArrayEntryDetailsWrongKeyTest() {
+    void configurationGetArrayEntryDetailsWrongKeyTest() {
         String[] defaultValue = new String[]{"TITLE", "MODIFIED"};
         String[] result = configuration.getArray("entry.detail", defaultValue);
         assertArrayEquals(defaultValue, result);

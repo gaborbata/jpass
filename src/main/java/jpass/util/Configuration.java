@@ -30,7 +30,10 @@ package jpass.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +47,7 @@ public final class Configuration {
 
     private static final Logger LOG = Logger.getLogger(Configuration.class.getName());
     private static Configuration instance;
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     private Configuration() {
         try {
@@ -96,6 +99,20 @@ public final class Configuration {
 
     public String get(String key, String defaultValue) {
         return properties.getProperty(key, defaultValue);
+    }
+
+    public void set(String key, String value) {
+        properties.setProperty(key, value);
+        saveProperties();
+    }
+
+    private void saveProperties() {
+        File filePath = new File(getConfigurationFolderPath(), "jpass.properties");
+        try (OutputStream os = Files.newOutputStream(filePath.toPath())) {
+            properties.store(os, "Configuration properties");
+        } catch (IOException e) {
+            LOG.log(Level.WARNING, "Could not save configuration to file.", e);
+        }
     }
 
     public String[] getArray(String key, String[] defaultValue) {

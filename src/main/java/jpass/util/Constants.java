@@ -5,9 +5,12 @@ public final class Constants {
         // not intended to be instantiated
     }
 
+    public static final String FILE_CHOOSER_CANCEL_BUTTON_TEXT = "FileChooser.cancelButtonText";
+
     public static final String FILE_MENU = "menuBar.fileMenu";
     public static final String EDIT_MENU = "menuBar.editMenu";
     public static final String TOOLS_MENU = "menuBar.toolsMenu";
+    public static final String SETTINGS_MENU = "menuBar.settingsMenu";
     public static final String HELP_MENU = "menuBar.helpMenu";
 
     public static final String FILE_MENU_NEW = "fileMenu.new";
@@ -40,6 +43,8 @@ public final class Constants {
     public static final String EDIT_MENU_FIND_ENTRY = "editMenu.findEntry";
 
     public static final String TOOLS_MENU_GENERATE_PASSWORD = "toolsMenu.generatePassword";
+
+    public static final String SETTINGS_MENU_LANGUAGE = "settingsMenu.language";
 
     public static final String HELP_MENU_LICENSE = "helpMenu.license";
     public static final String HELP_MENU_ABOUT_JPASS = "helpMenu.aboutJpass";
@@ -93,4 +98,11 @@ public final class Constants {
     public static final String PANEL_OPEN = "panel.open";
     public static final String PANEL_SAVE_MODIFIED_QUESTION_MESSAGE = "panel.saveModifiedQuestionMessage";
     public static final String PANEL_UNENCRYPTED_DATA_WARNING_MESSAGE = "panel.unencryptedDataWarningMessage";
+
+    public static final String LANGUAGE_LANGUAGE_SETTING = "language.languageSetting";
+    public static final String LANGUAGE_LANGUAGE_CHANGED = "language.languageChanged";
+    public static final String LANGUAGE_EN_US = "language.en.us";
+    public static final String LANGUAGE_ES_MX = "language.es.mx";
+    public static final String LANGUAGE_HU_HU = "language.hu.hu";
+    public static final String LANGUAGE_IT_IT = "language.it.it";
 }

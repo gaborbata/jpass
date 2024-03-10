@@ -60,12 +60,12 @@ public class EntryDetailsTable extends JTable {
     private static final DateTimeFormatter FORMATTER
             = DateUtils.createFormatter(Configuration.getInstance().get("date.format", "yyyy-MM-dd"));
 
-    private enum DetailType {
-        TITLE(getLocalizedMessages().getString(VIEW_WINDOW_TITLE), Entry::getTitle),
-        URL(getLocalizedMessages().getString(VIEW_WINDOW_URL), Entry::getUrl),
-        USER(getLocalizedMessages().getString(VIEW_WINDOW_USER), Entry::getUser),
-        MODIFIED(getLocalizedMessages().getString(VIEW_WINDOW_MODIFIED), entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
-        CREATED(getLocalizedMessages().getString(VIEW_WINDOW_CREATED), entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
+    public enum DetailType {
+        TITLE(VIEW_WINDOW_TITLE, Entry::getTitle),
+        URL(VIEW_WINDOW_URL, Entry::getUrl),
+        USER(VIEW_WINDOW_USER, Entry::getUser),
+        MODIFIED(VIEW_WINDOW_MODIFIED, entry -> DateUtils.formatIsoDateTime(entry.getLastModification(), FORMATTER)),
+        CREATED(VIEW_WINDOW_CREATED, entry -> DateUtils.formatIsoDateTime(entry.getCreationDate(), FORMATTER));
 
         private final String description;
         private final Function<Entry, String> valueMapper;
@@ -111,7 +111,7 @@ public class EntryDetailsTable extends JTable {
         }
 
         tableModel = new DefaultTableModel();
-        detailsToDisplay.forEach(detail -> tableModel.addColumn(detail.getDescription()));
+        detailsToDisplay.forEach(detail -> tableModel.addColumn(getLocalizedMessages().getString(detail.getDescription())));
         setModel(tableModel);
         getTableHeader().setReorderingAllowed(false);
         addMouseListener(new TableListener());
@@ -135,6 +135,10 @@ public class EntryDetailsTable extends JTable {
         return component;
     }
 
+    public List<DetailType> getDetailsToDisplay() {
+        return detailsToDisplay;
+    }
+
     public void clear() {
         tableModel.setRowCount(0);
     }
@@ -143,9 +147,5 @@ public class EntryDetailsTable extends JTable {
         tableModel.addRow(detailsToDisplay.stream()
                 .map(detail -> detail.getValue(entry))
                 .toArray(Object[]::new));
-    }
-
-    public int rowCount() {
-        return tableModel.getRowCount();
     }
 }

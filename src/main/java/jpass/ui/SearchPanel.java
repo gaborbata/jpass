@@ -145,6 +145,14 @@ public class SearchPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * Sets text for label
+     * @param text of the label
+     */
+    public void setLabelText(String text) {
+        this.label.setText(text);
+    }
+
+    /**
      * Get search criteria.
      *
      * @return get search criteria, non null

@@ -84,6 +84,7 @@ import static jpass.util.Constants.LANGUAGE_EN_US;
 import static jpass.util.Constants.LANGUAGE_ES_MX;
 import static jpass.util.Constants.LANGUAGE_HU_HU;
 import static jpass.util.Constants.LANGUAGE_IT_IT;
+import static jpass.util.Constants.LANGUAGE_LANGUAGE_CHANGED;
 import static jpass.util.Constants.LANGUAGE_LANGUAGE_SETTING;
 import static jpass.util.Constants.PANEL_FIND;
 import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
@@ -394,7 +395,7 @@ public final class JPassFrame extends JFrame {
         updateTable();
 
         Configuration.getInstance().set(LANGUAGE_LANGUAGE_SETTING, newLanguage);
-        MessageDialog.showInformationMessage(this, "Language has been changed");
+        MessageDialog.showInformationMessage(this, getLocalizedMessages().getString(LANGUAGE_LANGUAGE_CHANGED));
     }
 
     /**

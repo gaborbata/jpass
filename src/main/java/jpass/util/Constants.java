@@ -99,6 +99,7 @@ public final class Constants {
     public static final String PANEL_SAVE_MODIFIED_QUESTION_MESSAGE = "panel.saveModifiedQuestionMessage";
     public static final String PANEL_UNENCRYPTED_DATA_WARNING_MESSAGE = "panel.unencryptedDataWarningMessage";
 
+    public static final String LANGUAGE_LANGUAGE_SETTING = "language.languageSetting";
     public static final String LANGUAGE_EN_US = "language.en.us";
     public static final String LANGUAGE_ES_MX = "language.es.mx";
     public static final String LANGUAGE_HU_HU = "language.hu.hu";

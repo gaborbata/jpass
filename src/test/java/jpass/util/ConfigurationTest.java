@@ -68,9 +68,22 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationGetLanguageTest() {
-        String result = configuration.get("language.languageSetting", "en-US");
+    void configurationGetLanguageTestSupportedLanguages() {
+        configuration.set("language.languageSetting", "en-US");
+        String result = configuration.get("language.languageSetting", null);
         assertEquals("en-US", result);
+
+        configuration.set("language.languageSetting", "es-MX");
+        result = configuration.get("language.languageSetting", null);
+        assertEquals("es-MX", result);
+
+        configuration.set("language.languageSetting", "hu-HU");
+        result = configuration.get("language.languageSetting", null);
+        assertEquals("hu-HU", result);
+
+        configuration.set("language.languageSetting", "it-IT");
+        result = configuration.get("language.languageSetting", null);
+        assertEquals("it-IT", result);
     }
 
     @Test

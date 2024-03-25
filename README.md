@@ -69,3 +69,7 @@ Regarding `language.languageSetting` please check
 [languages](https://github.com/gaborbata/jpass/tree/master/src/main/resources/resources/languages)
 resources folder for possible configuration values.
 
+Each configuration property can be overridden by system properties, with the `jpass.` key prefix, e.g.
+
+    java -Djpass.entry.details=TITLE -jar jpass-1.0.6-SNAPSHOT.jar
+

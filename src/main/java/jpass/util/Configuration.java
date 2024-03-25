@@ -31,12 +31,18 @@ package jpass.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class for loading configurations from {@code jpass.properties}.
+ * Class for loading configurations from {@code jpass.properties} or system properties.
+ *
+ * <p>
+ * Each configuration property can be overridden by system properties,
+ * with the {@code jpass.} prefix.
+ * </p>
  *
  * @author Gabor_Bata
  */
@@ -75,7 +81,7 @@ public final class Configuration {
 
     private <T> T getValue(String key, T defaultValue, Class<T> type) {
         T value = defaultValue;
-        String prop = properties.getProperty(key);
+        String prop = getProperty(key);
         if (prop != null) {
             try {
                 value = type.getConstructor(String.class).newInstance(prop);
@@ -84,6 +90,11 @@ public final class Configuration {
             }
         }
         return value;
+    }
+
+    private String getProperty(String key) {
+        return Optional.ofNullable(System.getProperty(String.format("jpass.%s", key)))
+            .orElseGet(() -> properties.getProperty(key));
     }
 
     public Boolean is(String key, Boolean defaultValue) {
@@ -95,11 +106,12 @@ public final class Configuration {
     }
 
     public String get(String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
+        String prop = getProperty(key);
+        return prop != null ? prop : defaultValue;
     }
 
     public String[] getArray(String key, String[] defaultValue) {
-        String prop = properties.getProperty(key);
+        String prop = getProperty(key);
         if (prop != null) {
             return prop.split(",");
         }

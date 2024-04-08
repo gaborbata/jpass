@@ -42,6 +42,11 @@ Default configurations can be overridden in `jpass.properties` file:
 | file.chooser.directory             | string     | ./             |
 | language.languageSetting           | string     | en-US          |
 
+Each configuration property can be overridden by system properties,
+with the `jpass.` key prefix, e.g.
+
+    java -Djpass.entry.details=TITLE -jar jpass-1.0.6-SNAPSHOT.jar
+
 License
 -------
 Copyright (c) 2009-2024 Gabor Bata

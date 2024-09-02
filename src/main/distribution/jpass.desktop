@@ -6,4 +6,4 @@ Comment=Password manager with strong encryption
 Exec=/opt/jpass/jpass.sh
 Icon=/opt/jpass/jpass.png
 Terminal=false
-
+StartupWMClass=jpass-JPass

@@ -275,11 +275,8 @@ public final class JPassFrame extends JFrame {
 
     public static synchronized JPassFrame getInstance(String fileName) {
         if (instance == null) {
-            String languageTag = Configuration.getInstance().get(LANGUAGE_LANGUAGE_SETTING, null);
-            if (null == languageTag) {
-                languageTag = "en-US"; //Defaulting to en-US
-                Configuration.getInstance().set(LANGUAGE_LANGUAGE_SETTING, languageTag);
-            }
+            String languageTag = Configuration.getInstance().get(LANGUAGE_LANGUAGE_SETTING, "en-US");
+            Configuration.getInstance().set(LANGUAGE_LANGUAGE_SETTING, languageTag);
             setCurrentLanguage(languageTag);
             instance = new JPassFrame(fileName);
         }

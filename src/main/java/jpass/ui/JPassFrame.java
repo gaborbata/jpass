@@ -211,12 +211,12 @@ public final class JPassFrame extends JFrame {
 
         JMenu languageMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU_LANGUAGE));
         languageMenu.setActionCommand(SETTINGS_MENU_LANGUAGE);
-        languageMenu.setIcon(getIcon("world"));
+        languageMenu.setIcon(getIcon("language"));
 
         SUPPORTED_LANGUAGES.forEach((key, value) -> {
             JMenuItem language = new JMenuItem(localizedMessages.getString(key));
             if (Objects.equals(getCurrentLanguage(), value)) {
-                language.setIcon(getIcon("check_mark"));
+                language.setIcon(getIcon("selection_checked"));
             }
             language.setActionCommand(key);
             language.addActionListener(e -> refreshComponentsWithLanguageSelected(e.getActionCommand()));
@@ -414,7 +414,7 @@ public final class JPassFrame extends JFrame {
                     if (getSupportedLanguages().containsKey(actionCommand)) {
                         item.setIcon(null);
                         if (Objects.equals(getSupportedLanguages().get(actionCommand), getCurrentLanguage())) {
-                            item.setIcon(getIcon("check_mark"));
+                            item.setIcon(getIcon("selection_checked"));
                         }
                     }
                 }

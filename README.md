@@ -5,6 +5,18 @@
 JPass [![Java CI with Maven](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/gaborbata/jpass/actions/workflows/maven.yml) [![Java CI with Gradle](https://github.com/gaborbata/jpass/workflows/Java%20CI%20with%20Gradle/badge.svg)](https://github.com/gaborbata/jpass/actions/workflows/gradle.yml)
 =====
 
+Project status
+--------------
+
+**This repository is currently archived.**
+
+Due to increasing family and professional commitments, I am no longer able to actively maintain this project.
+
+**What you can do:**
+
+* Feel free to fork the repository and maintain your own version.
+* You can also look at similar projects, e.g. [KeePassXC](https://github.com/keepassxreboot/keepassxc), [OneKeePass](https://github.com/OneKeePass/desktop)
+
 Overview
 --------
 

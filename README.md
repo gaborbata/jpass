@@ -68,14 +68,14 @@ Configuration
 Default configurations can be overridden in `jpass.properties` file:
 
 | Configuration key                  | Value type | Default value    |
-| ---------------------------------- | ---------- | ---------------- |
+| ---------------------------------- | ---------- |------------------|
 | ui.theme.dark.mode.enabled         | boolean    | `false`          |
 | clear.clipboard.on.exit.enabled    | boolean    | `false`          |
 | default.password.generation.length | integer    | `14`             |
 | date.format                        | string     | `yyyy-MM-dd`     |
 | entry.details                      | list       | `TITLE,MODIFIED` |
 | file.chooser.directory             | string     | `./`             |
-| language.languageSetting           | string     | en-US            |
+| language.languageSetting           | string     | `en-US`          |
 
 Regarding `language.languageSetting` please check
 [languages](https://github.com/gaborbata/jpass/tree/master/src/main/resources/resources/languages)

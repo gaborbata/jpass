@@ -37,20 +37,26 @@ import jpass.util.Configuration;
 import jpass.xml.bind.Entry;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -58,7 +64,9 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.table.TableColumn;
 
 import static jpass.ui.MessageDialog.NO_OPTION;
 import static jpass.ui.MessageDialog.YES_NO_CANCEL_OPTION;
@@ -67,10 +75,21 @@ import static jpass.ui.MessageDialog.getIcon;
 import static jpass.ui.MessageDialog.showQuestionMessage;
 import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_COUNT;
 import static jpass.util.Constants.BOTTOM_MENU_ENTRIES_FOUND;
+import static jpass.util.Constants.BUTTON_MESSAGE_CANCEL;
 import static jpass.util.Constants.EDIT_MENU;
+import static jpass.util.Constants.FILE_CHOOSER_CANCEL_BUTTON_TEXT;
 import static jpass.util.Constants.FILE_MENU;
 import static jpass.util.Constants.HELP_MENU;
+import static jpass.util.Constants.LANGUAGE_EN_US;
+import static jpass.util.Constants.LANGUAGE_ES_MX;
+import static jpass.util.Constants.LANGUAGE_HU_HU;
+import static jpass.util.Constants.LANGUAGE_IT_IT;
+import static jpass.util.Constants.LANGUAGE_LANGUAGE_CHANGED;
+import static jpass.util.Constants.LANGUAGE_LANGUAGE_SETTING;
+import static jpass.util.Constants.PANEL_FIND;
 import static jpass.util.Constants.PANEL_SAVE_MODIFIED_QUESTION_MESSAGE;
+import static jpass.util.Constants.SETTINGS_MENU;
+import static jpass.util.Constants.SETTINGS_MENU_LANGUAGE;
 import static jpass.util.Constants.TOOLS_MENU;
 
 /**
@@ -81,10 +100,11 @@ import static jpass.util.Constants.TOOLS_MENU;
  */
 public final class JPassFrame extends JFrame {
 
-    private static ResourceBundle localizedMessages;
     private static final Logger LOG = Logger.getLogger(JPassFrame.class.getName());
 
     private static JPassFrame instance;
+    private static ResourceBundle localizedMessages;
+    private static final Map<String, String> SUPPORTED_LANGUAGES = new HashMap<>();
 
     public static final String PROGRAM_NAME = "JPass Password Manager";
     public static final String PROGRAM_VERSION = "1.0.7-SNAPSHOT";
@@ -96,6 +116,7 @@ public final class JPassFrame extends JFrame {
     private final JMenu fileMenu;
     private final JMenu editMenu;
     private final JMenu toolsMenu;
+    private final JMenu settingsMenu;
     private final JMenu helpMenu;
     private final JToolBar toolBar;
     private final JScrollPane scrollPane;
@@ -103,9 +124,10 @@ public final class JPassFrame extends JFrame {
     private final EntryDetailsTable entryDetailsTable;
     private final DataModel model = DataModel.getInstance();
     private final StatusPanel statusPanel;
+    private static String currentLanguage;
     private volatile boolean processing = false;
 
-    private JPassFrame(String fileName, Locale locale) {
+    private JPassFrame(String fileName) {
         try {
             setIconImages(Stream.of(16, 20, 32, 40, 64, 80, 128, 160)
                     .map(size -> getIcon("jpass", size, size).getImage())
@@ -114,7 +136,9 @@ public final class JPassFrame extends JFrame {
             LOG.log(Level.CONFIG, "Could not set application icon.", e);
         }
 
-        localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
+        setSupportedLanguages();
+        setLocalizedMessages(Locale.forLanguageTag(getCurrentLanguage()));
+        UIManager.put(FILE_CHOOSER_CANCEL_BUTTON_TEXT, localizedMessages.getString(BUTTON_MESSAGE_CANCEL));
 
         this.toolBar = new JToolBar();
         this.toolBar.setFloatable(false);
@@ -182,6 +206,25 @@ public final class JPassFrame extends JFrame {
         this.toolsMenu.add(MenuActionType.CLEAR_CLIPBOARD.getAction());
         this.jpassMenuBar.add(this.toolsMenu);
 
+        this.settingsMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU));
+        this.settingsMenu.setMnemonic(KeyEvent.VK_S);
+
+        JMenu languageMenu = new JMenu(localizedMessages.getString(SETTINGS_MENU_LANGUAGE));
+        languageMenu.setActionCommand(SETTINGS_MENU_LANGUAGE);
+        languageMenu.setIcon(getIcon("language"));
+
+        SUPPORTED_LANGUAGES.forEach((key, value) -> {
+            JMenuItem language = new JMenuItem(localizedMessages.getString(key));
+            if (Objects.equals(getCurrentLanguage(), value)) {
+                language.setIcon(getIcon("selection_checked"));
+            }
+            language.setActionCommand(key);
+            language.addActionListener(e -> refreshComponentsWithLanguageSelected(e.getActionCommand()));
+            languageMenu.add(language);
+        });
+        settingsMenu.add(languageMenu);
+        this.jpassMenuBar.add(this.settingsMenu);
+
         this.helpMenu = new JMenu(localizedMessages.getString(HELP_MENU));
         this.helpMenu.setMnemonic(KeyEvent.VK_H);
         this.helpMenu.add(MenuActionType.LICENSE.getAction());
@@ -215,7 +258,7 @@ public final class JPassFrame extends JFrame {
 
         setJMenuBar(this.jpassMenuBar);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        setSize(450, 400);
+        setSize(490, 400);
         setMinimumSize(new Dimension(420, 200));
         addWindowListener(new CloseListener());
         setLocationRelativeTo(null);
@@ -232,8 +275,10 @@ public final class JPassFrame extends JFrame {
 
     public static synchronized JPassFrame getInstance(String fileName) {
         if (instance == null) {
-            String languageTag = Configuration.getInstance().get("language.languageSetting", "en-US");
-            instance = new JPassFrame(fileName, Locale.forLanguageTag(languageTag));
+            String languageTag = Configuration.getInstance().get(LANGUAGE_LANGUAGE_SETTING, "en-US");
+            Configuration.getInstance().set(LANGUAGE_LANGUAGE_SETTING, languageTag);
+            setCurrentLanguage(languageTag);
+            instance = new JPassFrame(fileName);
         }
         return instance;
     }
@@ -314,6 +359,109 @@ public final class JPassFrame extends JFrame {
     }
 
     /**
+     * Refresh UI components with new translated strings from language selected
+     *
+     * @param actionCommand key to differentiate a component
+     */
+    private void refreshComponentsWithLanguageSelected(String actionCommand) {
+        String newLanguage = getSupportedLanguages().get(actionCommand);
+        if (Objects.equals(getCurrentLanguage(), newLanguage)) {
+            return;
+        }
+        setCurrentLanguage(newLanguage);
+        setLocalizedMessages(Locale.forLanguageTag(newLanguage));
+
+        UIManager.put(FILE_CHOOSER_CANCEL_BUTTON_TEXT, localizedMessages.getString(BUTTON_MESSAGE_CANCEL));
+
+        fileMenu.setText(localizedMessages.getString(FILE_MENU));
+        editMenu.setText(localizedMessages.getString(EDIT_MENU));
+        toolsMenu.setText(localizedMessages.getString(TOOLS_MENU));
+        settingsMenu.setText(localizedMessages.getString(SETTINGS_MENU));
+        helpMenu.setText(localizedMessages.getString(HELP_MENU));
+
+        updateMenuComponents(fileMenu);
+        updateMenuComponents(editMenu);
+        updateMenuComponents(toolsMenu);
+        updateMenuComponents(settingsMenu);
+        updateMenuComponents(helpMenu);
+        updateToolbarComponents(toolBar);
+
+        updateJPopupMenu(popup);
+        getSearchPanel().setLabelText(String.format("%s: ", getLocalizedMessages().getString(PANEL_FIND)));
+
+        updateTable();
+
+        Configuration.getInstance().set(LANGUAGE_LANGUAGE_SETTING, newLanguage);
+        MessageDialog.showInformationMessage(this, getLocalizedMessages().getString(LANGUAGE_LANGUAGE_CHANGED));
+    }
+
+    /**
+     * Updates JMenu components and its children with new translated strings
+     *
+     * @param menu to update
+     */
+    private void updateMenuComponents(JMenu menu) {
+        for (int i = 0; i < menu.getItemCount(); i++) {
+            JMenuItem item = menu.getItem(i);
+            if (null != item) {
+                String actionCommand = item.getActionCommand();
+                if (null != actionCommand) {
+                    item.setText(localizedMessages.getString(actionCommand));
+
+                    if (getSupportedLanguages().containsKey(actionCommand)) {
+                        item.setIcon(null);
+                        if (Objects.equals(getSupportedLanguages().get(actionCommand), getCurrentLanguage())) {
+                            item.setIcon(getIcon("selection_checked"));
+                        }
+                    }
+                }
+
+                if (item instanceof JMenu) {
+                    updateMenuComponents((JMenu) item);
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates JPopupMenu components with new translated strings
+     * @param jPopupMenu
+     */
+    private void updateJPopupMenu(JPopupMenu jPopupMenu) {
+        for (Component comp : jPopupMenu.getComponents()) {
+            if (comp instanceof JMenuItem) {
+                JMenuItem item = (JMenuItem) comp;
+                item.setText(localizedMessages.getString(item.getActionCommand()));
+            }
+        }
+    }
+
+    /**
+     * Updates JToolBar components with new translated strings
+     * @param toolBar
+     */
+    private void updateToolbarComponents(JToolBar toolBar) {
+        for (Component comp : toolBar.getComponents()) {
+            if (comp instanceof JButton) {
+                JButton jButton = (JButton) comp;
+                jButton.setToolTipText(localizedMessages.getString(jButton.getActionCommand()));
+            }
+        }
+    }
+
+    /**
+     * Updates main JTable columns headers with new translated strings
+     */
+    private void updateTable() {
+        for (int i = 0; i < getEntryTitleTable().getColumnModel().getColumnCount(); i++) {
+            TableColumn column = getEntryTitleTable().getColumnModel().getColumn(i);
+            column.setHeaderValue(getLocalizedMessages().getString(entryDetailsTable.getDetailsToDisplay().get(i).getDescription()));
+        }
+        getEntryTitleTable().getTableHeader().repaint();
+        refreshEntryTitleList(null);
+    }
+
+    /**
      * Exits the application.
      */
     public void exitFrame() {
@@ -355,6 +503,24 @@ public final class JPassFrame extends JFrame {
     }
 
     /**
+     * Sets the resource bundle for localization
+     *
+     * @param locale locale for the resources bundle
+     */
+    public static void setLocalizedMessages(Locale locale) {
+        JPassFrame.localizedMessages = ResourceBundle.getBundle("resources.languages.languages", locale);
+    }
+
+    /**
+     * Sets the current language for the program
+     *
+     * @param newLanguage
+     */
+    private static void setCurrentLanguage(String newLanguage) {
+        currentLanguage = newLanguage;
+    }
+
+    /**
      * Gets the processing state of this frame.
      *
      * @return processing state
@@ -364,7 +530,7 @@ public final class JPassFrame extends JFrame {
     }
 
     /**
-     * Get search panel.
+     * Gets search panel.
      *
      * @return the search panel
      */
@@ -374,9 +540,39 @@ public final class JPassFrame extends JFrame {
 
     /**
      * Gets the resource bundle for localization
+     *
      * @return resource bundle
      */
     public static ResourceBundle getLocalizedMessages() {
         return localizedMessages;
+    }
+
+    /**
+     * Gets current language selected
+     *
+     * @return currentLanguage
+     */
+    private static String getCurrentLanguage() {
+        return currentLanguage;
+    }
+
+    /**
+     * Set supported languages currently
+     *
+     */
+    private static void setSupportedLanguages() {
+        SUPPORTED_LANGUAGES.put(LANGUAGE_EN_US, "en-US");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_ES_MX, "es-MX");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_HU_HU, "hu-HU");
+        SUPPORTED_LANGUAGES.put(LANGUAGE_IT_IT, "it-IT");
+    }
+
+    /**
+     * Gets supported languages
+     *
+     * @return Map of supported languages
+     */
+    private static Map<String, String> getSupportedLanguages() {
+        return SUPPORTED_LANGUAGES;
     }
 }

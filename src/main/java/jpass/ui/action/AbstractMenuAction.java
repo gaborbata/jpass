@@ -43,12 +43,14 @@ public abstract class AbstractMenuAction extends AbstractAction {
     /**
      * Creates a new menu action.
      *
-     * @param text title of the action that appears on UI
-     * @param icon icon of action
-     * @param accelerator accelerator key
+     * @param text             title of the action that appears on UI
+     * @param actionCommandKey
+     * @param icon             icon of action
+     * @param accelerator      accelerator key
      */
-    public AbstractMenuAction(String text, Icon icon, KeyStroke accelerator) {
+    public AbstractMenuAction(String text, String actionCommandKey, Icon icon, KeyStroke accelerator) {
         super(text, icon);
+        putValue(ACTION_COMMAND_KEY, actionCommandKey);
         putValue(SHORT_DESCRIPTION, text);
         if (accelerator != null) {
             putValue(ACCELERATOR_KEY, accelerator);
